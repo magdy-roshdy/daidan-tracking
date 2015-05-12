@@ -1,0 +1,9 @@
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Diadan.Entities\bin\Debug\Daidan.Entities.dll
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Diadan.Entities\bin\Debug\Daidan.Entities.pdb
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Diadan.Entities\obj\Debug\Daidan.Entities.dll
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Diadan.Entities\obj\Debug\Daidan.Entities.pdb
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Daidan.Entities\bin\Debug\Daidan.Entities.dll
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Daidan.Entities\bin\Debug\Daidan.Entities.pdb
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Daidan.Entities\obj\Debug\Daidan.Entities.csprojResolveAssemblyReference.cache
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Daidan.Entities\obj\Debug\Daidan.Entities.dll
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Daidan.Entities\obj\Debug\Daidan.Entities.pdb

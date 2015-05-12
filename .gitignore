@@ -1,0 +1,11 @@
+Diadan.Web/bin/*
+Diadan.Web/obj/*
+Diadan.Web/Daidan.Web.csproj.user
+
+Diadan.Entities/bin/*
+Diadan.Entities/obj/*
+
+Diadan.Domain/bin/*
+Diadan.Domain/obj/*
+
+DaidanTripsTrackingSolution.v12.suo

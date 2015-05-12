@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Daidan.Entities"
+                   namespace="Daidan.Entities">
+	<class name="Material" table="Materials">
+
+		<id name="Id" column="MaterialId">
+			<generator class="identity"/>
+		</id>
+		<property name="Name" column="MaterialName" />
+		<property name="IsActive" column="MaterialIsActive" />
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Daidan.Entities"
+                   namespace="Daidan.Entities">
+	<class name="Trip" table="Trips">
+		<id name="Id" column="TripId">
+			<generator class="identity"/>
+		</id>
+		<property name="Date" column="TripDate" />
+		<property name="VoucherNumber" column="TripVoucherNumber" />
+		<property name="PONumber" column="TripPONumber" />
+		
+		<property name="UnitCost" column="TripUnitCost" />
+		<property name="UnitsQuantity" column="TripUnitsQuanitity" />
+		<property name="ExtraCost" column="TripExtraCost" />
+		<property name="UnitSellingPrice" column="TripUnitSellingPrice" />
+		<property name="AddedOn" column="TripAddedOn" />
+		<property name="LastModefied" column="TripLastModefied" />
+
+
+		<many-to-one name="Site" class="Site" column="TripSiteId" lazy="false" />
+		<many-to-one name="Material" class="Material" column="TripMaterialId" lazy="false" />
+		<many-to-one name="Unit" class="Unit" column="TripUnitId" lazy="false" />
+		<many-to-one name="Driver" class="Driver" column="TripDriverId" lazy="false" />
+		<many-to-one name="Truck" class="Truck" column="TripTruckId" lazy="false" />
+
+
+	</class>
+
+</hibernate-mapping>

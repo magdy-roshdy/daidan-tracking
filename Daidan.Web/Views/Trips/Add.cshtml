@@ -1,0 +1,84 @@
+﻿@model  Daidan.Web.Models.AddTripViewModel
+@{
+    ViewBag.Title = "Add Trips";
+}
+
+<link href="~/Content/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/animate.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-notify.min.js"></script>
+<input type="hidden" id="lookupsText" value='@Html.Raw(Json.Encode(Model.AddTripLookup))' />
+
+
+<style type="text/css">
+	#addTripModal input, #addTripModal select
+	{
+		height: 33px;
+	}
+
+	#addTripModal *.row
+	{
+		margin-bottom: 3px;
+	}
+
+	#tripsTable tr
+	{
+		height: 30px;
+	}
+</style>
+<div class="row">
+	<div style="float: right; margin: 10px 0px 10px 0px;">
+		<button type="button" class="btn btn-primary" id="addTripButton"><i class="fa fa-plus-square-o"></i> &nbsp;Add New Trip</button>
+	</div>
+</div>
+<div class="row">
+	<table border="1" class="table-responsive" style="width: 100%;" id="tripsTable">
+		<thead>
+			<tr style="background-color: #EBEBEB; height: 35px;">
+				<th style="text-align: center;" width="85">Date</th>
+				<th style="text-align: center;" width="75">Voucher #</th>
+				<th style="text-align: center;" width="75">P.O</th>
+				<th style="text-align: center;" width="115">Customer</th>
+				<th style="text-align: center;" width="130">Site</th>
+				<th style="text-align: center;" width="80">Truck</th>
+				<th style="text-align: center;" width="90">Material</th>
+				<th style="text-align: center;" width="80">Quantity</th>
+				<th style="text-align: center;" width="70">Unit Cost</th>
+				<th style="text-align: center;" width="75">Trip Cost</th>
+				<th style="text-align: center;" width="75">Extra Cost</th>
+				<th style="text-align: center;" width="75">Total Cost</th>
+				<th style="text-align: center;" width="35">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Daidan.Entities.Trip trip in Model.TripsList)
+			{
+				<tr>
+					<td style="text-align: center;">@trip.Date.ToString("dd/MM/yyyy")</td>
+					<td style="text-align: center;">@trip.VoucherNumber</td>
+					<td style="text-align: center;">@trip.PONumber</td>
+					<td style="text-align: center;">@trip.Site.Customer.Name</td>
+					<td style="text-align: center;">@trip.Site.Name</td>
+					<td style="text-align: center;">@trip.Truck.Number</td>
+					<td style="text-align: center;">@trip.Material.Name</td>
+					<td style="text-align: center;">@trip.QuantityCaption</td>
+					<td style="text-align: center;">@trip.UnitCost.ToString("0.00")</td>
+					<td style="text-align: center;">@trip.TripCost.ToString("0.00")</td>
+					<td style="text-align: center;">@(trip.ExtraCost > 0 ? trip.ExtraCost.ToString("#.00") : "0.00" )</td>
+					<td style="text-align: center;">@trip.TripTotalCost.ToString("#.00")</td>
+					<td style="text-align: center;">
+						<div style="cursor: pointer;" onclick="editTrip(this);">
+							<i class="fa fa-edit fa-lg"></i>
+							<i class="fa fa-spinner fa-pulse fa-lg" style="display: none;"></i>
+						</div>
+						<input type="hidden" value="@trip.Id.ToString()" />
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+@Html.Partial("~/Views/Shared/_EditTripModal.cshtml", null)
+<script type="text/javascript" src="~/Scripts/daidan-global.js"></script>
+<script type="text/javascript" src="~/Scripts/add-trip-script.js"></script>

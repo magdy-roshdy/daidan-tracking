@@ -1,0 +1,4 @@
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Diadan.Entities\bin\Debug\Diadan.Entities.dll
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Diadan.Entities\bin\Debug\Diadan.Entities.pdb
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Diadan.Entities\obj\Debug\Diadan.Entities.dll
+D:\Work\Diadan-Trip-Tracking\DiadanTripsTrackingSolution\Diadan.Entities\obj\Debug\Diadan.Entities.pdb

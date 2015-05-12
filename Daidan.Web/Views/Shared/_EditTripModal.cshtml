@@ -1,0 +1,113 @@
+﻿<style type="text/css">
+	#addTripModal *.row
+	{
+		margin-bottom: 3px;
+	}
+</style>
+
+<div class="modal fade" id="addTripModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" style="width: 700px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">&lt;Add New Trip&gt;</h4>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="row">
+								<div class="col-md-3">Voucher#:</div>
+								<div class="col-md-9">
+									<input type="text" id="voucherNumber" required="required" placeholder="Voucher Number" class="form-control"
+										   tabindex="1" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Driver:</div>
+								<div class="col-md-9">
+									<select class="form-control" id="drivers" tabindex="3"></select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Customer:</div>
+								<div class="col-md-9">
+									<select class="form-control" id="customers" tabindex="5"></select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Material:</div>
+								<div class="col-md-9">
+									<select class="form-control" id="materials" tabindex="7"></select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Cost:</div>
+								<div class="col-md-9">
+									<input type="text" id="unitCost" placeholder="Unit Cost" class="form-control" tabindex="10" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Date:</div>
+								<div class="col-md-9">
+									<div class="input-group date" id="tripDateFormGroup">
+										<input type="text" id="tripDate" class="form-control" placeholder="Trip Date" />
+										<span class="input-group-addon" style="cursor: pointer;">
+											<i class="fa fa-calendar"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6">
+							<div class="row">
+								<div class="col-md-3">P.O:</div>
+								<div class="col-md-9">
+									<input type="text" id="purchaseOrder" placeholder="Purchase Order" class="form-control"
+										   tabindex="2" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Truck:</div>
+								<div class="col-md-9">
+									<select class="form-control" id="trucks" tabindex="4"></select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Site:</div>
+								<div class="col-md-9">
+									<select class="form-control" id="sites" tabindex="6"></select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Quantity:</div>
+								<div class="col-md-9">
+									<div class="row">
+										<div class="col-md-6" style="padding-right: 2px;">
+											<select class="form-control" id="units" tabindex="8"></select>
+										</div>
+										<div class="col-md-6" style="padding-left: 2px;">
+											<input type="text" id="quantity" placeholder="Quantity" class="form-control" tabindex="9" />
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Ex Cost:</div>
+								<div class="col-md-9">
+									<input type="text" id="extraCost" placeholder="Extra Cost" class="form-control" tabindex="11" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Add Trip</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,192 @@
+﻿@model Daidan.Web.Models.AddTripLookup
+@{
+	ViewBag.Title = "Master Report";
+}
+
+<style type="text/css">
+	#searchPanel{
+		margin-top: 20px;
+	}
+	#searchPanel .row{
+		margin-bottom: 5px;
+	}
+	#searchPanel input, #searchPanel select {
+		height: 33px;
+	}
+
+	#resultTable tr
+	{
+		height: 30px;
+	}
+
+	#resultTable
+	{
+		margin-top: 10px;
+	}
+</style>
+
+<input type="hidden" id="lookupsText" value='@Html.Raw(Json.Encode(Model))' />
+<div id="searchPanel">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-sm-2">
+					Voucher#:
+				</div>
+				<div class="col-sm-4">
+					<input type="text" placeholder="Voucher Number" class="form-control" id="voucherNumber" />
+				</div>
+
+				<div class="col-sm-2">
+					P.O #:
+				</div>
+				<div class="col-sm-4">
+					<input type="text" placeholder="P.O Number" class="form-control" id="PONumber" />
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="col-sm-2">
+				From:
+			</div>
+			<div class="col-sm-4">
+				<div class="input-group date" id="fromDateGroup">
+					<input type="text" class="form-control" placeholder="From Date" id="fromDate" />
+					<span class="input-group-addon" style="cursor: pointer;" id="tripDateIcon">
+						<i class="fa fa-calendar"></i>
+					</span>
+				</div>
+			</div>
+
+			<div class="col-sm-2">
+				To:
+			</div>
+			<div class="col-sm-4">
+				<div class="input-group date" id="toDateGroup">
+					<input type="text" class="form-control" placeholder="To Date" id="toDate" />
+					<span class="input-group-addon" style="cursor: pointer;" id="tripDateIcon">
+						<i class="fa fa-calendar"></i>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-sm-2">
+					Driver:
+				</div>
+				<div class="col-sm-4">
+					<select class="form-control" id="drivers">
+						<option value="">[ALL]</option>
+					</select>
+				</div>
+
+				<div class="col-sm-2">
+					Truck:
+				</div>
+				<div class="col-sm-4">
+					<select class="form-control" id="trucks">
+						<option value="">[ALL]</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="col-sm-2">
+				Customer:
+			</div>
+			<div class="col-sm-4">
+				<select class="form-control" id="customers">
+					<option value="">[ALL]</option>
+				</select>
+			</div>
+
+			<div class="col-sm-2">
+				Site:
+			</div>
+			<div class="col-sm-4">
+				<select class="form-control" id="sites">
+					<option value="">[ALL]</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-sm-2">
+					Material:
+				</div>
+				<div class="col-sm-4">
+					<select class="form-control" id="materials">
+						<option value="">[ALL]</option>
+					</select>
+				</div>
+
+				<div class="col-sm-2">
+					Unit:
+				</div>
+				<div class="col-sm-4">
+					<select class="form-control" id="units">
+						<option value="">[ALL]</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="col-sm-2">&nbsp;</div>
+			<div class="col-sm-4"><div class="col-sm-2">&nbsp;</div></div>
+			<div class="col-sm-2"><div class="col-sm-2">&nbsp;</div></div>
+			<div class="col-sm-4">
+				<button class="btn form-control btn-primary" id="searchButton">Search &nbsp; <i class="fa fa-search"></i></button>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="border-bottom: dotted 1px #000;">&nbsp;</div>
+	<div id="searchResult">
+		<table border="1" class="table-responsive" style="width: 100%; display: none;" id="resultTable">
+			<thead>
+				<tr style="background-color: #EBEBEB; height: 35px;">
+					<th style="text-align: center;" width="85">Date</th>
+					<th style="text-align: center;" width="75">Voucher #</th>
+					<th style="text-align: center;" width="75">P.O</th>
+					<th style="text-align: center;" width="115">Customer</th>
+					<th style="text-align: center;" width="130">Site</th>
+					<th style="text-align: center;" width="80">Truck</th>
+					<th style="text-align: center;" width="90">Material</th>
+					<th style="text-align: center;" width="80">Quantity</th>
+					<th style="text-align: center;" width="70">Unit Cost</th>
+					<th style="text-align: center;" width="75">Trip Cost</th>
+					<th style="text-align: center;" width="75">Extra Cost</th>
+					<th style="text-align: center;" width="75">Total Cost</th>
+					<th style="text-align: center;" width="35">&nbsp;</th>
+					<th style="text-align: center;" width="35">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		<div class="row" id="loadingDiv" style="display: none;">
+			<div style="margin: 0 auto; width: 150px;">
+				loading ...
+			</div>
+		</div>
+		<div class="row" style="display: none;" id="noResultMessage">
+			<br />
+			<h3 style="margin: 0 auto; width: 100%; text-align: center;">There are no trips matching the search parameters!</h3>
+		</div>
+	</div>
+</div>
+@Html.Partial("~/Views/Shared/_EditTripModal.cshtml", null)
+<!-- scripts -->
+<link href="~/Content/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/animate.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+<script type="text/javascript" src="~/Scripts/daidan-global.js"></script>
+<script type="text/javascript" src="~/Scripts/master-report-js.js"></script>

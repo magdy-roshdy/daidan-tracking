@@ -1,0 +1,6 @@
+﻿make a default unit for each material, for example: D.Sand has a M3 as default unit.
+after trip insertion, reset all info except for driver and truck and date
+put zeros in the empty values in the trips list
+add the option to add outsourced truck while adding the trip if this truck is not included in the trucks list
+make all fields in add trip empty not first item
+make voucher number as unique
