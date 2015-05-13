@@ -137,6 +137,7 @@ function initiateAddTripModel(dataLookup) {
 		$("#addTripModal #unitCost").val(window.currentWorkObject.currentTrip.UnitCost.toFixed(2));
 		$("#addTripModal #quantity").val(window.currentWorkObject.currentTrip.UnitsQuantity.toFixed(2));
 		$("#addTripModal #extraCost").val((window.currentWorkObject.currentTrip.ExtraCost > 0 ? window.currentWorkObject.currentTrip.ExtraCost.toFixed(2) : ''));
+		$("#addTripModal #ticketNumber").val(window.currentWorkObject.currentTrip.TicketNumber);
 		$('#tripDate').val(getDateFromJSON(window.currentWorkObject.currentTrip.Date).format('DD/MM/YYYY'));
 
 		$('#addTripModal .btn-primary').text('Update Trip');
@@ -147,6 +148,7 @@ function initiateAddTripModel(dataLookup) {
 		$("#addTripModal #unitCost").val('');
 		$("#addTripModal #quantity").val('');
 		$("#addTripModal #extraCost").val('');
+		$("#addTripModal #ticketNumber").val('');
 
 		var momentDate = getDateFromJSON(dataLookup.LastInsertionDate.toString());
 		$('#tripDate').val(momentDate.format('DD/MM/YYYY'));
@@ -321,6 +323,12 @@ function wireTripEditModalEvents() {
 		}
 
 		if (valid) {
+			var ticketNumber = $('#addTripModal #ticketNumber');
+			if (ticketNumber.val())
+				valid = validateField(ticketNumber, numberPattern, 'Please enter a valid ticket number');
+		}
+
+		if (valid) {
 			var extraCost = $('#addTripModal #extraCost');
 			if (extraCost.val())
 				valid = validateField(extraCost, decimalPattern, 'Please enter a valid extar cost. Example: 100.30');
@@ -356,6 +364,7 @@ function saveNewTrip(saveButtonObject) {
 		'Date': moment($('#addTripModal #tripDate').val(), "DD/MM/YYYY").format('MM/DD/YYYY'),
 		'VoucherNumber': parseInt($('#addTripModal #voucherNumber').val()),
 		'PONumber': $('#addTripModal #purchaseOrder').val() ? parseInt($('#addTripModal #purchaseOrder').val()) : null,
+		'TicketNumber': $('#addTripModal #ticketNumber').val() ? parseInt($('#addTripModal #ticketNumber').val()) : null,
 		'UnitCost': parseFloat($('#addTripModal #unitCost').val()),
 		'UnitsQuantity': parseFloat($('#addTripModal #quantity').val()),
 		'ExtraCost': $('#addTripModal #extraCost').val() ? parseFloat($('#addTripModal #extraCost').val()) : 0,
@@ -428,6 +437,7 @@ function resetAddTripForm() {
 	$("#addTripModal #voucherNumber").val('');
 	$("#addTripModal #unitCost").val('');
 	$("#addTripModal #extraCost").val('');
+	$("#addTripModal #ticketNumber").val('');
 	$("#addTripModal #quantity").val('');
 
 	$('#addTripModal #voucherNumber').focus();

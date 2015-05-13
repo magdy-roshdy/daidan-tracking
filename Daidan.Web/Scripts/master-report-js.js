@@ -44,6 +44,7 @@
 		var parameters = {
 			'VoucherNumber': $('#voucherNumber').val(),
 			'PONumber': $('#PONumber').val(),
+			'TicketNumber': $('#ticketNumber').val(),
 			'From': moment($('#fromDate').val(), "DD/MM/YYYY").format('MM/DD/YYYY'),
 			'To': moment($('#toDate').val(), "DD/MM/YYYY").format('MM/DD/YYYY'),
 			'DriverId': $('#drivers').val(),

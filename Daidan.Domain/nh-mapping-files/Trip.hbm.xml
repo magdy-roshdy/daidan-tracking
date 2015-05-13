@@ -10,6 +10,7 @@
 		<property name="Date" column="TripDate" />
 		<property name="VoucherNumber" column="TripVoucherNumber" />
 		<property name="PONumber" column="TripPONumber" />
+		<property name="TicketNumber" column="TripTicketNumber" />
 		
 		<property name="UnitCost" column="TripUnitCost" />
 		<property name="UnitsQuantity" column="TripUnitsQuanitity" />

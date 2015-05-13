@@ -9,6 +9,7 @@ namespace Daidan.Domain
 	{
 		public string VoucherNumber { get; set; }
 		public string PONumber { get; set; }
+		public string TicketNumber { get; set; }
 		public DateTime? From { get; set; }
 		public DateTime? To { get; set; }
 		public int? DriverId { get; set; }

@@ -37,6 +37,7 @@ namespace Daidan.Domain
 						db_trip.Date = trip.Date;
 						db_trip.VoucherNumber = trip.VoucherNumber;
 						db_trip.PONumber = trip.PONumber ?? null;
+						db_trip.TicketNumber = trip.TicketNumber ?? null;
 						db_trip.UnitCost = trip.UnitCost;
 						db_trip.UnitSellingPrice = trip.UnitSellingPrice;
 						db_trip.UnitsQuantity = trip.UnitsQuantity;
@@ -58,6 +59,7 @@ namespace Daidan.Domain
 						trip.Date = trip.Date;
 						trip.VoucherNumber = trip.VoucherNumber;
 						trip.PONumber = trip.PONumber ?? null;
+						trip.TicketNumber = trip.TicketNumber ?? null;
 						trip.UnitCost = trip.UnitCost;
 						trip.UnitSellingPrice = trip.UnitSellingPrice;
 						trip.UnitsQuantity = trip.UnitsQuantity;
@@ -201,6 +203,8 @@ namespace Daidan.Domain
 					queryOver.Where(x => x.VoucherNumber == parameters.VoucherNumber);
 				if (!string.IsNullOrWhiteSpace(parameters.PONumber))
 					queryOver.Where(x => x.PONumber == parameters.PONumber);
+				if (!string.IsNullOrWhiteSpace(parameters.TicketNumber))
+					queryOver.Where(x => x.TicketNumber == parameters.TicketNumber);
 				
 				if (parameters.From.HasValue)
 					queryOver.Where(x => x.Date >= parameters.From.Value);

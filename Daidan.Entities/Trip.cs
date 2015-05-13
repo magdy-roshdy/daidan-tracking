@@ -12,6 +12,7 @@ namespace Daidan.Entities
 		public virtual DateTime Date { get; set; }
 		public virtual string VoucherNumber { get; set; }
 		public virtual string PONumber { get; set; }
+		public virtual string TicketNumber { get; set; }
 
 		public virtual decimal UnitCost { get; set; }
 		public virtual decimal UnitsQuantity { get; set; }
