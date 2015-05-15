@@ -20,7 +20,7 @@ namespace Daidan.Entities
 		public virtual decimal UnitSellingPrice { get; set; }
 
 		public virtual DateTime AddedOn { get; set; }
-		public virtual DateTime LastModefied { get; set; }
+		public virtual DateTime? LastModefied { get; set; }
 
 		public virtual Material Material { set; get; }
 		public virtual Site Site { set; get; }
