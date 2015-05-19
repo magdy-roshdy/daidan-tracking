@@ -286,52 +286,52 @@ function wireTripEditModalEvents() {
 		var decimalPattern = /^(?:\d*\.\d{1,2}|\d+)$/;
 
 		var voucherNumber = $('#addTripModal #voucherNumber');
-		valid = validateField($('#addTripModal #voucherNumber'), numberPattern, 'Please enter a valid voucher number');
+		valid = validateField($('#addTripModal #voucherNumber'), numberPattern, 'Please enter a valid voucher number', '#addTripModal');
 
 		if (valid) {
 			var poNumber = $('#addTripModal #purchaseOrder');
 			if (poNumber.val())
-				valid = validateField(poNumber, numberPattern, 'Please enter a valid P.O number');
+				valid = validateField(poNumber, numberPattern, 'Please enter a valid P.O number', '#addTripModal');
 		}
 
 		if (valid) {
-			valid = validateField($('#addTripModal #drivers'), null, 'Please select the driver');
+			valid = validateField($('#addTripModal #drivers'), null, 'Please select the driver', '#addTripModal');
 		}
 
 		if (valid) {
-			valid = validateField($('#addTripModal #customers'), null, 'Please select the customer');
+			valid = validateField($('#addTripModal #customers'), null, 'Please select the customer', '#addTripModal');
 		}
 
 		if (valid) {
-			valid = validateField($('#addTripModal #sites'), null, 'Please select the site');
+			valid = validateField($('#addTripModal #sites'), null, 'Please select the site', '#addTripModal');
 		}
 
 		if (valid) {
-			valid = validateField($('#addTripModal #materials'), null, 'Please select the material');
+			valid = validateField($('#addTripModal #materials'), null, 'Please select the material', '#addTripModal');
 		}
 
 		if (valid) {
-			valid = validateField($('#addTripModal #units'), null, 'Please select the unit');
+			valid = validateField($('#addTripModal #units'), null, 'Please select the unit', '#addTripModal');
 		}
 
 		if (valid) {
-			valid = validateField($('#addTripModal #quantity'), decimalPattern, 'Please enter a valid quantity value. Example: 120.50');
+			valid = validateField($('#addTripModal #quantity'), decimalPattern, 'Please enter a valid quantity value. Example: 120.50', '#addTripModal');
 		}
 
 		if (valid) {
-			valid = validateField($('#addTripModal #unitCost'), decimalPattern, 'Please enter a valid unit cost. Example: 42.75');
+			valid = validateField($('#addTripModal #unitCost'), decimalPattern, 'Please enter a valid unit cost. Example: 42.75', '#addTripModal');
 		}
 
 		if (valid) {
 			var ticketNumber = $('#addTripModal #ticketNumber');
 			if (ticketNumber.val())
-				valid = validateField(ticketNumber, numberPattern, 'Please enter a valid ticket number');
+				valid = validateField(ticketNumber, numberPattern, 'Please enter a valid ticket number', '#addTripModal');
 		}
 
 		if (valid) {
 			var extraCost = $('#addTripModal #extraCost');
 			if (extraCost.val())
-				valid = validateField(extraCost, decimalPattern, 'Please enter a valid extar cost. Example: 100.30');
+				valid = validateField(extraCost, decimalPattern, 'Please enter a valid extar cost. Example: 100.30', '#addTripModal');
 		}
 
 		if (valid) {
@@ -342,7 +342,7 @@ function wireTripEditModalEvents() {
 
 }
 
-function validateField(field, pattern, message) {
+function validateField(field, pattern, message, popOverContainer) {
 	var result = false;
 	if (pattern)
 		result = pattern.test(field.val());
@@ -350,7 +350,7 @@ function validateField(field, pattern, message) {
 		result = field.val();
 
 	if (!result) {
-		field.popover({ content: message, trigger: 'focus', container: '#addTripModal' });
+		field.popover({ content: message, trigger: 'focus', container: popOverContainer });
 		field.focus();
 	} else {
 		field.popover('destroy');
@@ -395,7 +395,6 @@ function saveNewTrip(saveButtonObject) {
 	});
 }
 
-
 function appendNewTrip(tripObject) {
 	var newTripRow = constructTripRow(tripObject);
 
@@ -426,7 +425,6 @@ function showNotification(message, type) {
 	});
 }
 
-
 function resetAddTripForm() {
 	$("#addTripModal #customers").val($("#addTripModal #customers option:first").val());
 	$("#addTripModal #materials").val($("#addTripModal #materials option:first").val());
@@ -441,4 +439,10 @@ function resetAddTripForm() {
 	$("#addTripModal #quantity").val('');
 
 	$('#addTripModal #voucherNumber').focus();
+}
+
+function fillDropDown(select, list, textPropertyName) {
+	$.each(list, function (index, element) {
+		select.append($("<option />").val(element.Id).text(element[textPropertyName]));
+	});
 }

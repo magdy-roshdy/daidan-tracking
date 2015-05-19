@@ -44,6 +44,14 @@ namespace Daidan.Entities
 			}
 		}
 
+		public virtual decimal TripTotalPrice
+		{
+			get
+			{
+				return this.UnitSellingPrice * this.UnitsQuantity;
+			}
+		}
+
 		public virtual string QuantityCaption
 		{
 			get

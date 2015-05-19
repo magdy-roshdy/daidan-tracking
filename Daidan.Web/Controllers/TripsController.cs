@@ -1,5 +1,6 @@
 ﻿using Daidan.Domain;
 using Daidan.Entities;
+using Daidan.Web.Helpers;
 using Daidan.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,7 @@ namespace Daidan.Web.Controllers
         {
 			AddTripViewModel viewModel = new AddTripViewModel();
 			viewModel.TripsList = dbRepository.GetAddedTodayTrips();
-
-
-
-			viewModel.AddTripLookup = GetTripLookups();
+			viewModel.AddTripLookup = DaidanControllersHelper.GetTripLookups(dbRepository);
 
 			return View(viewModel);
         }
@@ -54,31 +52,6 @@ namespace Daidan.Web.Controllers
 		public ActionResult GetTrip(long tripId)
 		{
 			return Json(dbRepository.GetTripById(tripId), JsonRequestBehavior.AllowGet);
-		}
-
-		public ActionResult MasterReport()
-		{
-			return View(GetTripLookups());
-		}
-
-		[HttpPost]
-		public ActionResult MasterReportSearch(MasterReportSearchParameters parameter)
-		{
-			return Json(dbRepository.MasterReportSearch(parameter), JsonRequestBehavior.AllowGet);
-		}
-
-		private AddTripLookup GetTripLookups()
-		{
-			AddTripLookup lookups = new AddTripLookup();
-			lookups.Customers = dbRepository.GetAllCustomers();
-			lookups.Drivers = dbRepository.GetAllDrivers();
-			lookups.Trucks = dbRepository.GetAllTrucks();
-			lookups.Materials = dbRepository.GetAllMaterials();
-			lookups.Units = dbRepository.GetAllUnits();
-			lookups.Sites = dbRepository.GetAllSites();
-			lookups.LastInsertionDate = DateTime.Now;
-
-			return lookups;
 		}
     }
 }

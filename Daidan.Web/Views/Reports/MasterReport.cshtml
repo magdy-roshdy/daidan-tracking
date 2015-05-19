@@ -24,7 +24,7 @@
 		margin-top: 10px;
 	}
 </style>
-
+<h2>Master Report</h2>
 <input type="hidden" id="lookupsText" value='@Html.Raw(Json.Encode(Model))' />
 <div id="searchPanel">
 	<div class="row">
@@ -184,11 +184,5 @@
 </div>
 @Html.Partial("~/Views/Shared/_EditTripModal.cshtml", null)
 <!-- scripts -->
-<link href="~/Content/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
-<link href="~/Content/css/animate.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="~/Scripts/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="~/Scripts/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
-<script type="text/javascript" src="~/Scripts/daidan-global.js"></script>
-<script type="text/javascript" src="~/Scripts/master-report-js.js"></script>
+<script type="text/javascript" src="~/Scripts/master-report.js"></script>

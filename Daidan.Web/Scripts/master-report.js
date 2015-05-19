@@ -57,7 +57,7 @@
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
-			url: '/Trips/MasterReportSearch',
+			url: '/Reports/MasterReportSearch',
 			data: parameters,
 			success: function (data) {
 				$('#searchResult #loadingDiv').hide();
@@ -76,12 +76,6 @@
 	wireTripEditModalEvents();
 	initWorkingObject({ addDeleteToTripRow: true });
 });
-
-function fillDropDown(select, list, textPropertyName) {
-	$.each(list, function (index, element) {
-		select.append($("<option />").val(element.Id).text(element[textPropertyName]));
-	});
-}
 
 function showSearchResult(tripsArray) {
 	$('#searchResult #resultTable').show();

@@ -2,14 +2,7 @@
 @{
     ViewBag.Title = "Add Trips";
 }
-
-<link href="~/Content/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
-<link href="~/Content/css/animate.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="~/Scripts/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
-<script type="text/javascript" src="~/Scripts/bootstrap-notify.min.js"></script>
 <input type="hidden" id="lookupsText" value='@Html.Raw(Json.Encode(Model.AddTripLookup))' />
-
 
 <style type="text/css">
 	#addTripModal input, #addTripModal select
@@ -80,5 +73,4 @@
 	</table>
 </div>
 @Html.Partial("~/Views/Shared/_EditTripModal.cshtml", null)
-<script type="text/javascript" src="~/Scripts/daidan-global.js"></script>
 <script type="text/javascript" src="~/Scripts/add-trip-script.js"></script>
