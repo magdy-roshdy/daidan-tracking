@@ -106,32 +106,74 @@
 			</div>
 		</div>
 	</div>
-	<div class="row" style="border-bottom: dotted 1px #000;">&nbsp;</div>
-	<div id="searchResult">
-		<table border="1" class="table-responsive" style="width: 100%; display: none;" id="resultTable">
-			<thead>
-				<tr style="background-color: #EBEBEB; height: 35px;">
-					<th style="text-align: center;" width="30">&nbsp;</th>
-					<th style="text-align: center;" width="85">Date</th>
-					<th style="text-align: center;" width="75">Voucher #</th>
-					<th style="text-align: center;" width="75">P.O</th>
-					<th style="text-align: center;" width="80">Truck</th>
-					<th style="text-align: center;" width="80">Quantity</th>
-					<th style="text-align: center;" width="80">Unit Price</th>
-					<th style="text-align: center;" width="80">Trip Price</th>
-				</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
-		<div class="row" id="loadingDiv" style="display: none;">
-			<div style="margin: 0 auto; width: 150px;">
-				loading ...
-			</div>
+</div>
+<!--  -->
+<div class="row" style="border-bottom: dotted 1px #000;">&nbsp;</div>
+<div id="searchResult" style="display: none; width: 100%;">
+	<div class="row">
+		<div class="col-lg-11">
+
 		</div>
-		<div class="row" style="display: none;" id="noResultMessage">
-			<br />
-			<h3 style="margin: 0 auto; width: 100%; text-align: center;">There are no trips matching the search parameters!</h3>
+		<div class="col-lg-1">
+			<button id="printButton" class="btn btn-default" style="margin: 5px 0px 5px 0px;">
+				<i class="fa fa-print"></i>
+				&nbsp;
+				Print
+			</button>
+		</div>
+	</div>
+	<div class="row print-area">
+		<div style="border: solid 1px #000; padding: 5px 15px 15px 15px;">
+			<h4 class="text-center">Invoice</h4>
+			<h3 id="customerNameHead"></h3>
+
+			<table border="0" style="width: 100%;">
+				<tbody>
+					<tr>
+						<td style="width: 5%"><strong>Site:</strong></td>
+						<td style="width: 20%" id="siteCell"></td>
+
+						<td style="width: 10%"><strong>Material:</strong></td>
+						<td style="width: 15%" id="materialCell"></td>
+
+
+						<td style="width: 5%"><strong>From:</strong></td>
+						<td style="width: 20%" id="fromCell">></td>
+
+						<td style="width: 5%"><strong>To:</strong></td>
+						<td style="width: 20%" id="toCell"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="row">&nbsp;</div>
+			<table border="1" class="table-responsive" style="width: 100%;" id="resultTable">
+				<thead>
+					<tr style="background-color: #EBEBEB; height: 35px;">
+						<th style="text-align: center;" width="30">&nbsp;</th>
+						<th style="text-align: center;" width="85">Date</th>
+						<th style="text-align: center;" width="75">Voucher #</th>
+						<th style="text-align: center;" width="75">P.O</th>
+						<th style="text-align: center;" width="80">Truck</th>
+						<th style="text-align: center;" width="80">Quantity</th>
+						<th style="text-align: center;" width="80">Unit Price</th>
+						<th style="text-align: center;" width="80">Trip Price</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
 		</div>
 	</div>
 </div>
+<div class="row" id="loadingDiv" style="display: none;">
+	<div style="margin: 0 auto; width: 150px;">
+		loading ...
+	</div>
+</div>
+<div class="row" style="display: none;" id="noResultMessage">
+	<br />
+	<h3 style="margin: 0 auto; width: 100%; text-align: center;">There are no trips matching the search parameters!</h3>
+</div>
+
 <script type="text/javascript" src="~/Scripts/customer-report.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>

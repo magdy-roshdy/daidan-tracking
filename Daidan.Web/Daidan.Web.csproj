@@ -127,6 +127,7 @@
     <Content Include="Scripts\customer-report.js" />
     <Content Include="Scripts\daidan-global.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery.PrintArea.js_4.js" />
     <Content Include="Scripts\master-report.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.min.js" />

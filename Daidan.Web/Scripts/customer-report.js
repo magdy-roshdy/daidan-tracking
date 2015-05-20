@@ -31,12 +31,18 @@
 		});
 	});
 
+	$('#printButton').click(function () {
+		$('.print-area').printArea();
+	});
+
+	
+
 	$('#viewReportButton').click(function () {
 		if(validateReportForm()){
 			$(this).attr('disabled', 'disabled');
-			$('#searchResult #loadingDiv').show();
-			$('#searchResult #resultTable').hide();
-			$('#searchResult #noResultMessage').hide();
+			$('#loadingDiv').show();
+			$('#searchResult').hide();
+			$('#noResultMessage').hide();
 
 			var parameters = {
 				'PONumber': $('#PONumber').val(),
@@ -53,11 +59,11 @@
 				url: '/Reports/MasterReportSearch',
 				data: parameters,
 				success: function (data) {
-					$('#searchResult #loadingDiv').hide();
+					$('#loadingDiv').hide();
 					if (data.length > 0) {
 						showSearchResult(data)
 					} else {
-						$('#searchResult #noResultMessage').show();
+						$('#noResultMessage').show();
 					}
 
 					$('#viewReportButton').removeAttr('disabled');
@@ -69,16 +75,33 @@
 });
 
 function showSearchResult(tripsArray) {
-	$('#searchResult #resultTable').show();
+	$('#searchResult').show();
 	$('#searchResult #resultTable tbody tr').remove();
+
+	//
+	$('#searchResult #customerNameHead').text($('#customers').children(':selected').text());
+	$('#searchResult #siteCell').text($('#sites').children(':selected').text());
+	$('#searchResult #materialCell').text($('#materials').children(':selected').text());
+	$('#searchResult #fromCell').text($('#fromDate').val());
+	$('#searchResult #toCell').text($('#toDate').val());
 
 	var tripRow = "";
 	var counter = 1;
+	var quantitySum = 0;
+	var tripPriceSum = 0;
 	$.each(tripsArray, function (index, trip) {
 		tripRow = constructTripRowForCustomerReport(counter, trip);
 		$('#searchResult #resultTable tbody').append($(tripRow));
 		counter++;
+
+		quantitySum += trip.UnitsQuantity;
+		tripPriceSum += trip.TripTotalPrice;
 	});
+
+	//sum row
+	var sumTripObj = { 'QuantityCaption': quantitySum.toFixed(2), 'TripTotalPrice': tripPriceSum };
+	tripRow = constructTripRowForCustomerReport('', sumTripObj);
+	$('#searchResult #resultTable tbody').append($(tripRow));
 }
 
 function validateReportForm() {
@@ -127,13 +150,13 @@ function validateReportForm() {
 function constructTripRowForCustomerReport(counter, tripObject) {
 	var newTripRow = "<tr>\
 		<td style='text-align: center;'>" + counter.toString() + "</td>\
-		<td style='text-align: center;'>" + getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') + "</td>\
-		<td style='text-align: center;'>" + tripObject.VoucherNumber + "</td>\
-		<td style='text-align: center;'>" + (tripObject.PONumber ? tripObject.PONumber : "") + "</td>\
-		<td style='text-align: center;'>" + tripObject.Truck.Number + "</td>\
-		<td style='text-align: center;'>" + tripObject.QuantityCaption + "</td>\
-		<td style='text-align: center;'>" + tripObject.UnitSellingPrice.toFixed(2) + "</td>\
-		<td style='text-align: center;'>" + tripObject.TripTotalPrice.toFixed(2) + "</td>\
+		<td style='text-align: center;'>" + (tripObject.Date ? getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') : '') + "</td>\
+		<td style='text-align: center;'>" + (tripObject.VoucherNumber ? tripObject.VoucherNumber : '') + "</td>\
+		<td style='text-align: center;'>" + (tripObject.PONumber ? tripObject.PONumber : '') + "</td>\
+		<td style='text-align: center;'>" + (tripObject.Truck ? tripObject.Truck.Number : '') + "</td>\
+		<td style='text-align: center;'>" + (tripObject.QuantityCaption ? tripObject.QuantityCaption : '') + "</td>\
+		<td style='text-align: center;'>" + (tripObject.UnitSellingPrice ? tripObject.UnitSellingPrice.toFixed(2) : '') + "</td>\
+		<td style='text-align: center;'>" + (tripObject.TripTotalPrice ? tripObject.TripTotalPrice.toFixed(2) : '') + "</td>\
 	</tr>";
 
 	return newTripRow;
