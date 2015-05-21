@@ -136,6 +136,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TripsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -159,6 +160,8 @@
     <Content Include="Views\Reports\MasterReport.cshtml" />
     <Content Include="Views\Shared\_EditTripModal.cshtml" />
     <Content Include="Views\Reports\CustomerReport.cshtml" />
+    <Content Include="Views\Lookups\ListDrivers.cshtml" />
+    <Content Include="Views\Lookups\EditDriver.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

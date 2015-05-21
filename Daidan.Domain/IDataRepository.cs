@@ -23,5 +23,9 @@ namespace Daidan.Domain
 		void DeleteTrip(long tripId);
 
 		IList<Trip> MasterReportSearch(MasterReportSearchParameters parameters);
+
+		Driver GetDriverById(int driverId);
+		Driver SaveDriver(Driver driver);
+		bool DeleteDriver(int driverId);
 	}
 }

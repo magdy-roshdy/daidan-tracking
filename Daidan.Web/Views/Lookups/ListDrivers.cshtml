@@ -1,0 +1,46 @@
+﻿@model IList<Daidan.Entities.Driver>
+
+@{
+    ViewBag.Title = "Drivers List";
+}
+
+<h2>List of Drivers</h2>
+
+<div class="row">
+	<div class="col-lg-10">&nbsp;</div>
+	<div class="col-lg-2">
+		@Html.ActionLink("+ Add Driver", "CreateDriver", "Lookups",null , new { style = "float: right;"})
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Is Outsourced</th>
+			<th>Is Active</th>
+			<th></th>
+		</tr>
+	</thead>
+	@foreach (Daidan.Entities.Driver driver in Model)
+	{
+		<tr>
+			<td>
+				@Html.ActionLink(driver.Name, "EditDriver", new { driver.Id })
+			</td>
+			<td>@driver.IsOutsourced</td>
+			<td>@driver.IsActive</td>
+			<td>
+				@using (@Html.BeginForm("DeleteDriver", "Lookups"))
+				{
+					@Html.Hidden("driverId", driver.Id)
+					<input class="btn btn-default" type="submit"
+						   value="Delete"
+						   onclick="return confirm('Are you sure?')" />
+				}
+			</td>
+		</tr>
+	}
+
+</table>
+

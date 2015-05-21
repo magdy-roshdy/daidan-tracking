@@ -80,7 +80,7 @@
 						</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a href="#">
+								<a href="@Url.Action("ListDrivers", "Lookups")">
 									<i class="fa fa-user-secret fa-lg"></i>
 									&nbsp;Drivers Management
 								</a>
@@ -109,6 +109,11 @@
             </div>
         </div>
     </div>
+
+	@if (TempData["message"] != null)
+	{
+		<div class="alert @TempData["message-class"]" style="width: 45%; margin: 10px auto; text-align:center;">@TempData["message"]</div>
+	}
 
     <div class="container body-content">
         @RenderBody()

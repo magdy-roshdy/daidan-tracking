@@ -215,5 +215,73 @@ namespace Daidan.Domain
 				return queryOver.List();
 			}
 		}
+
+		public Driver GetDriverById(int driverId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<Driver>(driverId);
+			}
+		}
+
+		public Driver SaveDriver(Driver driver)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (driver.Id > 0)
+					{
+						Driver db_driver = session.Get<Driver>(driver.Id);
+
+
+
+						db_driver.Name = driver.Name;
+						db_driver.IsActive = driver.IsActive;
+						db_driver.IsOutsourced = driver.IsOutsourced;
+						
+
+						session.Save(db_driver);
+						driver = db_driver;
+					}
+					else
+					{
+						session.Save(driver);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return driver;
+		}
+
+		public bool DeleteDriver(int driverId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						Driver db_driver = session.Get<Driver>(driverId);
+						session.Delete(db_driver);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+					
+				}
+			}
+
+			return result;
+		}
 	}
 }
