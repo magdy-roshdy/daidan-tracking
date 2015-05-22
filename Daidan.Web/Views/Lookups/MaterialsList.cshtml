@@ -1,0 +1,42 @@
+﻿@model IList<Daidan.Entities.Material>
+@{
+    ViewBag.Title = "MaterialsList";
+}
+
+<h2><i class="fa fa-codepen"></i> Materials List</h2>
+
+<div class="row">
+	<div class="col-lg-10">&nbsp;</div>
+	<div class="col-lg-2">
+		@Html.ActionLink("+ Add Material", "CreateMaterial", "Lookups", null, new { style = "float: right;" })
+	</div>
+</div>
+
+<table class="table table-responsive">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Is Active</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Daidan.Entities.Material material in Model)
+		{
+			<tr>
+				<td>
+					@Html.ActionLink(material.Name, "EditMaterial", new { material.Id })
+				</td>
+				<td>@material.IsActive</td>
+				<td>
+					@using (@Html.BeginForm("DeleteMaterial", "Lookups"))
+					{
+						@Html.Hidden("materialId", material.Id)
+						<input type="image" src="/Content/images/delete.png"
+							   onclick="return confirm('Are you sure?')" />
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

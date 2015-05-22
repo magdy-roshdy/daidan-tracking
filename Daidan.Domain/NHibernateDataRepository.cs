@@ -283,5 +283,69 @@ namespace Daidan.Domain
 
 			return result;
 		}
+
+		public Material GetMaterialById(int materialId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<Material>(materialId);
+			}
+		}
+
+		public Material SaveMaterial(Material material)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (material.Id > 0)
+					{
+						Material db_material = session.Get<Material>(material.Id);
+
+						db_material.Name = material.Name;
+						db_material.IsActive = material.IsActive;
+
+						session.Save(db_material);
+						material = db_material;
+					}
+					else
+					{
+						session.Save(material);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return material;
+		}
+
+		public bool DeleteMaterial(int materialId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						Material db_material = session.Get<Material>(materialId);
+						session.Delete(db_material);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
 	}
 }

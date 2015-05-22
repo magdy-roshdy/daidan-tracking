@@ -66,5 +66,56 @@ namespace Daidan.Web.Controllers
 			}
 			return RedirectToAction("ListDrivers");
 		}
+
+		//materials
+		public ActionResult MaterialsList()
+		{
+			return View(dbRepository.GetAllMaterials());
+		}
+
+		public ActionResult EditMaterial(int id)
+		{
+			Material material = dbRepository.GetMaterialById(id);
+			return View(material);
+		}
+
+		[HttpPost]
+		public ActionResult EditMaterial(Material material)
+		{
+			if (ModelState.IsValid)
+			{
+				dbRepository.SaveMaterial(material);
+				TempData["message"] = material.Id > 0 ? "Material information updated successfully" : "Material added successfully";
+				TempData["message-class"] = "alert-success";
+
+				return RedirectToAction("MaterialsList");
+			}
+			else
+			{
+				return View(material);
+			}
+		}
+
+		public ViewResult CreateMaterial()
+		{
+			return View("EditMaterial", new Material());
+		}
+
+		[HttpPost]
+		public ActionResult DeleteMaterial(int materialId)
+		{
+			bool result = dbRepository.DeleteMaterial(materialId);
+			if (result)
+			{
+				TempData["message"] = "Material deleted successfully";
+				TempData["message-class"] = "alert-success";
+			}
+			else
+			{
+				TempData["message"] = "Can't delete this material";
+				TempData["message-class"] = "alert-danger";
+			}
+			return RedirectToAction("MaterialsList");
+		}
     }
 }

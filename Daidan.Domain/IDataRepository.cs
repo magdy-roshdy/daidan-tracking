@@ -27,5 +27,9 @@ namespace Daidan.Domain
 		Driver GetDriverById(int driverId);
 		Driver SaveDriver(Driver driver);
 		bool DeleteDriver(int driverId);
+
+		Material GetMaterialById(int materialId);
+		Material SaveMaterial(Material material);
+		bool DeleteMaterial(int materialId);
 	}
 }

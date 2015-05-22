@@ -4,7 +4,7 @@
     ViewBag.Title = "Drivers List";
 }
 
-<h2>List of Drivers</h2>
+<h2><i class="fa fa-user"></i> List of Drivers</h2>
 
 <div class="row">
 	<div class="col-lg-10">&nbsp;</div>
@@ -34,8 +34,7 @@
 				@using (@Html.BeginForm("DeleteDriver", "Lookups"))
 				{
 					@Html.Hidden("driverId", driver.Id)
-					<input class="btn btn-default" type="submit"
-						   value="Delete"
+					<input type="image" src="/Content/images/delete.png"
 						   onclick="return confirm('Are you sure?')" />
 				}
 			</td>

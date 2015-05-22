@@ -162,6 +162,8 @@
     <Content Include="Views\Reports\CustomerReport.cshtml" />
     <Content Include="Views\Lookups\ListDrivers.cshtml" />
     <Content Include="Views\Lookups\EditDriver.cshtml" />
+    <Content Include="Views\Lookups\MaterialsList.cshtml" />
+    <Content Include="Views\Lookups\EditMaterial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
