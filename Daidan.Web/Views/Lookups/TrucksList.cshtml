@@ -1,0 +1,60 @@
+﻿@model IList<Daidan.Entities.Truck>
+@{
+    ViewBag.Title = "TrucksList";
+}
+
+<h2><i class="fa fa-truck"></i> Trucks List</h2>
+
+
+<div class="row">
+	<div class="col-lg-10">&nbsp;</div>
+	<div class="col-lg-2">
+		<div class="btn-group" style="float: right;">
+			<button type="button" class="btn btn-default">+ Add Truck</button>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li>@Html.ActionLink("Own Truck", "CreateTruck", "Lookups", new { isOutsourced = false }, null)</li>
+				<li>@Html.ActionLink("Outsourced Truck", "CreateTruck", "Lookups", new { isOutsourced = true }, null)</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Number</th>
+			<th>Driver</th>
+			<th>Is Outsourced</th>
+			<th>Is Active</th>
+			<th></th>
+		</tr>
+	</thead>
+	@foreach (Daidan.Entities.Truck truck in Model)
+	{
+		<tr>
+			<td>
+				@Html.ActionLink(truck.Number, "EditTruck", new { truck.Id })
+			</td>
+			<td>
+				@if (truck.Driver != null)
+				{
+					@truck.Driver.Name
+				}
+			</td>
+			<td>@truck.IsOutsourced</td>
+			<td>@truck.IsActive</td>
+			<td>
+				@using (@Html.BeginForm("DeleteTruck", "Lookups"))
+				{
+					@Html.Hidden("truckId", truck.Id)
+					<input type="image" src="/Content/images/delete.png"
+						   onclick="return confirm('Are you sure?')" />
+				}
+			</td>
+		</tr>
+	}
+
+</table>

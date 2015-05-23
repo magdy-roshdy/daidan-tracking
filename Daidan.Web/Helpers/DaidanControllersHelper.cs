@@ -41,5 +41,22 @@ namespace Daidan.Web.Helpers
 
 			return selectListItems;
 		}
+
+		public static List<SelectListItem> DriversToSelectListItems(IList<Driver> drivers, int selectedId = -1, bool addEmptyItem = false)
+		{
+			List<SelectListItem> selectListItems = new List<SelectListItem>();
+
+			if (addEmptyItem)
+			{
+				selectListItems.Add(new SelectListItem { Text = "", Value = "0" });
+			}
+
+			foreach (Driver driver in drivers)
+			{
+				selectListItems.Add(new SelectListItem { Text = driver.Name, Value = driver.Id.ToString(), Selected = (selectedId == driver.Id) });
+			}
+
+			return selectListItems;
+		}
 	}
 }

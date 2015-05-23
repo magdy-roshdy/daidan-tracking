@@ -147,6 +147,7 @@
     <Compile Include="Models\AddTripLookup.cs" />
     <Compile Include="Models\AddTripViewModel.cs" />
     <Compile Include="Models\EditSiteViewModel.cs" />
+    <Compile Include="Models\EditTruckViewModel.cs" />
     <Compile Include="Models\SitesListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -170,6 +171,8 @@
     <Content Include="Views\Lookups\EditCustomer.cshtml" />
     <Content Include="Views\Lookups\SitesList.cshtml" />
     <Content Include="Views\Lookups\EditSite.cshtml" />
+    <Content Include="Views\Lookups\TrucksList.cshtml" />
+    <Content Include="Views\Lookups\EditTruck.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

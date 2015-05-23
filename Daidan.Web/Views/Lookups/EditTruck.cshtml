@@ -1,6 +1,6 @@
-﻿@model Daidan.Web.Models.EditSiteViewModel
+﻿@model Daidan.Web.Models.EditTruckViewModel
 @{
-    ViewBag.Title = "Edit Site";
+    ViewBag.Title = "Edit Truck";
 }
 
 <style type="text/css">
@@ -10,37 +10,37 @@
 </style>
 <div class="panel panel-default" style="width: 45%; margin: 20px auto;">
 	<div class="panel-heading">
-		@if (Model.SiteId > 0)
+		@if (Model.TruckId > 0)
 		{
-			<h4>Edit Site</h4>
+			<h4>Edit Truck</h4>
 		}
 		else
 		{
-			<h4>Add Site</h4>
+			<h4>Add Truck</h4>
 		}
 	</div>
 
-	@using (Html.BeginForm("EditSite", "Lookups", FormMethod.Post, new { role = "form" }))
+	@using (Html.BeginForm("EditTruck", "Lookups", FormMethod.Post, new { role = "form" }))
 	{
 		<div class="panel-body">
 			@Html.ValidationSummary(true)
 			<div class="row">
 				<div class="col-lg-3">
-					<label>Name</label>
+					<label>Number</label>
 				</div>
 				<div class="col-lg-9">
-					@Html.TextBoxFor(x => x.SiteName, new { @class = "form-control" })
-					@Html.ValidationMessageFor(x => x.SiteName)
+					@Html.TextBoxFor(x => x.TruckNumber, new { @class = "form-control" })
+					@Html.ValidationMessageFor(x => x.TruckNumber)
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-lg-3">
-					<label>Customer</label>
+					<label>Driver</label>
 				</div>
 				<div class="col-lg-9">
-					@Html.DropDownListFor(x => x.CustomerId,
-					@Daidan.Web.Helpers.DaidanControllersHelper.CustomersToSelectListItems(Model.Customers, Model.CustomerId),
+					@Html.DropDownListFor(x => x.TruckDriverId,
+					@Model.Drivers,
 					new { @class = "form-control" })
 				</div>
 			</div>
@@ -48,8 +48,9 @@
 				<div class="col-lg-3">&nbsp;</div>
 				<div class="col-lg-9">
 					<label>
-						@Html.CheckBoxFor(x => x.SiteIsOwnSite)
-						Is Own Site
+						@Html.CheckBoxFor(x => x.TruckIsOutsourcedX, new { disabled = "disabled" })
+						@Html.HiddenFor(x => x.TruckIsOutsourced)
+						Is Outsourced
 					</label>
 				</div>
 			</div>
@@ -57,13 +58,13 @@
 				<div class="col-lg-3">&nbsp;</div>
 				<div class="col-lg-9">
 					<label>
-						@Html.CheckBoxFor(x => x.SiteIsActive)
+						@Html.CheckBoxFor(x => x.TruckIsActive)
 						Is Active
 					</label>
 				</div>
 			</div>
 
-			@Html.HiddenFor(x => x.SiteId)
+			@Html.HiddenFor(x => x.TruckId)
 		</div>
 		<div class="panel-footer">
 			<div class="row">
@@ -75,3 +76,14 @@
 		</div>
 	}
 </div>
+
+<script type="text/javascript">
+	$(function () {
+		var isOusourcedCheckbox = $('#TruckIsOutsourcedX');
+		if ($('#TruckIsOutsourced').val().toLowerCase() == "true") {
+			isOusourcedCheckbox.attr('checked', 'checked');
+		} else {
+			isOusourcedCheckbox.removeAttr('checked');
+		}
+	});
+</script>

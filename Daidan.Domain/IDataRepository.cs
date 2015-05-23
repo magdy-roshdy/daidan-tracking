@@ -40,5 +40,10 @@ namespace Daidan.Domain
 		Site GetSiteById(int siteId);
 		Site SaveSite(Site site);
 		bool DeleteSite(int siteId);
+
+		Truck GetTruckById(int truckId);
+		IList<Driver> GetTruckFreeDrivers(bool? outsourced = null);
+		Truck SaveTruck(Truck truck);
+		bool DeleteTruck(int truckId);
 	}
 }

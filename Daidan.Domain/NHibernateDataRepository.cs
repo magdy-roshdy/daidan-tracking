@@ -1,6 +1,7 @@
 ﻿using Daidan.Entities;
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.Transform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -470,6 +471,100 @@ namespace Daidan.Domain
 					{
 						Site db_site = session.Get<Site>(siteId);
 						session.Delete(db_site);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
+
+		public Truck GetTruckById(int truckId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<Truck>(truckId);
+			}
+		}
+
+		public IList<Driver> GetTruckFreeDrivers(bool? outsourced = null)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				string sql = "SELECT DriverId, DriverName, DriverIsActive, DriverIsOutsourced FROM Drivers LEFT JOIN Trucks ON TruckDriverId = DriverId WHERE TruckDriverId IS NULL AND DriverIsOutsourced = 0;";
+				var drivers = session.CreateSQLQuery(sql).List();
+				IList<Driver> driversList = new List<Driver>();
+				foreach (object driverObj in drivers)
+				{
+					object[] properties = driverObj as object[];
+					if(properties != null)
+					{ 
+						Driver driver = new Driver();
+						driver.Id = (int)properties[0];
+						driver.Name = properties[1].ToString();
+						driver.IsActive = (bool)properties[2];
+						driver.IsOutsourced = (bool)properties[3];
+						driversList.Add(driver);
+					}
+				}
+
+				return driversList;
+			}
+		}
+
+		public Truck SaveTruck(Truck truck)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (truck.Id > 0)
+					{
+						Truck db_truck = session.Get<Truck>(truck.Id);
+
+						db_truck.Number = truck.Number;
+						db_truck.IsActive = truck.IsActive;
+						db_truck.IsOutsourced = truck.IsOutsourced;
+						if (truck.Driver != null && truck.Driver.Id > 0)
+							db_truck.Driver = session.Get<Driver>(truck.Driver.Id);
+						else
+							db_truck.Driver = null;
+
+						session.Save(db_truck);
+						truck = db_truck;
+					}
+					else
+					{
+						session.Save(truck);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return truck;
+		}
+
+		public bool DeleteTruck(int truckId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						Truck db_truck = session.Get<Truck>(truckId);
+						session.Delete(db_truck);
 						transaction.Commit();
 						session.Flush();
 

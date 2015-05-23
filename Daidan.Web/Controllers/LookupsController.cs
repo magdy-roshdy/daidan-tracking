@@ -246,5 +246,96 @@ namespace Daidan.Web.Controllers
 			}
 			return RedirectToAction("SitesList", new { id = customerId });
 		}
+
+		//trucks
+		public ActionResult TrucksList()
+		{
+			return View(dbRepository.GetAllTrucks());
+		}
+
+		public ActionResult EditTruck(int id)
+		{
+			EditTruckViewModel model = new EditTruckViewModel();
+			Truck db_truck = dbRepository.GetTruckById(id);
+
+			model.TruckId = db_truck.Id;
+			model.TruckNumber = db_truck.Number;
+			model.TruckIsActive = db_truck.IsActive;
+			model.TruckIsOutsourced = db_truck.IsOutsourced;
+			model.TruckDriverId = db_truck.Driver != null ? db_truck.Driver.Id : 0;
+
+			model.Drivers = getEditTruckDriversList(db_truck);
+			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult EditTruck(EditTruckViewModel model)
+		{
+			Truck truck = new Truck();
+			truck.Id = model.TruckId;
+			truck.Number = model.TruckNumber;
+			truck.IsActive = model.TruckIsActive;
+			truck.IsOutsourced = model.TruckIsOutsourced;
+			if (model.TruckDriverId > 0)
+				truck.Driver = new Driver { Id = model.TruckDriverId };
+
+			if (ModelState.IsValid)
+			{
+				dbRepository.SaveTruck(truck);
+				TempData["message"] = truck.Id > 0 ? "Truck information updated successfully" : "Truck added successfully";
+				TempData["message-class"] = "alert-success";
+
+				return RedirectToAction("TrucksList");
+			}
+			else
+			{
+				if (truck.Driver != null)
+					truck.Driver = dbRepository.GetDriverById(truck.Driver.Id);
+				model.TruckIsOutsourcedX = model.TruckIsOutsourced;
+				model.Drivers = getEditTruckDriversList(truck);
+				return View(model);
+			}
+		}
+
+		public ActionResult CreateTruck(bool isOutsourced)
+		{
+			EditTruckViewModel model = new EditTruckViewModel();
+			model.TruckIsOutsourced = isOutsourced;
+			model.Drivers = getEditTruckDriversList(new Truck { IsOutsourced = isOutsourced });
+
+			return View("EditTruck", model);
+		}
+
+		private List<SelectListItem> getEditTruckDriversList(Truck truck)
+		{			
+			IList<Driver> drivers = new List<Driver>();
+			if (truck.IsOutsourced)
+				drivers = dbRepository.GetAllDrivers().Where(x => x.IsOutsourced).ToList<Driver>();
+			else
+			{
+				drivers = dbRepository.GetTruckFreeDrivers(null);
+				if (truck.Driver != null)
+					drivers.Add(truck.Driver);
+			}
+
+			return Helpers.DaidanControllersHelper.DriversToSelectListItems(drivers, truck.Driver != null ? truck.Driver.Id : 0, true);
+		}
+
+		[HttpPost]
+		public ActionResult DeleteTruck(int truckId)
+		{
+			bool result = dbRepository.DeleteTruck(truckId);
+			if (result)
+			{
+				TempData["message"] = "Truck deleted successfully";
+				TempData["message-class"] = "alert-success";
+			}
+			else
+			{
+				TempData["message"] = "Can't delete this truck!";
+				TempData["message-class"] = "alert-danger";
+			}
+			return RedirectToAction("TrucksList");
+		}
     }
 }

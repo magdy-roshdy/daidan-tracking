@@ -11,7 +11,7 @@
 		<property name="IsActive" column="TruckIsActive" />
 		<property name="IsOutsourced" column="TruckIsOutsourced" />
 
-		<many-to-one name="Driver" class="Driver" column="TruckDriverId" not-null="true" lazy="false" />
+		<many-to-one name="Driver" class="Driver" column="TruckDriverId" not-null="false" lazy="false" />
 	</class>
 
 </hibernate-mapping>
