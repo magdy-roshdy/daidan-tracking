@@ -347,5 +347,143 @@ namespace Daidan.Domain
 
 			return result;
 		}
+
+		public Customer GetCustomerById(int customerId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<Customer>(customerId);
+			}
+		}
+
+		public Customer SaveCustomer(Customer customer)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (customer.Id > 0)
+					{
+						Customer db_customer = session.Get<Customer>(customer.Id);
+
+						db_customer.Name = customer.Name;
+						db_customer.IsActive = customer.IsActive;
+
+						session.Save(db_customer);
+						customer = db_customer;
+					}
+					else
+					{
+						session.Save(customer);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return customer;
+		}
+
+		public bool DeleteCustomer(int customerId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						Customer db_customer = session.Get<Customer>(customerId);
+						session.Delete(db_customer);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
+
+		public IList<Site> GetSitesByCustomerId(int customerId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<Site>().Where(x => x.Customer.Id == customerId).List();
+			}
+		}
+
+		public Site GetSiteById(int siteId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<Site>(siteId);
+			}
+		}
+
+		public Site SaveSite(Site site)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (site.Id > 0)
+					{
+						Site db_site = session.Get<Site>(site.Id);
+
+						db_site.Name = site.Name;
+						db_site.IsActive = site.IsActive;
+						db_site.IsOwnSite = site.IsOwnSite;
+						db_site.Customer = session.Get<Customer>(site.Customer.Id);
+
+						session.Save(db_site);
+						site = db_site;
+					}
+					else
+					{
+						session.Save(site);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return site;
+		}
+
+		public bool DeleteSite(int siteId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						Site db_site = session.Get<Site>(siteId);
+						session.Delete(db_site);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
 	}
 }

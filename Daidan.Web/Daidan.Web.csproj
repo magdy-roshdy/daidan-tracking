@@ -146,6 +146,8 @@
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\AddTripLookup.cs" />
     <Compile Include="Models\AddTripViewModel.cs" />
+    <Compile Include="Models\EditSiteViewModel.cs" />
+    <Compile Include="Models\SitesListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +166,10 @@
     <Content Include="Views\Lookups\EditDriver.cshtml" />
     <Content Include="Views\Lookups\MaterialsList.cshtml" />
     <Content Include="Views\Lookups\EditMaterial.cshtml" />
+    <Content Include="Views\Lookups\CustomersList.cshtml" />
+    <Content Include="Views\Lookups\EditCustomer.cshtml" />
+    <Content Include="Views\Lookups\SitesList.cshtml" />
+    <Content Include="Views\Lookups\EditSite.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,47 @@
+﻿@model IList<Daidan.Entities.Customer>
+@{
+    ViewBag.Title = "Customers List";
+}
+
+<h2><i class="fa fa-user-secret"></i> Customers List</h2>
+
+
+<div class="row">
+	<div class="col-lg-10">&nbsp;</div>
+	<div class="col-lg-2">
+		@Html.ActionLink("+ Add Customer", "CreateCustomer", "Lookups", null, new { style = "float: right;" })
+	</div>
+</div>
+
+<table class="table table-responsive">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Is Active</th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Daidan.Entities.Customer customer in Model)
+		{
+			<tr>
+				<td>
+					@Html.ActionLink(customer.Name, "EditCustomer", new { customer.Id })
+				</td>
+				<td>@customer.IsActive</td>
+				<td>
+					@Html.ActionLink("Customer Sites", "SitesList", new { customer.Id })
+				</td>
+				<td>
+					@using (@Html.BeginForm("DeleteCustomer", "Lookups"))
+					{
+						@Html.Hidden("customerId", customer.Id)
+						<input type="image" src="/Content/images/delete.png"
+							   onclick="return confirm('Are you sure?')" />
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

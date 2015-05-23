@@ -31,5 +31,14 @@ namespace Daidan.Domain
 		Material GetMaterialById(int materialId);
 		Material SaveMaterial(Material material);
 		bool DeleteMaterial(int materialId);
+
+		Customer GetCustomerById(int customerId);
+		Customer SaveCustomer(Customer customer);
+		bool DeleteCustomer(int customerId);
+
+		IList<Site> GetSitesByCustomerId(int customerId);
+		Site GetSiteById(int siteId);
+		Site SaveSite(Site site);
+		bool DeleteSite(int siteId);
 	}
 }

@@ -1,0 +1,46 @@
+﻿@model Daidan.Web.Models.SitesListViewModel
+@{
+    ViewBag.Title = "Sites List";
+}
+
+<h2>Sites List of : @Model.Customer.Name</h2>
+
+
+<div class="row">
+	<div class="col-lg-10">&nbsp;</div>
+	<div class="col-lg-2">
+		@Html.ActionLink("+ Add Site", "CreateSite", "Lookups", new { Model.Customer.Id }, new { style = "float: right;" })
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Customer</th>
+			<th>Is Active</th>
+			<th></th>
+		</tr>
+	</thead>
+	@foreach (Daidan.Entities.Site site in Model.Sites)
+	{
+		<tr>
+			<td>
+				@Html.ActionLink(site.Name, "EditSite", new { site.Id })
+			</td>
+			<td>
+				@site.Customer.Name
+			</td>
+			<td>@site.IsActive</td>
+			<td>
+				@using (@Html.BeginForm("DeleteSite", "Lookups"))
+				{
+					@Html.Hidden("siteId", site.Id)
+					<input type="image" src="/Content/images/delete.png"
+						   onclick="return confirm('Are you sure?')" />
+				}
+			</td>
+		</tr>
+	}
+
+</table>
