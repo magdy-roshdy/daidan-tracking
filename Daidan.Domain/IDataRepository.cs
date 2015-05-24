@@ -45,5 +45,8 @@ namespace Daidan.Domain
 		IList<Driver> GetTruckFreeDrivers(bool? outsourced = null);
 		Truck SaveTruck(Truck truck);
 		bool DeleteTruck(int truckId);
+		
+		bool PONumberBatchUpdate(IList<long> tripsIds, string newPONumber);
+		bool SellingPriceBatchUpdate(IList<long> tripsIds, decimal newSellingPrice);
 	}
 }

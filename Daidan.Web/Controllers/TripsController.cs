@@ -53,5 +53,38 @@ namespace Daidan.Web.Controllers
 		{
 			return Json(dbRepository.GetTripById(tripId), JsonRequestBehavior.AllowGet);
 		}
+
+		[HttpPost]
+		public ActionResult PONumberBatchUpdate(PONumberBatchUpdateParameter parameters)
+		{
+			bool result = dbRepository.PONumberBatchUpdate(parameters.TripsIds, parameters.PONumber);
+			return Json(result);
+		}
+
+		public ActionResult SellingPriceBatchUpdate(SellingPriceBatchUpdateParameter parameters)
+		{
+			bool result = dbRepository.SellingPriceBatchUpdate(parameters.TripsIds, parameters.SellingPrice);
+			return Json(result);
+		}
     }
+
+	public class PONumberBatchUpdateParameter
+	{
+		public PONumberBatchUpdateParameter()
+		{
+			this.TripsIds = new List<long>();
+		}
+		public IList<long> TripsIds { get; set; }
+		public string PONumber { get; set; }
+	}
+
+	public class SellingPriceBatchUpdateParameter
+	{
+		public SellingPriceBatchUpdateParameter()
+		{
+			this.TripsIds = new List<long>();
+		}
+		public IList<long> TripsIds { get; set; }
+		public decimal SellingPrice { get; set; }
+	}
 }

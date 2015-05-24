@@ -147,14 +147,32 @@
 		</div>
 	</div>
 	<div class="row" style="border-bottom: dotted 1px #000;">&nbsp;</div>
-	<div id="searchResult">
-		<table border="1" class="table-responsive" style="width: 100%; display: none;" id="resultTable">
+	<div id="searchResult" style="display: none;">
+		<div class="row">
+			<div class="col-lg-8">&nbsp;</div>
+			<div class="col-lg-2">
+				<button disabled="disabled" id="updatePONumberButton" style="float: right;"
+						class="btn btn-default btn-block">
+					Update P.O Number ...
+				</button>
+			</div>
+			<div class="col-lg-2">
+				<button disabled="disabled" id="updateSellingPriceButton" style="float: right;"
+						class="btn btn-default btn-block">
+					Update Selling Price ...
+				</button>
+			</div>
+		</div>
+		<table border="1" class="table-responsive" style="width: 100%;" id="resultTable">
 			<thead>
 				<tr style="background-color: #EBEBEB; height: 35px;">
+					<th style="text-align: center;" width="30">
+						<input type="checkbox" id="checkAll" />
+					</th>
 					<th style="text-align: center;" width="85">Date</th>
 					<th style="text-align: center;" width="75">Voucher #</th>
 					<th style="text-align: center;" width="75">P.O</th>
-					<th style="text-align: center;" width="115">Customer</th>
+					<th style="text-align: center;">Customer</th>
 					<th style="text-align: center;" width="130">Site</th>
 					<th style="text-align: center;" width="80">Truck</th>
 					<th style="text-align: center;" width="90">Material</th>
@@ -163,26 +181,77 @@
 					<th style="text-align: center;" width="75">Trip Cost</th>
 					<th style="text-align: center;" width="75">Extra Cost</th>
 					<th style="text-align: center;" width="75">Total Cost</th>
-					<th style="text-align: center;" width="35">&nbsp;</th>
-					<th style="text-align: center;" width="35">&nbsp;</th>
+					<th style="text-align: center;" width="30">&nbsp;</th>
+					<th style="text-align: center;" width="30">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
 				
 			</tbody>
 		</table>
-		<div class="row" id="loadingDiv" style="display: none;">
-			<div style="margin: 0 auto; width: 150px;">
-				loading ...
-			</div>
+	</div>
+	<div class="row" id="loadingDiv" style="display: none;">
+		<div style="margin: 0 auto; width: 150px;">
+			loading ...
 		</div>
-		<div class="row" style="display: none;" id="noResultMessage">
-			<br />
-			<h3 style="margin: 0 auto; width: 100%; text-align: center;">There are no trips matching the search parameters!</h3>
-		</div>
+	</div>
+	<div class="row" style="display: none;" id="noResultMessage">
+		<br />
+		<h3 style="margin: 0 auto; width: 100%; text-align: center;">There are no trips matching the search parameters!</h3>
 	</div>
 </div>
 @Html.Partial("~/Views/Shared/_EditTripModal.cshtml", null)
-<!-- scripts -->
+
+<div class="modal fade" id="updatePONumberModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" style="width: 450px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Update P.O Number</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						P.O Number:
+					</div>
+					<div class="col-md-7">
+						<input type="text" class="form-control" id="poNumber" placeholder="P.O Number" />
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Update</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="updateSellingPriceModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" style="width: 450px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Update Selling Price</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-5">
+						Unit Selling Price:
+					</div>
+					<div class="col-md-6">
+						<input type="text" class="form-control" id="sellingPrice" placeholder="Unit Selling Price" />
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Update</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript" src="~/Scripts/master-report.js"></script>

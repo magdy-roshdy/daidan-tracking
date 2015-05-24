@@ -3,8 +3,13 @@
 }
 
 function constructTripRow(tripObject) {
-	var newTripRow = "<tr>\
-		<td style='text-align: center;'>" + getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') + "</td>\
+	var newTripRow = "<tr>";
+	if (window.currentWorkObject.addCheckboxToTripRow) {
+		newTripRow += "<td style='text-align: center;'>\
+				<input type='checkbox' data-tripId=" + tripObject.Id.toString() + " />\
+			</td>";
+	}
+	newTripRow += "<td style ='text-align: center;'>" + getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') + "</td>\
 		<td style='text-align: center;'>" + tripObject.VoucherNumber + "</td>\
 		<td style='text-align: center;'>" + (tripObject.PONumber ? tripObject.PONumber : "") + "</td>\
 		<td style='text-align: center;'>" + tripObject.Site.Customer.Name + "</td>\
@@ -33,20 +38,30 @@ function constructTripRow(tripObject) {
 	return newTripRow;
 }
 
-function initWorkingObject(showDelete) {
+function initWorkingObject(initObject) {
 	var _addDeleteToTripRow = false;
-	if (!showDelete){
+	var _addCheckboxToTripRow = false;
+	if (!initObject) {
 		if (window.currentWorkObject)
 			_addDeleteToTripRow = window.currentWorkObject.addDeleteToTripRow;
-		} else {
-		_addDeleteToTripRow = showDelete.addDeleteToTripRow;
+	} else {
+		_addDeleteToTripRow = initObject.addDeleteToTripRow;
 	}
+
+	if (!initObject) {
+		if (window.currentWorkObject)
+			_addCheckboxToTripRow = window.currentWorkObject.addCheckboxToTripRow;
+	} else {
+		_addCheckboxToTripRow = initObject.addCheckboxToTripRow;
+	}
+
 	var workingObject = {
 		'ediTD': null,
 		'deletedTD': null,
 		'currentTrip': null,
 		'SelectText': '[SELECT]',
-		'addDeleteToTripRow': _addDeleteToTripRow
+		'addDeleteToTripRow': _addDeleteToTripRow,
+		'addCheckboxToTripRow': _addCheckboxToTripRow
 	};
 
 	window.currentWorkObject = workingObject;

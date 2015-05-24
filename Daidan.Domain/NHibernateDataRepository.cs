@@ -580,5 +580,73 @@ namespace Daidan.Domain
 
 			return result;
 		}
+
+		public bool PONumberBatchUpdate(IList<long> tripsIds, string newPONumber)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						foreach(long id in tripsIds)
+						{
+							Trip t = session.Get<Trip>(id);
+							if(t != null)
+							{
+								t.PONumber = newPONumber;
+								session.Save(t);
+							}
+						}
+
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+				}
+			}
+
+			return result;
+		}
+
+		public bool SellingPriceBatchUpdate(IList<long> tripsIds, decimal newSellingPrice)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						foreach (long id in tripsIds)
+						{
+							Trip t = session.Get<Trip>(id);
+							if (t != null)
+							{
+								t.UnitSellingPrice = newSellingPrice;
+								session.Save(t);
+							}
+						}
+
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+				}
+			}
+
+			return result;
+		}
 	}
 }

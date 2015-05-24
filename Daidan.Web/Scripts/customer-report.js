@@ -1,6 +1,12 @@
 ﻿$(function () {
 	window.lookups = getTripLookups();
-	initWorkingObject(false);
+	initWorkingObject
+		(
+			{
+				'addDeleteToTripRow': false,
+				'addCheckboxToTripRow': false
+			}
+		);
 
 	fillDropDown($('#customers'), window.lookups.Customers, 'Name');
 	fillDropDown($('#materials'), window.lookups.Materials, 'Name');
@@ -107,43 +113,36 @@ function showSearchResult(tripsArray) {
 function validateReportForm() {
 	var isValid = true;
 
-	var customers = $('#customers');
-	isValid = validateField(customers, null, 'Please select the customer', '#searchPanel');
+	var poNumber = $('#PONumber');
+	if (poNumber.val()) {
+		isValid = validateField(poNumber, /^\d+$/, 'Please enter a valid P.O number', '#searchPanel');
+	} else { //if there is PO no need to make other field required
+		if (isValid) {
+			var customers = $('#customers');
+			isValid = validateField(customers, null, 'Please select the customer', '#searchPanel');
+		}
 
-	if (isValid) {
-		var sites = $('#sites');
-		isValid = validateField(sites, null, 'Please select the site', '#searchPanel');
+		if (isValid) {
+			var sites = $('#sites');
+			isValid = validateField(sites, null, 'Please select the site', '#searchPanel');
+		}
+
+		if (isValid) {
+			var fromDate = $('#fromDate');
+			isValid = validateField(fromDate, null, 'Please enter the starting date', '#searchPanel');
+		}
+
+		if (isValid) {
+			var toDate = $('#toDate');
+			isValid = validateField(toDate, null, 'Please enter the end date', '#searchPanel');
+		}
+
+		if (isValid) {
+			var materials = $('#materials');
+			isValid = validateField(materials, null, 'Please select the material', '#searchPanel');
+		}
 	}
 
-	if (isValid) {
-		var fromDate = $('#fromDate');
-		isValid = validateField(fromDate, null, 'Please enter the starting date', '#searchPanel');
-	}
-
-	if (isValid) {
-		var toDate = $('#toDate');
-		isValid = validateField(toDate, null, 'Please enter the end date', '#searchPanel');
-	}
-
-	if (isValid) {
-		var materials = $('#materials');
-		isValid = validateField(materials, null, 'Please select the material', '#searchPanel');
-	}
-
-	if (isValid) {
-		var poNumber = $('#PONumber');
-		if (poNumber.val())
-			isValid = validateField(poNumber, /^\d+$/, 'Please enter a valid P.O number', '#searchPanel');
-	}
-
-	var parameters = {
-		'PONumber': $('#PONumber').val(),
-		'From': moment($('#fromDate').val(), "DD/MM/YYYY").format('MM/DD/YYYY'),
-		'To': moment($('#toDate').val(), "DD/MM/YYYY").format('MM/DD/YYYY'),
-		'CustomerId': $('#customers').val(),
-		'SiteId': $('#sites').val(),
-		'MaterialId': $('#materials').val()
-	};
 	return isValid;
 }
 

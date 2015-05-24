@@ -6,5 +6,11 @@
 	});
 	
 	wireTripEditModalEvents();
-	initWorkingObject({ addDeleteToTripRow: false });
+	initWorkingObject
+		(
+			{
+				'addDeleteToTripRow': false,
+				'addCheckboxToTripRow': false
+			}
+		);
 });
