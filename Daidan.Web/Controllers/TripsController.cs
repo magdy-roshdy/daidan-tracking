@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
+using System.Security.Claims;
 using System.Threading;
 using System.Web;
 using System.Web.Helpers;
@@ -36,6 +37,15 @@ namespace Daidan.Web.Controllers
 		{
 			if(trip != null)
 			{
+				ClaimsIdentity admin = User.Identity as ClaimsIdentity;
+				int id = int.Parse(admin.FindFirst(ClaimTypes.Sid).Value);
+
+				if (trip.Id > 0)
+					trip.LastModefiedBy = new SystemAdmin { Id = id };
+				else
+					trip.AddedBy = new SystemAdmin { Id = id };
+				
+				
 				trip = dbRepository.SaveTrip(trip);
 			}
 

@@ -20,13 +20,16 @@ namespace Daidan.Entities
 		public virtual decimal UnitSellingPrice { get; set; }
 
 		public virtual DateTime AddedOn { get; set; }
-		public virtual DateTime? LastModefied { get; set; }
+		public virtual DateTime? LastModifiedOn { get; set; }
 
 		public virtual Material Material { set; get; }
 		public virtual Site Site { set; get; }
 		public virtual Driver Driver { set; get; }
 		public virtual Truck Truck { set; get; }
 		public virtual Unit Unit { set; get; }
+
+		public virtual SystemAdmin AddedBy { set; get; }
+		public virtual SystemAdmin LastModefiedBy { set; get; }
 
 		public virtual decimal TripCost
 		{

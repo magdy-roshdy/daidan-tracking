@@ -43,7 +43,8 @@ namespace Daidan.Domain
 						db_trip.UnitSellingPrice = trip.UnitSellingPrice;
 						db_trip.UnitsQuantity = trip.UnitsQuantity;
 						db_trip.ExtraCost = trip.ExtraCost;
-						db_trip.LastModefied = DateTime.Now;
+						db_trip.LastModifiedOn = DateTime.Now;
+						db_trip.LastModefiedBy = session.Get<SystemAdmin>(trip.LastModefiedBy.Id);
 
 						session.Save(db_trip);
 						trip = db_trip;
@@ -66,6 +67,7 @@ namespace Daidan.Domain
 						trip.UnitsQuantity = trip.UnitsQuantity;
 						trip.ExtraCost = trip.ExtraCost;
 						trip.AddedOn = DateTime.Now;
+						trip.AddedBy = session.Get<SystemAdmin>(trip.AddedBy.Id);
 
 						session.Save(trip);
 					}

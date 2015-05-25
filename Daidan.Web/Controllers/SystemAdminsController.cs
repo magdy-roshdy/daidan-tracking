@@ -42,7 +42,8 @@ namespace Daidan.Web.Controllers
 					var identity = new ClaimsIdentity(new[] {
 						new Claim(ClaimTypes.Name, admin.Name),
 						new Claim(ClaimTypes.Email, admin.Email),
-						new Claim(ClaimTypes.Role, admin.Role)
+						new Claim(ClaimTypes.Role, admin.Role),
+						new Claim(ClaimTypes.Sid, admin.Id.ToString())
 					}, "Daidan-Trips-Cookie");
 
 					var owinContext = Request.GetOwinContext();

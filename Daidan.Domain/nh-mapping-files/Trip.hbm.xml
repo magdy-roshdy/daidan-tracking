@@ -17,7 +17,7 @@
 		<property name="ExtraCost" column="TripExtraCost" />
 		<property name="UnitSellingPrice" column="TripUnitSellingPrice" />
 		<property name="AddedOn" column="TripAddedOn" />
-		<property name="LastModefied" column="TripLastModefied" />
+		<property name="LastModifiedOn" column="TripLastModifiedOn" />
 
 
 		<many-to-one name="Site" class="Site" column="TripSiteId" lazy="false" />
@@ -25,6 +25,9 @@
 		<many-to-one name="Unit" class="Unit" column="TripUnitId" lazy="false" />
 		<many-to-one name="Driver" class="Driver" column="TripDriverId" lazy="false" />
 		<many-to-one name="Truck" class="Truck" column="TripTruckId" lazy="false" />
+
+		<many-to-one name="AddedBy" class="SystemAdmin" column="TripAddedBy" lazy="false" not-null="true" />
+		<many-to-one name="LastModefiedBy" class="SystemAdmin" column="TripLastModifiedBy" lazy="false" not-null="false" />
 
 
 	</class>
