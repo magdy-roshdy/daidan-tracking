@@ -656,5 +656,81 @@ namespace Daidan.Domain
 				return session.QueryOver<SystemAdmin>().Where(x => x.Email == email).List().FirstOrDefault();
 			}
 		}
+
+		public IList<SystemAdmin> GetAllSystemAdmins()
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<SystemAdmin>().Where(x => !x.IsBuiltIn).List();
+			}
+		}
+
+		public SystemAdmin GetSystemAdminById(int systemAdminId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<SystemAdmin>().Where(x => x.Id == systemAdminId && !x.IsBuiltIn).List().FirstOrDefault();
+			}
+		}
+
+		public SystemAdmin SaveSystemAdmin(SystemAdmin systemAdmin, bool includePassword)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (systemAdmin.Id > 0)
+					{
+						SystemAdmin db_systemAdmin = session.Get<SystemAdmin>(systemAdmin.Id);
+
+						db_systemAdmin.Name = systemAdmin.Name;
+						db_systemAdmin.Email = systemAdmin.Email;
+						db_systemAdmin.Role = systemAdmin.Role;
+						db_systemAdmin.IsActive = systemAdmin.IsActive;
+						if (includePassword)
+							db_systemAdmin.Password = systemAdmin.Password;
+
+						session.Save(db_systemAdmin);
+						systemAdmin = db_systemAdmin;
+					}
+					else
+					{
+						session.Save(systemAdmin);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return systemAdmin;
+		}
+
+		public bool DeleteSystemAdmin(int systemAdminId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						SystemAdmin db_systemAdmin = session.QueryOver<SystemAdmin>().Where(x => x.Id == systemAdminId && !x.IsBuiltIn).SingleOrDefault();
+						session.Delete(db_systemAdmin);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
 	}
 }

@@ -1,0 +1,46 @@
+﻿@model IList<Daidan.Entities.SystemAdmin>
+@{
+    ViewBag.Title = "System Admins List";
+}
+
+<h2><i class="fa fa-user"></i> System Admin List</h2>
+
+<div class="row">
+	<div class="col-lg-10">&nbsp;</div>
+	<div class="col-lg-2">
+		@Html.ActionLink("+ Add System Admin", "CreateSystemAdmin", "Lookups", null, new { @class = "btn btn-default", role = "button", style = "float: right;" })
+	</div>
+</div>
+
+<table class="table table-responsive">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Role</th>
+			<th>Is Active</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Daidan.Entities.SystemAdmin systemAdmin in Model)
+		{
+			<tr>
+				<td>
+					@Html.ActionLink(systemAdmin.Name, "EditSystemAdmin", new { systemAdmin.Id })
+				</td>
+				<td>@systemAdmin.Email</td>
+				<td>@systemAdmin.Role</td>
+				<td>@systemAdmin.IsActive</td>
+				<td>
+					@using (@Html.BeginForm("DeleteSystemAdmin", "Lookups"))
+					{
+						@Html.Hidden("systemAdminId", systemAdmin.Id)
+						<input type="image" src="/Content/images/delete.png"
+							   onclick="return confirm('Are you sure?')" />
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

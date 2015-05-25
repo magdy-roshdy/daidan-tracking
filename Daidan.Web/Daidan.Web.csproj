@@ -164,6 +164,7 @@
     <Compile Include="Models\AddTripViewModel.cs" />
     <Compile Include="Models\EditSiteViewModel.cs" />
     <Compile Include="Models\EditTruckViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\SitesListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartUp.cs" />
@@ -192,6 +193,8 @@
     <Content Include="Views\Lookups\EditTruck.cshtml" />
     <Content Include="Views\SystemAdmins\Login.cshtml" />
     <Content Include="Views\Shared\_NavigationBar.cshtml" />
+    <Content Include="Views\Lookups\SystemAdminsList.cshtml" />
+    <Content Include="Views\Lookups\EditSystemAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

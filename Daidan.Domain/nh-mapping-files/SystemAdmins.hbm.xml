@@ -13,6 +13,7 @@
 		<property name="Password" column="SystemAdminPassword" />
 		<property name="IsActive" column="SystemAdminIsActive" />
 		<property name="Role" column="SystemAdminRole" />
+		<property name="IsBuiltIn" column="SystemAdminIsBuiltIn" />
 	</class>
 
 </hibernate-mapping>

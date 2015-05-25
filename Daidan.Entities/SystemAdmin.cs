@@ -10,6 +10,8 @@ namespace Daidan.Entities
 	public class SystemAdmin
 	{
 		virtual public int Id { get; set; }
+
+		[Required(ErrorMessage = "Please enter the name")]
 		virtual public string Name { get; set; }
 
 		[Required(ErrorMessage = "Please enter the email")]
@@ -20,5 +22,6 @@ namespace Daidan.Entities
 
 		virtual public bool IsActive { get; set; }
 		virtual public string Role { get; set; }
+		virtual public bool IsBuiltIn { get; set; }
 	}
 }

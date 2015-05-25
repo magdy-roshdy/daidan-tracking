@@ -337,5 +337,64 @@ namespace Daidan.Web.Controllers
 			}
 			return RedirectToAction("TrucksList");
 		}
+
+		//systems admins
+		public ActionResult SystemAdminsList()
+		{
+			return View(dbRepository.GetAllSystemAdmins());
+		}
+
+		public ActionResult EditSystemAdmin(int id)
+		{
+			SystemAdmin db_systemAdmin = dbRepository.GetSystemAdminById(id);
+			db_systemAdmin.Password = "***dummy_password***";
+			return View(db_systemAdmin);
+		}
+
+		[HttpPost]
+		public ActionResult EditSystemAdmin(SystemAdmin model)
+		{
+			if (ModelState.IsValid)
+			{
+				bool includePassword = false;
+				if (model.Password != "***dummy_password***")
+				{
+					model.Password = Helpers.DaidanControllersHelper.ComputePasswordHash(model.Password);
+					includePassword = true;
+				}
+
+				dbRepository.SaveSystemAdmin(model, includePassword);
+				TempData["message"] = model.Id > 0 ? "System Admin information updated successfully" : "System Admin added successfully";
+				TempData["message-class"] = "alert-success";
+
+				return RedirectToAction("SystemAdminsList");
+			}
+			else
+			{				
+				return View(model);
+			}
+		}
+
+		public ActionResult CreateSystemAdmin()
+		{
+			return View("EditSystemAdmin", new SystemAdmin { IsBuiltIn = false });
+		}
+
+		[HttpPost]
+		public ActionResult DeleteSystemAdmin(int systemAdminId)
+		{
+			bool result = dbRepository.DeleteSystemAdmin(systemAdminId);
+			if (result)
+			{
+				TempData["message"] = "System Admin deleted successfully";
+				TempData["message-class"] = "alert-success";
+			}
+			else
+			{
+				TempData["message"] = "Can't delete this system admin!";
+				TempData["message-class"] = "alert-danger";
+			}
+			return RedirectToAction("SystemAdminsList");
+		}
     }
 }

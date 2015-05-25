@@ -1,5 +1,6 @@
 ﻿using Daidan.Domain;
 using Daidan.Entities;
+using Daidan.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,17 +26,17 @@ namespace Daidan.Web.Controllers
 
 		[AllowAnonymous]
 		[HttpPost]
-		public ActionResult Login(SystemAdmin loginUser)
+		public ActionResult Login(LoginViewModel model)
 		{
 			if (!ModelState.IsValid)
 			{
-				return View(loginUser);
+				return View(model);
 			}
 
-			SystemAdmin admin = dbRepository.GetSystemAdminByEmail(loginUser.Email);
+			SystemAdmin admin = dbRepository.GetSystemAdminByEmail(model.Email);
 			if (admin != null && admin.IsActive)
 			{
-				bool valid = Helpers.DaidanControllersHelper.VerifyPasswordHash(loginUser.Password, admin.Password);
+				bool valid = Helpers.DaidanControllersHelper.VerifyPasswordHash(model.Password, admin.Password);
 				if(valid)
 				{
 					var identity = new ClaimsIdentity(new[] {

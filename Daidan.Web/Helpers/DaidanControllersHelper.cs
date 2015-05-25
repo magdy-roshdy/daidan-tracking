@@ -60,6 +60,7 @@ namespace Daidan.Web.Helpers
 
 			return selectListItems;
 		}
+
 		public static string ComputePasswordHash(string plainText, byte[] saltBytes = null, string hashAlgorithm = "")
 		{
 			if (saltBytes == null)
@@ -141,5 +142,21 @@ namespace Daidan.Web.Helpers
 			return (hashValue == expectedHashString);
 		}
 
+		public static List<SelectListItem> RolesListToSelectitems(string selected, bool addEmptyItem = false)
+		{
+			string[] roles = new string[] {"data-entry", "admin", "systemAdmin"};
+			List<SelectListItem> rolesSelectItems = new List<SelectListItem>();
+			if (addEmptyItem)
+			{
+				rolesSelectItems.Add(new SelectListItem { Text = "", Value = "" });
+			}
+
+			foreach(string role in roles)
+			{
+				rolesSelectItems.Add(new SelectListItem { Text = role, Value = role, Selected = (role == selected) });
+			}
+
+			return rolesSelectItems;
+		}
 	}
 }

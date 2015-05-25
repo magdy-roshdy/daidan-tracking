@@ -50,5 +50,9 @@ namespace Daidan.Domain
 		bool SellingPriceBatchUpdate(IList<long> tripsIds, decimal newSellingPrice);
 
 		SystemAdmin GetSystemAdminByEmail(string email);
+		IList<SystemAdmin> GetAllSystemAdmins();
+		SystemAdmin GetSystemAdminById(int systemAdminId);
+		SystemAdmin SaveSystemAdmin(SystemAdmin systemAdmin, bool includePassword);
+		bool DeleteSystemAdmin(int systemAdminId);
 	}
 }
