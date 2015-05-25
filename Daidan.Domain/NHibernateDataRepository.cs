@@ -648,5 +648,13 @@ namespace Daidan.Domain
 
 			return result;
 		}
+
+		public SystemAdmin GetSystemAdminByEmail(string email)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<SystemAdmin>().Where(x => x.Email == email).List().FirstOrDefault();
+			}
+		}
 	}
 }

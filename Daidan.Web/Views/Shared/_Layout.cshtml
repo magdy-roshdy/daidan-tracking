@@ -19,96 +19,10 @@
 	<script type="text/javascript" src="~/Scripts/daidan-global.js"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="@Url.Action("Add", "Trips")">
-                            <i class="fa fa-plus-square fa-lg"></i>
-                            &nbsp;Add Trips
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle"
-                           data-toggle="dropdown" role="button"
-                           aria-expanded="false">
-							<i class="fa fa-file-text-o fa-lg"></i>
-                            &nbsp;Monthly Sheets
-                        <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="@Url.Action("CustomerReport", "Reports")">
-									<i class="fa fa-user-secret fa-lg"></i>
-                                    &nbsp;Customer Sheet
-                                </a>
-                            </li>
-                            <li>
-								<a href="#">
-									<i class="fa fa-user fa-lg"></i>
-									&nbsp;Driver Sheet
-								</a>
-							</li>
-                            <li>
-								<a href="#">
-									<i class="fa fa-truck fa-lg"></i>
-									&nbsp;Truck Sheet&nbsp;
-								</a>
-							</li>
-                        </ul>
-                    </li>
-                    <li>
-						<a href="@Url.Action("MasterReport", "Reports")">
-							<i class="fa fa-file-o fa-lg"></i>
-							&nbsp;Master Report
-						</a>
-                    </li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle"
-						   data-toggle="dropdown" role="button"
-						   aria-expanded="false">
-							<i class="fa fa-cogs fa-lg"></i>
-							&nbsp;System Management
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" role="menu">
-							<li>
-								<a href="@Url.Action("ListDrivers", "Lookups")">
-									<i class="fa fa-user fa-lg"></i>
-									&nbsp;Drivers Management
-								</a>
-							</li>
-							<li>
-								<a href="@Url.Action("TrucksList", "Lookups")">
-									<i class="fa fa-truck fa-lg"></i>
-									&nbsp;Trucks Management
-								</a>
-							</li>
-							<li>
-								<a href="@Url.Action("CustomersList", "Lookups")">
-									<i class="fa fa-user-secret fa-lg"></i>
-									&nbsp;Customers and Sites Management
-								</a>
-							</li>
-							<li>
-								<a href="@Url.Action("MaterialsList", "Lookups")">
-									<i class="fa fa-codepen fa-lg"></i>
-									&nbsp;Materials Management
-								</a>
-							</li>
-						</ul>
-					</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    @if (@Request.IsAuthenticated)
+	{
+		Html.RenderPartial("_NavigationBar");
+	}
 
 	@if (TempData["message"] != null)
 	{

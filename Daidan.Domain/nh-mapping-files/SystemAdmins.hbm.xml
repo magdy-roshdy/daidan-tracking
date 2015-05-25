@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Daidan.Entities"
+                   namespace="Daidan.Entities">
+	<class name="SystemAdmin" table="SystemAdmins">
+
+		<id name="Id" column="SystemAdminId">
+			<generator class="identity"/>
+		</id>
+		<property name="Name" column="SystemAdminName" />
+		<property name="Email" column="SystemAdminEmail" />
+		<property name="Password" column="SystemAdminPassword" />
+		<property name="IsActive" column="SystemAdminIsActive" />
+		<property name="Role" column="SystemAdminRole" />
+	</class>
+
+</hibernate-mapping>

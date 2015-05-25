@@ -48,5 +48,7 @@ namespace Daidan.Domain
 		
 		bool PONumberBatchUpdate(IList<long> tripsIds, string newPONumber);
 		bool SellingPriceBatchUpdate(IList<long> tripsIds, decimal newSellingPrice);
+
+		SystemAdmin GetSystemAdminByEmail(string email);
 	}
 }

@@ -1,0 +1,49 @@
+﻿@model Daidan.Entities.SystemAdmin
+@{
+    ViewBag.Title = "Login";
+}
+<style type="text/css">
+	div.row {
+		margin: 7px;
+	}
+</style>
+<div class="panel panel-default" style="width: 500px; margin: 20px auto;">
+	<div class="panel-heading">
+		<h4>
+			<i class="fa fa-lock"></i> &nbsp;Trips System Login
+		</h4>
+	</div>
+
+	@using (Html.BeginForm("Login", "SystemAdmins", FormMethod.Post, new { role = "form" }))
+	{
+		<div class="panel-body">
+			@Html.ValidationSummary(true)
+			<div class="row">
+				<div class="col-lg-2">
+					<label>Email</label>
+				</div>
+				<div class="col-lg-10">
+					@Html.TextBoxFor(x => x.Email, new { @class = "form-control", type = "email", placeholder = "Email" })
+					@Html.ValidationMessageFor(x => x.Email)
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-2">
+					<label>Password</label>
+				</div>
+				<div class="col-lg-10">
+					@Html.TextBoxFor(x => x.Password, new { @class = "form-control", type = "password", placeholder = "Password" })
+					@Html.ValidationMessageFor(x => x.Password)
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-10">&nbsp;</div>
+				<div class="col-lg-2">
+					<input type="submit" value="Login" class="btn btn-primary" />
+				</div>
+			</div>
+		</div>
+	}
+</div>

@@ -15,6 +15,9 @@ namespace Daidan.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 			AreaRegistration.RegisterAllAreas();
 
+			GlobalFilters.Filters.Add(new HandleErrorAttribute());
+			GlobalFilters.Filters.Add(new AuthorizeAttribute());
+
 			ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
         }
 
