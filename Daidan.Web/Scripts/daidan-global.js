@@ -190,6 +190,9 @@ function initiateAddTripModel(dataLookup) {
 		).on('hide.bs.modal',
 			function () {
 				initWorkingObject();
+
+				//TODO
+				//remove popovers from fields
 			}
 		);
 	}

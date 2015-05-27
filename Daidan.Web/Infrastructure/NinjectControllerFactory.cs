@@ -7,6 +7,7 @@ using NHibernate;
 using Ninject;
 using Daidan.Entities;
 using Daidan.Domain;
+using System.Web.Security;
 
 namespace Daidan.Web.Infrastructure
 {
@@ -35,6 +36,8 @@ namespace Daidan.Web.Infrastructure
 			kernel.Bind<IDataRepository>()
 				.To<NHibernateDataRepository>()
 				.WithPropertyValue("SessionFactory", sessionFactory);
+
+			kernel.Inject(Roles.Provider);
 		}
 	}
 }

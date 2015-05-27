@@ -1,5 +1,6 @@
 ﻿using Daidan.Domain;
 using Daidan.Entities;
+using Daidan.Web.Infrastructure;
 using Daidan.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
+	[RedirectAuthorize(Roles = "admin, systemAdmin")]
     public class LookupsController : Controller
     {
         private IDataRepository dbRepository;
@@ -339,11 +341,13 @@ namespace Daidan.Web.Controllers
 		}
 
 		//systems admins
+		[RedirectAuthorize(Roles = "systemAdmin")]
 		public ActionResult SystemAdminsList()
 		{
 			return View(dbRepository.GetAllSystemAdmins());
 		}
 
+		[RedirectAuthorize(Roles = "systemAdmin")]
 		public ActionResult EditSystemAdmin(int id)
 		{
 			SystemAdmin db_systemAdmin = dbRepository.GetSystemAdminById(id);
@@ -352,6 +356,7 @@ namespace Daidan.Web.Controllers
 		}
 
 		[HttpPost]
+		[RedirectAuthorize(Roles = "systemAdmin")]
 		public ActionResult EditSystemAdmin(SystemAdmin model)
 		{
 			if (ModelState.IsValid)
@@ -375,12 +380,14 @@ namespace Daidan.Web.Controllers
 			}
 		}
 
+		[RedirectAuthorize(Roles = "systemAdmin")]
 		public ActionResult CreateSystemAdmin()
 		{
 			return View("EditSystemAdmin", new SystemAdmin { IsBuiltIn = false });
 		}
 
 		[HttpPost]
+		[RedirectAuthorize(Roles = "systemAdmin")]
 		public ActionResult DeleteSystemAdmin(int systemAdminId)
 		{
 			bool result = dbRepository.DeleteSystemAdmin(systemAdminId);

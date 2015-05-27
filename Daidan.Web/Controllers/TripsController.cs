@@ -1,6 +1,7 @@
 ﻿using Daidan.Domain;
 using Daidan.Entities;
 using Daidan.Web.Helpers;
+using Daidan.Web.Infrastructure;
 using Daidan.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,8 @@ namespace Daidan.Web.Controllers
 		{
 			dbRepository = repo;
 		}
-        // GET: Trips
+
+		[RedirectAuthorize(Roles = "data-entry, admin, systemAdmin")]
         public ActionResult Add()
         {
 			AddTripViewModel viewModel = new AddTripViewModel();
@@ -33,6 +35,7 @@ namespace Daidan.Web.Controllers
         }
 
 		[HttpPost]
+		[RedirectAuthorize(Roles = "data-entry, admin, systemAdmin")]
 		public ActionResult SaveTrip(Trip trip)
 		{
 			if(trip != null)
@@ -53,6 +56,7 @@ namespace Daidan.Web.Controllers
 		}
 
 		[HttpPost]
+		[RedirectAuthorize(Roles = "admin, systemAdmin")]
 		public ActionResult DeletedTrip(long tripId)
 		{
 			dbRepository.DeleteTrip(tripId);
@@ -65,15 +69,22 @@ namespace Daidan.Web.Controllers
 		}
 
 		[HttpPost]
+		[RedirectAuthorize(Roles = "admin, systemAdmin")]
 		public ActionResult PONumberBatchUpdate(PONumberBatchUpdateParameter parameters)
 		{
-			bool result = dbRepository.PONumberBatchUpdate(parameters.TripsIds, parameters.PONumber);
+			SystemAdmin admin = DaidanControllersHelper.IdentityUserToSystemAdmin(User.Identity);
+
+			bool result = dbRepository.PONumberBatchUpdate(parameters.TripsIds, parameters.PONumber, admin.Id);
 			return Json(result);
 		}
-
+		
+		[HttpPost]
+		[RedirectAuthorize(Roles = "admin, systemAdmin")]
 		public ActionResult SellingPriceBatchUpdate(SellingPriceBatchUpdateParameter parameters)
 		{
-			bool result = dbRepository.SellingPriceBatchUpdate(parameters.TripsIds, parameters.SellingPrice);
+			SystemAdmin admin = DaidanControllersHelper.IdentityUserToSystemAdmin(User.Identity);			
+
+			bool result = dbRepository.SellingPriceBatchUpdate(parameters.TripsIds, parameters.SellingPrice, admin.Id);
 			return Json(result);
 		}
     }

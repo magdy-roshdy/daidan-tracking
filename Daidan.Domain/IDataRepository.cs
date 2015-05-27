@@ -46,13 +46,15 @@ namespace Daidan.Domain
 		Truck SaveTruck(Truck truck);
 		bool DeleteTruck(int truckId);
 		
-		bool PONumberBatchUpdate(IList<long> tripsIds, string newPONumber);
-		bool SellingPriceBatchUpdate(IList<long> tripsIds, decimal newSellingPrice);
+		bool PONumberBatchUpdate(IList<long> tripsIds, string newPONumber, int systemAdminId);
+		bool SellingPriceBatchUpdate(IList<long> tripsIds, decimal newSellingPrice, int systemAdminId);
 
 		SystemAdmin GetSystemAdminByEmail(string email);
 		IList<SystemAdmin> GetAllSystemAdmins();
 		SystemAdmin GetSystemAdminById(int systemAdminId);
 		SystemAdmin SaveSystemAdmin(SystemAdmin systemAdmin, bool includePassword);
 		bool DeleteSystemAdmin(int systemAdminId);
+
+		string[] GetUsersRoles(string email);
 	}
 }

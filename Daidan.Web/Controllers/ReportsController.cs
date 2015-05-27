@@ -1,5 +1,6 @@
 ﻿using Daidan.Domain;
 using Daidan.Web.Helpers;
+using Daidan.Web.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
+	[RedirectAuthorize(Roles = "admin, systemAdmin")]
     public class ReportsController : Controller
     {
 		private IDataRepository dbRepository;

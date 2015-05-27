@@ -226,6 +226,8 @@ function showSearchResult(tripsArray) {
 				$('#updatePONumberButton').attr('disabled', 'disabled');
 				$('#updateSellingPriceButton').attr('disabled', 'disabled');
 			}
+
+			$('#searchResult #resultTable thead #checkAll')[0].checked = false;
 		}
 	});
 }

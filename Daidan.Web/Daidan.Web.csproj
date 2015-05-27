@@ -159,7 +159,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DaidanControllersHelper.cs" />
+    <Compile Include="Infrastructure\DaidanRolesProvider.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Infrastructure\RedirectAuthorizeAttribute.cs" />
     <Compile Include="Models\AddTripLookup.cs" />
     <Compile Include="Models\AddTripViewModel.cs" />
     <Compile Include="Models\EditSiteViewModel.cs" />
@@ -167,7 +169,7 @@
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\SitesListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StartUp.cs" />
+    <Compile Include="Infrastructure\StartUp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -195,6 +197,7 @@
     <Content Include="Views\Shared\_NavigationBar.cshtml" />
     <Content Include="Views\Lookups\SystemAdminsList.cshtml" />
     <Content Include="Views\Lookups\EditSystemAdmin.cshtml" />
+    <Content Include="Views\SystemAdmins\Unauthorized.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

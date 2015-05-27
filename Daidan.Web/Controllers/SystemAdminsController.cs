@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
+	[Authorize]
     public class SystemAdminsController : Controller
     {
 		private IDataRepository dbRepository;
@@ -40,8 +41,9 @@ namespace Daidan.Web.Controllers
 				if(valid)
 				{
 					var identity = new ClaimsIdentity(new[] {
-						new Claim(ClaimTypes.Name, admin.Name),
+						new Claim(ClaimTypes.Name, admin.Email),
 						new Claim(ClaimTypes.Email, admin.Email),
+						new Claim(ClaimTypes.GivenName, admin.Name),
 						new Claim(ClaimTypes.Role, admin.Role),
 						new Claim(ClaimTypes.Sid, admin.Id.ToString())
 					}, "Daidan-Trips-Cookie");
@@ -76,6 +78,11 @@ namespace Daidan.Web.Controllers
 
 			authManager.SignOut("Daidan-Trips-Cookie");
 			return RedirectToAction("Add", "Trips");
+		}
+
+		public ActionResult Unauthorized()
+		{
+			return View();
 		}
     }
 }

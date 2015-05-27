@@ -4,6 +4,7 @@ using Daidan.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -157,6 +158,34 @@ namespace Daidan.Web.Helpers
 			}
 
 			return rolesSelectItems;
+		}
+
+		public static SystemAdmin IdentityUserToSystemAdmin(System.Security.Principal.IIdentity identity)
+		{
+			SystemAdmin systemAdmin = null;
+			ClaimsIdentity claimIdentity = identity as ClaimsIdentity;
+			if(claimIdentity != null)
+			{
+				systemAdmin = new SystemAdmin();
+				systemAdmin.Id = int.Parse(claimIdentity.FindFirst(ClaimTypes.Sid).Value);
+				systemAdmin.Email = claimIdentity.FindFirst(ClaimTypes.Email).Value;
+				systemAdmin.Name = claimIdentity.FindFirst(ClaimTypes.GivenName).Value;
+				systemAdmin.Role = claimIdentity.FindFirst(ClaimTypes.Role).Value;
+			}
+
+			return systemAdmin;
+		}
+
+		public static bool IsUserAdmin(System.Security.Principal.IIdentity identity)
+		{
+			SystemAdmin admin = DaidanControllersHelper.IdentityUserToSystemAdmin(identity);
+			return (admin != null && admin.Role == "admin");
+		}
+
+		public static bool IsUserSystemAdmin(System.Security.Principal.IIdentity identity)
+		{
+			SystemAdmin admin = DaidanControllersHelper.IdentityUserToSystemAdmin(identity);
+			return (admin != null && admin.Role == "systemAdmin");
 		}
 	}
 }

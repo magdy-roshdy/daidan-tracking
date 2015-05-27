@@ -583,7 +583,7 @@ namespace Daidan.Domain
 			return result;
 		}
 
-		public bool PONumberBatchUpdate(IList<long> tripsIds, string newPONumber)
+		public bool PONumberBatchUpdate(IList<long> tripsIds, string newPONumber, int systemAdminId)
 		{
 			bool result = false;
 			using (ISession session = SessionFactory.OpenSession())
@@ -598,6 +598,8 @@ namespace Daidan.Domain
 							if(t != null)
 							{
 								t.PONumber = newPONumber;
+								t.LastModifiedOn = DateTime.Now;
+								t.LastModefiedBy = session.Get<SystemAdmin>(systemAdminId);
 								session.Save(t);
 							}
 						}
@@ -617,7 +619,7 @@ namespace Daidan.Domain
 			return result;
 		}
 
-		public bool SellingPriceBatchUpdate(IList<long> tripsIds, decimal newSellingPrice)
+		public bool SellingPriceBatchUpdate(IList<long> tripsIds, decimal newSellingPrice, int systemAdminId)
 		{
 			bool result = false;
 			using (ISession session = SessionFactory.OpenSession())
@@ -632,6 +634,8 @@ namespace Daidan.Domain
 							if (t != null)
 							{
 								t.UnitSellingPrice = newSellingPrice;
+								t.LastModifiedOn = DateTime.Now;
+								t.LastModefiedBy = session.Get<SystemAdmin>(systemAdminId);
 								session.Save(t);
 							}
 						}
@@ -733,6 +737,21 @@ namespace Daidan.Domain
 			}
 
 			return result;
+		}
+
+		public string[] GetUsersRoles(string email)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				List<string> roles = new List<string>();
+				SystemAdmin admin = this.GetSystemAdminByEmail(email);
+				if(admin != null)
+				{
+					roles.Add(admin.Role);
+				}
+
+				return roles.ToArray();
+			}
 		}
 	}
 }
