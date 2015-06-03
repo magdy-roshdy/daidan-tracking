@@ -279,16 +279,59 @@ function updateQuantityField(unitsselectObject) {
 }
 
 function wireTripEditModalEvents() {
-	$('#addTripModal #customers').change(function () {
-		updateSitesList($(this));
-	});
-
-	$('#addTripModal #units').change(function () {
-		updateQuantityField($(this));
+	$('#addTripModal #voucherNumber').change(function () {
+		$(this).popover('destroy');
 	});
 
 	$('#addTripModal #drivers').change(function () {
 		updateTrucksList($(this));
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #customers').change(function () {
+		updateSitesList($(this));
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #materials').change(function () {
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #unitCost').change(function () {
+		$(this).popover('destroy');
+	}); 
+
+	$('#addTripModal #purchaseOrder').change(function () {
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #ticketNumber').change(function () {
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #trucks').change(function () {
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #sites').change(function () {
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #units').change(function () {
+		updateQuantityField($(this));
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #quantity').change(function () {
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #extraCost').change(function () {
+		$(this).popover('destroy');
+	});
+
+	$('#addTripModal #tripDate').change(function () {
+		$(this).popover('destroy');
 	});
 
 	$('#addTripModal .modal-body').keyup(function (eventObj) {
