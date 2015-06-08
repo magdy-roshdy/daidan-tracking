@@ -1,0 +1,75 @@
+﻿@model Daidan.Web.Models.TrucksExpensesListViewModel
+@{
+    ViewBag.Title = "Trucks Expenses List";
+}
+<style type="text/css">
+	#expensesTable tr {
+		height: 30px;
+	}
+</style>
+
+<div style="width: 80%; margin: 0 auto;">
+	<h3>
+		Expenses for Truck Number <span style="font-weight: bold;">@Model.TruckNumber</span> for <span style="font-weight: bold;">@Model.Month @Model.Year</span>
+	</h3>
+
+	<div class="row">
+		<div class="col-lg-10">&nbsp;</div>
+		<div class="col-lg-2">
+			@using (@Html.BeginForm("Create", "TrucksExpenses"))
+			{
+				@Html.Hidden("truckId", Model.TruckId)
+				@Html.Hidden("month", Model.Month)
+				@Html.Hidden("year", Model.Year)
+				<input type="submit" value="+ Add Truck Expense" class="btn btn-default" style="float: right;" />
+			}
+		</div>
+	</div>
+	<br />
+
+	<table border="1" class="table-responsive" style="width: 100%;" id="expensesTable">
+		<thead>
+			<tr style="background-color: #EBEBEB; height: 35px;">
+				<th style="text-align: center; width: 200px;">Section</th>
+				<th style="text-align: center; width: 100px;">Amount</th>
+				<th style="text-align: center; width: 250px;">Driver</th>
+				<th style="text-align: center; width: 50px;"></th>
+				<th style="text-align: center; width: 50px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Daidan.Entities.TruckExpense expense in Model.TruckExpenseList)
+			{
+				<tr>
+					<td style="text-align: center;">@expense.Section.Name</td>
+					<td style="text-align: center;">@expense.Amount.ToString("0.00")</td>
+					<td style="text-align: center;">
+						@if (expense.Driver != null)
+						{
+							@expense.Driver.Name
+						}
+					</td>
+					<td style="text-align: center;">
+						<a href="@Url.Action("Edit", "TrucksExpenses", new { id = expense.Id})">
+							<i class="fa fa-edit fa-lg" style="color: #033074;"></i>
+						</a>
+					</td>
+					<td style="text-align: center; vertical-align: middle;">
+						@using (@Html.BeginForm("Delete", "TrucksExpenses"))
+						{
+							@Html.Hidden("expenseId", expense.Id)
+							
+							@Html.Hidden("truckId", Model.TruckId)
+							@Html.Hidden("truckNumber", Model.TruckNumber)
+							@Html.Hidden("month", Model.Month)
+							@Html.Hidden("year", Model.Year)
+							
+							<input type="image" src="/Content/images/delete.png"
+								   onclick="return confirm('Are you sure?')" />
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

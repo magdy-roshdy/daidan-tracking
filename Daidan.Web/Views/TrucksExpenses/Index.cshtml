@@ -1,0 +1,46 @@
+﻿@model Daidan.Web.Models.TrucksExpensesIndexViewModel
+@{
+    ViewBag.Title = "Trucks Expenses";
+}
+
+<div class="panel panel-default" style="width: 600px; margin: 20px auto;">
+	<div class="panel-heading">
+		<h4>Please select the truck and the month:</h4>
+	</div>
+
+	@using (Html.BeginForm("Index", "TrucksExpenses", FormMethod.Post, new { role = "form" }))
+	{
+		<div class="panel-body">
+			@Html.ValidationSummary(false)
+			<div class="row">
+				<div class="col-lg-1">Truck:</div>
+				<div class="col-lg-3">
+					@Html.DropDownListFor(x => x.TruckId,
+					@Model.Trucks,
+					new { @class = "form-control" })
+				</div>
+				<div class="col-lg-1">Month:</div>
+				<div class="col-lg-3">
+					@Html.DropDownListFor(x => x.Month,
+					@Model.Months,
+					new { @class = "form-control" })
+				</div>
+				<div class="col-lg-1">Year:</div>
+				<div class="col-lg-3">
+					@Html.TextBoxFor(x => x.Year, new { @class = "form-control", type = "number" })
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-3">
+					@Html.ActionLink("+ Add Truck Expense", "Create", "TrucksExpenses", null, new { @class = "btn btn-default", role = "button", style = "float: left;" })
+				</div>
+				<div class="col-lg-6">&nbsp;</div>
+				<div class="col-lg-3">
+					<input type="submit" value="View" class="btn btn-primary" style="float: right;" />
+				</div>
+			</div>
+		</div>
+	}
+</div>

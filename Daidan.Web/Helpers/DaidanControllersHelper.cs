@@ -187,5 +187,58 @@ namespace Daidan.Web.Helpers
 			SystemAdmin admin = DaidanControllersHelper.IdentityUserToSystemAdmin(identity);
 			return (admin != null && admin.Role == "systemAdmin");
 		}
+
+		public static List<SelectListItem> TrucksToSelectListItems(IList<Truck> trucks, int selectedId = -1, bool addEmptyItem = false)
+		{
+			List<SelectListItem> selectListItems = new List<SelectListItem>();
+
+			if (addEmptyItem)
+			{
+				selectListItems.Add(new SelectListItem { Text = "", Value = "0" });
+			}
+
+			foreach (Truck truck in trucks)
+			{
+				selectListItems.Add(new SelectListItem { Text = truck.Number, Value = truck.Id.ToString(), Selected = (selectedId == truck.Id) });
+			}
+
+			return selectListItems;
+		}
+
+		public static List<SelectListItem> YearMonthsToSelectListItems(int selectedId = -1, bool addEmptyItem = false)
+		{
+			List<SelectListItem> selectListItems = new List<SelectListItem>();
+
+			if (addEmptyItem)
+			{
+				selectListItems.Add(new SelectListItem { Text = "", Value = "0" });
+			}
+
+			DateTime date;
+			for (int month = 1; month <= 12; month++)
+			{
+				date = new DateTime(1, month, 1);
+				selectListItems.Add(new SelectListItem { Text = date.ToString("MMMM"), Value = date.Month.ToString(), Selected = (selectedId == month) });
+			}
+
+			return selectListItems;
+		}
+
+		public static List<SelectListItem> TrucksExpenseSectionsToSelectListItems(IList<ExpensesSection> expenseSections, int selectedId = -1, bool addEmptyItem = false)
+		{
+			List<SelectListItem> selectListItems = new List<SelectListItem>();
+
+			if (addEmptyItem)
+			{
+				selectListItems.Add(new SelectListItem { Text = "", Value = "0" });
+			}
+
+			foreach (ExpensesSection section in expenseSections)
+			{
+				selectListItems.Add(new SelectListItem { Text = section.Name, Value = section.Id.ToString(), Selected = (selectedId == section.Id) });
+			}
+
+			return selectListItems;
+		}
 	}
 }

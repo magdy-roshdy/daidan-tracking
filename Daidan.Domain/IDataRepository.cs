@@ -56,5 +56,11 @@ namespace Daidan.Domain
 		bool DeleteSystemAdmin(int systemAdminId);
 
 		string[] GetUsersRoles(string email);
+
+		IList<TruckExpense> GetTruckExpenses(int truckId, int? month = null, int? year = null);
+		IList<ExpensesSection> GetAllTrucksExpensesSections();
+		TruckExpense SaveTruckExpense(TruckExpense expense);
+		TruckExpense GetTruckExpenseById(long expenseId);
+		bool DeleteTruckExpense(long expenseId);
 	}
 }

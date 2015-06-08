@@ -75,6 +75,10 @@
   <ItemGroup>
     <EmbeddedResource Include="nh-mapping-files\SystemAdmins.hbm.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="nh-mapping-files\ExpensesSections.hbm.xml" />
+    <EmbeddedResource Include="nh-mapping-files\TrucksExpenses.hbm.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

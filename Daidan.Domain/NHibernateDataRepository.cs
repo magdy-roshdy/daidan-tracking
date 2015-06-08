@@ -753,5 +753,100 @@ namespace Daidan.Domain
 				return roles.ToArray();
 			}
 		}
+
+		public IList<TruckExpense> GetTruckExpenses(int truckId, int? month, int? year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				IQueryOver<TruckExpense, TruckExpense> queryOver = session.QueryOver<TruckExpense>();
+				queryOver.Inner.JoinQueryOver<Truck>(y => y.Truck).Where(z => z.Id == truckId);
+
+				if(month.HasValue && year.HasValue)
+				{
+					queryOver.Where(x => x.Month == month.Value);
+					queryOver.Where(x => x.Year == year.Value);
+				}
+
+				return queryOver.List();
+			}
+		}
+
+		public IList<ExpensesSection> GetAllTrucksExpensesSections()
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<ExpensesSection>().List();
+			}
+		}
+
+		public TruckExpense SaveTruckExpense(TruckExpense expense)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (expense.Id > 0)
+					{
+						TruckExpense db_expense = session.Get<TruckExpense>(expense.Id);
+
+						db_expense.Truck = session.Get<Truck>(expense.Truck.Id);
+						db_expense.Month = expense.Month;
+						db_expense.Year = expense.Year;
+						db_expense.Section = session.Get<ExpensesSection>(expense.Section.Id);
+						db_expense.Driver = expense.Driver != null ?  session.Get<Driver>(expense.Driver.Id) : null;
+						db_expense.Amount = expense.Amount;
+						
+						session.Save(db_expense);
+						expense = db_expense;
+					}
+					else
+					{
+						if (expense.Driver.Id == 0)
+							expense.Driver = null;
+						session.Save(expense);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return expense;
+		}
+
+		public TruckExpense GetTruckExpenseById(long expenseId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<TruckExpense>(expenseId);
+			}
+		}
+
+		public bool DeleteTruckExpense(long expenseId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						TruckExpense db_truckExpense = session.Get<TruckExpense>(expenseId);
+						session.Delete(db_truckExpense);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
 	}
 }

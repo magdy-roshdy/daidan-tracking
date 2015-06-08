@@ -1,0 +1,98 @@
+﻿@model Daidan.Web.Models.TrucksExpensesEditViewModel
+
+<style type="text/css">
+	div.row {
+		margin: 5px;
+	}
+</style>
+<div class="panel panel-default" style="width: 45%; margin: 20px auto;">
+	<div class="panel-heading">
+		@if (Model.ExpenseId > 0)
+		{
+			<h4>Edit Truck Expense</h4>
+			ViewBag.Title = "Edit Truck Expense";
+		}
+		else
+		{
+			<h4>Add Truck Expense</h4>
+			ViewBag.Title = "Add Truck Expense";
+		}
+	</div>
+
+	@using (Html.BeginForm("Edit", "TrucksExpenses", FormMethod.Post, new { role = "form" }))
+	{
+		<div class="panel-body">
+			@Html.ValidationSummary(true)
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Truck:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.DropDownListFor(x => x.TruckId,
+					@Model.Trucks,
+					new { @class = "form-control" })
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Amount:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.TextBoxFor(x => x.Amount, new { @class = "form-control", placeholder="Expense Amount" })
+					@Html.ValidationMessageFor(x => x.Amount)
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Section:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.DropDownListFor(x => x.SectionId,
+					@Model.Sections,
+					new { @class = "form-control" })
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Driver:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.DropDownListFor(x => x.DriverId,
+					@Model.Drivers,
+					new { @class = "form-control" })
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Month:</label>
+				</div>
+				<div class="col-lg-4">
+					@Html.DropDownListFor(x => x.Month,
+					@Model.Months,
+					new { @class = "form-control" })
+				</div>
+				<div class="col-lg-1">
+					<label>Year:</label>
+				</div>
+				<div class="col-lg-3">
+					@Html.TextBoxFor(x => x.Year, new { @class = "form-control", placeholder = "Year", type="number" })
+					@Html.ValidationMessageFor(x => x.Year)
+				</div>
+			</div>
+
+			@Html.HiddenFor(x => x.ExpenseId)
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-10">&nbsp;</div>
+				<div class="col-lg-2">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</div>
+		</div>
+	}
+</div>
