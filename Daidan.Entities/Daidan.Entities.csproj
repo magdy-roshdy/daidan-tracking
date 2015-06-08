@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Customer.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="DriverCash.cs" />
     <Compile Include="ExpensesSection.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Site.cs" />

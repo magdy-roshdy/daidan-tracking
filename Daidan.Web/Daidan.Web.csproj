@@ -141,6 +141,7 @@
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Scripts\customer-report.js" />
     <Content Include="Scripts\daidan-global.js" />
+    <Content Include="Scripts\driver-cash-index.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery.PrintArea.js_4.js" />
     <Content Include="Scripts\master-report.js" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DriversCashController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SystemAdminsController.cs" />
@@ -165,6 +167,9 @@
     <Compile Include="Infrastructure\RedirectAuthorizeAttribute.cs" />
     <Compile Include="Models\AddTripLookup.cs" />
     <Compile Include="Models\AddTripViewModel.cs" />
+    <Compile Include="Models\DriverCashEditViewModel.cs" />
+    <Compile Include="Models\DriverCashListViewModel.cs" />
+    <Compile Include="Models\DriversCashIndexViewModel.cs" />
     <Compile Include="Models\EditSiteViewModel.cs" />
     <Compile Include="Models\EditTruckViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
@@ -205,6 +210,9 @@
     <Content Include="Views\TrucksExpenses\Index.cshtml" />
     <Content Include="Views\TrucksExpenses\List.cshtml" />
     <Content Include="Views\TrucksExpenses\Edit.cshtml" />
+    <Content Include="Views\DriversCash\Index.cshtml" />
+    <Content Include="Views\DriversCash\List.cshtml" />
+    <Content Include="Views\DriversCash\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

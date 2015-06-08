@@ -1,0 +1,66 @@
+﻿@model Daidan.Web.Models.DriverCashListViewModel
+@{
+    ViewBag.Title = "Driver Cash List";
+}
+<style type="text/css">
+	#expensesTable tr {
+		height: 30px;
+	}
+</style>
+
+<div style="width: 80%; margin: 0 auto;">
+	<h3>
+		Cash History for Driver: <span style="font-weight: bold;">@Model.DriverName</span> between <span style="font-weight: bold;">@Model.From.ToShortDateString()</span> and <span style="font-weight: bold;">@Model.To.ToShortDateString()</span>
+	</h3>
+
+	<div class="row">
+		<div class="col-lg-10">&nbsp;</div>
+		<div class="col-lg-2">
+			@using (@Html.BeginForm("Create", "DriversCash"))
+			{
+				@Html.Hidden("driverId", @Model.DriverId)
+				<input type="submit" value="+ Add Driver Cash" class="btn btn-default" style="float: right;" />
+			}
+		</div>
+	</div>
+	<br />
+
+	<table border="1" class="table-responsive" style="width: 100%;" id="expensesTable">
+		<thead>
+			<tr style="background-color: #EBEBEB; height: 35px;">
+				<th style="text-align: center; width: 250px;">Date</th>
+				<th style="text-align: center; width: 100px;">Amount</th>
+				<th style="text-align: center; width: 250px;">Voucher Number</th>
+				<th style="text-align: center; width: 50px;"></th>
+				<th style="text-align: center; width: 50px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Daidan.Entities.DriverCash cash in Model.DriverCashList)
+			{
+				<tr>
+					<td style="text-align: center;">@cash.Date.ToShortDateString()</td>
+					<td style="text-align: center;">@cash.Amount.ToString("0.00")</td>
+					<td style="text-align: center;">@cash.VoucherNumber</td>
+					<td style="text-align: center;">
+						<a href="@Url.Action("Edit", "DriversCash", new { id = cash.Id })">
+							<i class="fa fa-edit fa-lg" style="color: #033074;"></i>
+						</a>
+					</td>
+					<td style="text-align: center; vertical-align: middle;">
+						@using (@Html.BeginForm("Delete", "DriversCash"))
+						{
+							@Html.Hidden("driverId", cash.Driver.Id)
+							@Html.Hidden("cashId", cash.Id)
+							@Html.Hidden("dateFrom", Model.From.ToShortDateString())
+							@Html.Hidden("dateTo", Model.To.ToShortDateString())
+
+							<input type="image" src="/Content/images/delete.png"
+								   onclick="return confirm('Are you sure?')" />
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

@@ -62,5 +62,10 @@ namespace Daidan.Domain
 		TruckExpense SaveTruckExpense(TruckExpense expense);
 		TruckExpense GetTruckExpenseById(long expenseId);
 		bool DeleteTruckExpense(long expenseId);
+
+		IList<DriverCash> GetDriverCashList(int driverId, DateTime? from = null, DateTime? to = null);
+		DriverCash SaveDriverCash(DriverCash cash);
+		DriverCash GetDriverCashById(long cashId);
+		bool DeleteDriverCash(long cashId);
 	}
 }

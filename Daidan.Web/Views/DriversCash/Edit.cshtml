@@ -1,0 +1,93 @@
+﻿@model Daidan.Web.Models.DriverCashEditViewModel
+<style type="text/css">
+	div.row {
+		margin: 5px;
+	}
+</style>
+<div class="panel panel-default" style="width: 45%; margin: 20px auto;">
+	<div class="panel-heading">
+		@if (Model.DriverCashId > 0)
+		{
+			<h4>Edit Driver Cash</h4>
+			ViewBag.Title = "Edit Driver Cash";
+		}
+		else
+		{
+			<h4>Add Driver Cash</h4>
+			ViewBag.Title = "Add Driver Cash";
+		}
+	</div>
+
+	@using (Html.BeginForm("Edit", "DriversCash", FormMethod.Post, new { role = "form" }))
+	{
+		<div class="panel-body">
+			@Html.ValidationSummary(true)
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Driver:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.DropDownListFor(x => x.DriverId,
+					@Model.Drivers,
+					new { @class = "form-control" })
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Date:</label>
+				</div>
+				<div class="col-lg-8">
+					<div class="input-group date" id="cashDateGroup">
+						@Html.TextBoxFor(x => x.Date, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "Cash Date" })
+						<span class="input-group-addon" style="cursor: pointer;">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+					@Html.ValidationMessageFor(x => x.Date)
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Amount:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.TextBoxFor(x => x.Amount, new { @class = "form-control", placeholder = "Cash Amount" })
+					@Html.ValidationMessageFor(x => x.Amount)
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Voucher #:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.TextBoxFor(x => x.VoucherNumber, new { @class = "form-control", placeholder = "Voucher Number" })
+				</div>
+			</div>
+
+			@Html.HiddenFor(x => x.DriverCashId)
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-10">&nbsp;</div>
+				<div class="col-lg-2">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</div>
+		</div>
+	}
+</div>
+<script language="javascript" type="text/javascript">
+	$(function () {
+		$('#cashDateGroup').datepicker(
+			{
+				autoclose: true,
+				format: 'dd/mm/yyyy',
+				orientation: 'top left'
+			}
+		);
+		
+	});
+</script>

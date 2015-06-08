@@ -848,5 +848,88 @@ namespace Daidan.Domain
 
 			return result;
 		}
+
+		public IList<DriverCash> GetDriverCashList(int driverId, DateTime? from = null, DateTime? to = null)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				IQueryOver<DriverCash, DriverCash> queryOver = session.QueryOver<DriverCash>();
+				queryOver.Inner.JoinQueryOver<Driver>(y => y.Driver).Where(z => z.Id == driverId);
+
+				if (from.HasValue)
+					queryOver.Where(x => x.Date >= from.Value);
+
+				if (to.HasValue)
+					queryOver.Where(x => x.Date <= to.Value);
+
+				return queryOver.List();
+			}
+		}
+
+		public DriverCash SaveDriverCash(DriverCash cash)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (cash.Id > 0)
+					{
+						DriverCash db_cash = session.Get<DriverCash>(cash.Id);
+
+						db_cash.Driver = session.Get<Driver>(cash.Driver.Id);
+						db_cash.Amount = cash.Amount;
+						db_cash.Date = cash.Date;
+						db_cash.VoucherNumber = cash.VoucherNumber;
+
+						session.Save(db_cash);
+						cash = db_cash;
+					}
+					else
+					{
+						session.Save(cash);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return cash;
+		}
+
+		public DriverCash GetDriverCashById(long cashId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<DriverCash>(cashId);
+			}
+		}
+
+		public bool DeleteDriverCash(long cashId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						DriverCash db_driverCash = session.Get<DriverCash>(cashId);
+						session.Delete(db_driverCash);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
 	}
 }

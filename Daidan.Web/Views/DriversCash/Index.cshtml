@@ -1,0 +1,57 @@
+﻿@model Daidan.Web.Models.DriversCashIndexViewModel
+@{
+    ViewBag.Title = "Drivers Cash";
+}
+
+<div class="panel panel-default" style="width: 700px; margin: 20px auto;">
+	<div class="panel-heading">
+		<h4>Please select the driver and dates:</h4>
+	</div>
+
+	@using (Html.BeginForm("Index", "DriversCash", FormMethod.Post, new { role = "form" }))
+	{
+		<div class="panel-body">
+			@Html.ValidationSummary(true)
+			<div class="row">
+				<div class="col-lg-1">Driver:</div>
+				<div class="col-lg-3">
+					@Html.DropDownListFor(x => x.DriverId,
+					@Model.Drivers,
+					new { @class = "form-control" })
+				</div>
+				<div class="col-lg-1">From:</div>
+				<div class="col-lg-3">
+					<div class="input-group date" id="fromDateGroup">
+						@Html.TextBoxFor(x => x.From, new { @class = "form-control", placeholder="From Date" })
+						<span class="input-group-addon" style="cursor: pointer;">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+					@Html.ValidationMessageFor(x => x.From)
+				</div>
+				<div class="col-lg-1">To:</div>
+				<div class="col-lg-3">
+					<div class="input-group date" id="toDateGroup">
+						@Html.TextBoxFor(x => x.To, new { @class = "form-control", placeholder = "To Date" })
+						<span class="input-group-addon" style="cursor: pointer;">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+					@Html.ValidationMessageFor(x => x.To)
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-3">
+					@Html.ActionLink("+ Add Driver Cash", "Create", "DriversCash", null, new { @class = "btn btn-default", role = "button", style = "float: left;" })
+				</div>
+				<div class="col-lg-6">&nbsp;</div>
+				<div class="col-lg-3">
+					<input type="submit" value="View" class="btn btn-primary" style="float: right;" />
+				</div>
+			</div>
+		</div>
+	}
+</div>
+<script type="text/javascript" src="~/Scripts/driver-cash-index.js"></script>
