@@ -3,8 +3,7 @@
 	initWorkingObject
 		(
 			{
-				'addDeleteToTripRow': false,
-				'addCheckboxToTripRow': false
+				'addDeleteToTripRow': false
 			}
 		);
 
@@ -78,6 +77,97 @@
 			});
 		}
 	});
+
+	//---
+	$('#updatePONumberButton').click(function () {
+		$('#updatePONumberModal #poNumber').val('');
+		$('#updatePONumberModal').modal().on('shown.bs.modal',
+			function () {
+				$('#updatePONumberModal #poNumber').focus();
+			}
+		);
+	});
+
+	$('#updateSellingPriceButton').click(function () {
+		$('#updateSellingPriceModal #sellingPrice').val('');
+		$('#updateSellingPriceModal').modal().on('shown.bs.modal',
+			function () {
+				$('#updateSellingPriceModal #sellingPrice').focus();
+			}
+		);
+	});
+
+	$('#updatePONumberModal .btn-primary').click(function () {
+		var valid = validateField($('#updatePONumberModal #poNumber'), /^\d+$/, "Please enter P.O number", '#updatePONumberModal');
+		if (valid) {
+			var idsArray = [];
+			$('#searchResult #resultTable tbody input:hidden').each(function (index, hidden) {
+				idsArray.push(parseInt($(hidden).val()));
+			});
+
+			if (confirm('Are you sure you want to update P.O number for all the trips?')) {
+				$('#updatePONumberModal .btn-primary').attr('disabled', 'disabled');
+
+				$.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: '/Trips/PONumberBatchUpdate',
+					data: { 'TripsIds': idsArray, 'PONumber': $('#updatePONumberModal #poNumber').val() },
+					success: function (data) {
+						$('#updatePONumberModal .btn-primary').removeAttr('disabled');
+
+						alert("Update Done Successfully!");
+						$('#updatePONumberModal').modal('hide');
+						$('#viewReportButton').click(); //update result
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						alert(errorThrown);
+						$('#updatePONumberModal .btn-primary').removeAttr('disabled');
+						$('#updatePONumberModal').modal('hide');
+					}
+				});
+			} else {
+				$('#updatePONumberModal').modal('hide');
+			}
+		}
+	});
+
+	$('#updateSellingPriceModal .btn-primary').click(function () {
+		var modalObj = $('#updateSellingPriceModal');
+		var textBoxObj = $('#updateSellingPriceModal #sellingPrice');
+		var valid = validateField(textBoxObj, /^(?:\d*\.\d{1,2}|\d+)$/, "Please enter selling price", '#updateSellingPriceModal');
+		if (valid) {
+			var idsArray = [];
+			$('#searchResult #resultTable tbody input:hidden').each(function (index, hidden) {
+				idsArray.push(parseInt($(hidden).val()));
+			});
+
+			if (confirm('Are you sure you want to update selling price for all trips?')) {
+				$(this).attr('disabled', 'disabled');
+
+				$.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: '/Trips/SellingPriceBatchUpdate',
+					data: { 'TripsIds': idsArray, 'SellingPrice': parseFloat($('#updateSellingPriceModal #sellingPrice').val()) },
+					success: function (data) {
+						$('.btn-primary', modalObj).removeAttr('disabled');
+
+						alert("Update Done Successfully!");
+						modalObj.modal('hide');
+						$('#viewReportButton').click(); //update result
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						alert(errorThrown);
+						$('.btn-primary', modalObj).removeAttr('disabled');
+						modalObj.modal('hide');
+					}
+				});
+			} else {
+				modalObj.modal('hide');
+			}
+		}
+	});
 });
 
 function showSearchResult(tripsArray) {
@@ -95,19 +185,25 @@ function showSearchResult(tripsArray) {
 	var counter = 1;
 	var quantitySum = 0;
 	var tripPriceSum = 0;
+	var tripsUnit = '';
 	$.each(tripsArray, function (index, trip) {
+		trip.QuantityCaption = trip.UnitsQuantity.toFixed(2);
 		tripRow = constructTripRowForCustomerReport(counter, trip);
 		$('#searchResult #resultTable tbody').append($(tripRow));
 		counter++;
 
 		quantitySum += trip.UnitsQuantity;
 		tripPriceSum += trip.TripTotalPrice;
+		tripsUnit = trip.Unit.Name;
 	});
 
 	//sum row
-	var sumTripObj = { 'QuantityCaption': quantitySum.toFixed(2), 'TripTotalPrice': tripPriceSum };
-	tripRow = constructTripRowForCustomerReport('', sumTripObj);
-	$('#searchResult #resultTable tbody').append($(tripRow));
+	var sumTripObj = { 'QuantityCaption': quantitySum.toFixed(2) + ' ' + tripsUnit, 'TripTotalPrice': tripPriceSum, 'Id': 0 };
+	var totalRowObj = $(constructTripRowForCustomerReport('', sumTripObj));
+	totalRowObj.css('font-weight', 'bold');
+	totalRowObj.css('height', '35px');
+	totalRowObj.css('background-color', '#EBEBEB');
+	$('#searchResult #resultTable tbody').append(totalRowObj);
 }
 
 function validateReportForm() {
@@ -148,7 +244,7 @@ function validateReportForm() {
 
 function constructTripRowForCustomerReport(counter, tripObject) {
 	var newTripRow = "<tr>\
-		<td style='text-align: center;'>" + counter.toString() + "</td>\
+		<td style='text-align: center;'>" + counter.toString() + "<input type='hidden' value='" + tripObject.Id.toString() + "' /></td>\
 		<td style='text-align: center;'>" + (tripObject.Date ? getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.VoucherNumber ? tripObject.VoucherNumber : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.PONumber ? tripObject.PONumber : '') + "</td>\

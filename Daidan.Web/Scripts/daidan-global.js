@@ -3,13 +3,7 @@
 }
 
 function constructTripRow(tripObject) {
-	var newTripRow = "<tr>";
-	if (window.currentWorkObject.addCheckboxToTripRow) {
-		newTripRow += "<td style='text-align: center;'>\
-				<input type='checkbox' data-tripId=" + tripObject.Id.toString() + " />\
-			</td>";
-	}
-	newTripRow += "<td style ='text-align: center;'>" + getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') + "</td>\
+	var newTripRow = "<tr><td style ='text-align: center;'>" + getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') + "</td>\
 		<td style='text-align: center;'>" + tripObject.VoucherNumber + "</td>\
 		<td style='text-align: center;'>" + (tripObject.PONumber ? tripObject.PONumber : "") + "</td>\
 		<td style='text-align: center;'>" + tripObject.Site.Customer.Name + "</td>\
@@ -40,7 +34,6 @@ function constructTripRow(tripObject) {
 
 function initWorkingObject(initObject) {
 	var _addDeleteToTripRow = false;
-	var _addCheckboxToTripRow = false;
 	if (!initObject) {
 		if (window.currentWorkObject)
 			_addDeleteToTripRow = window.currentWorkObject.addDeleteToTripRow;
@@ -48,20 +41,12 @@ function initWorkingObject(initObject) {
 		_addDeleteToTripRow = initObject.addDeleteToTripRow;
 	}
 
-	if (!initObject) {
-		if (window.currentWorkObject)
-			_addCheckboxToTripRow = window.currentWorkObject.addCheckboxToTripRow;
-	} else {
-		_addCheckboxToTripRow = initObject.addCheckboxToTripRow;
-	}
-
 	var workingObject = {
 		'ediTD': null,
 		'deletedTD': null,
 		'currentTrip': null,
 		'SelectText': '[SELECT]',
-		'addDeleteToTripRow': _addDeleteToTripRow,
-		'addCheckboxToTripRow': _addCheckboxToTripRow
+		'addDeleteToTripRow': _addDeleteToTripRow
 	};
 
 	window.currentWorkObject = workingObject;
@@ -167,16 +152,17 @@ function initiateAddTripModel(dataLookup) {
 
 		var momentDate = getDateFromJSON(dataLookup.LastInsertionDate.toString());
 		$('#tripDate').val(momentDate.format('DD/MM/YYYY'));
-		$('#tripDateFormGroup').datepicker(
-			{
-				autoclose: true,
-				format: 'dd/mm/yyyy'
-			}
-		);
 
 		$('#addTripModal .btn-primary').text('Add Trip');
 		$('#addTripModal h4.modal-title').text('<Add New Trip>');
 	}
+
+	$('#tripDateFormGroup').datepicker(
+		{
+			autoclose: true,
+			format: 'dd/mm/yyyy'
+		}
+	);
 
 	//show the modal
 	if (window.modalCreated) {
@@ -422,7 +408,7 @@ function validateField(field, pattern, message, popOverContainer) {
 
 function saveNewTrip(saveButtonObject) {
 	var tripObject = {
-		'Date': moment($('#addTripModal #tripDate').val(), "DD/MM/YYYY").format('MM/DD/YYYY'),
+		'Date': moment($('#addTripModal #tripDate').val(), "DD/MM/YYYY").format('DD/MM/YYYY'),
 		'VoucherNumber': parseInt($('#addTripModal #voucherNumber').val()),
 		'PONumber': $('#addTripModal #purchaseOrder').val() ? parseInt($('#addTripModal #purchaseOrder').val()) : null,
 		'TicketNumber': $('#addTripModal #ticketNumber').val() ? parseInt($('#addTripModal #ticketNumber').val()) : null,

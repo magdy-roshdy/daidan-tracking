@@ -111,8 +111,18 @@
 <div class="row" style="border-bottom: dotted 1px #000;">&nbsp;</div>
 <div id="searchResult" style="display: none; width: 100%;">
 	<div class="row">
-		<div class="col-lg-11">
-
+		<div class="col-lg-7"></div>
+		<div class="col-lg-2">
+			<button id="updatePONumberButton" style="margin: 5px 0px 5px 0px;"
+					class="btn btn-default btn-block">
+				Update P.O Number ...
+			</button>
+		</div>
+		<div class="col-lg-2">
+			<button id="updateSellingPriceButton" style="margin: 5px 0px 5px 0px;"
+					class="btn btn-default btn-block">
+				Update Selling Price ...
+			</button>
 		</div>
 		<div class="col-lg-1">
 			<button id="printButton" class="btn btn-default" style="margin: 5px 0px 5px 0px;">
@@ -124,24 +134,24 @@
 	</div>
 	<div class="row print-area">
 		<div style="border: solid 1px #000; padding: 5px 15px 15px 15px;">
-			<h4 class="text-center">Trips Report</h4>
+			<h2 class="text-center">Trips Report</h2>
 			<h3 id="customerNameHead"></h3>
 
 			<table border="0" style="width: 100%;">
 				<tbody>
 					<tr>
-						<td style="width: 5%"><strong>Site:</strong></td>
-						<td style="width: 20%" id="siteCell"></td>
+						<td style="width: 10%"><strong>Site:</strong></td>
+						<td style="width: 40%" id="siteCell"></td>
 
 						<td style="width: 10%"><strong>Material:</strong></td>
-						<td style="width: 15%" id="materialCell"></td>
+						<td style="width: 40%" id="materialCell"></td>
+					</tr>
+					<tr>
+						<td style="width: 10%"><strong>From:</strong></td>
+						<td style="width: 40%" id="fromCell">></td>
 
-
-						<td style="width: 5%"><strong>From:</strong></td>
-						<td style="width: 20%" id="fromCell">></td>
-
-						<td style="width: 5%"><strong>To:</strong></td>
-						<td style="width: 20%" id="toCell"></td>
+						<td style="width: 10%"><strong>To:</strong></td>
+						<td style="width: 40%" id="toCell"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -175,5 +185,58 @@
 	<h3 style="margin: 0 auto; width: 100%; text-align: center;">There are no trips matching the search parameters!</h3>
 </div>
 
-<script type="text/javascript" src="~/Scripts/customer-report.js"></script>
+<div class="modal fade" id="updatePONumberModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" style="width: 450px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Update P.O Number</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						P.O Number:
+					</div>
+					<div class="col-md-7">
+						<input type="text" class="form-control" id="poNumber" placeholder="P.O Number" />
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Update</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="updateSellingPriceModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" style="width: 450px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Update Selling Price</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-5">
+						Unit Selling Price:
+					</div>
+					<div class="col-md-6">
+						<input type="text" class="form-control" id="sellingPrice" placeholder="Unit Selling Price" />
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Update</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript" src="~/Scripts/customer-report.js?version=1.1"></script>
 <script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>

@@ -9,8 +9,7 @@
 	initWorkingObject
 		(
 			{
-				'addDeleteToTripRow': false,
-				'addCheckboxToTripRow': false
+				'addDeleteToTripRow': false
 			}
 		);
 });
