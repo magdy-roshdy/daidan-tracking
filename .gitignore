@@ -12,3 +12,6 @@ Daidan.Domain/bin/Release/*
 Daidan.Domain/obj/*
 
 DaidanTripsTrackingSolution.v12.suo
+
+logs
+logs/*
