@@ -74,8 +74,6 @@ function editTrip(divObj) {
 			initiateAddTripModel(window.lookups);
 			ediIcon.show();
 			spinnerIcon.hide();
-
-			console.log(window.currentWorkObject.currentTrip);
 		},
 		error: function (jqXHR, textStatus, errorThrown) { alert(errorThrown); }
 	});
