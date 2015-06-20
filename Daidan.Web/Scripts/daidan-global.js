@@ -74,6 +74,8 @@ function editTrip(divObj) {
 			initiateAddTripModel(window.lookups);
 			ediIcon.show();
 			spinnerIcon.hide();
+
+			console.log(window.currentWorkObject.currentTrip);
 		},
 		error: function (jqXHR, textStatus, errorThrown) { alert(errorThrown); }
 	});
@@ -142,6 +144,17 @@ function initiateAddTripModel(dataLookup) {
 
 		$('#addTripModal .btn-primary').text('Update Trip');
 		$('#addTripModal h4.modal-title').text('Edit Trip: Voucher# ' + window.currentWorkObject.currentTrip.VoucherNumber);
+
+		$('#addTripModal #tripAddedOnDetails').show();
+
+		$('#addTripModal #tripAddedOnDetails #addedOnDiv').text(getDateFromJSON(window.currentWorkObject.currentTrip.AddedOn).format('DD/MM/YYYY HH:mm'));
+		$('#addTripModal #tripAddedOnDetails #addedByDiv').text(window.currentWorkObject.currentTrip.AddedBy.Name);
+
+		if(window.currentWorkObject.currentTrip.LastModefiedBy && window.currentWorkObject.currentTrip.LastModifiedOn)
+		{
+			$('#addTripModal #tripAddedOnDetails #editedOnDiv').text(getDateFromJSON(window.currentWorkObject.currentTrip.LastModifiedOn).format('DD/MM/YYYY HH:mm'));
+			$('#addTripModal #tripAddedOnDetails #editByDiv').text(window.currentWorkObject.currentTrip.LastModefiedBy.Name);
+		}
 	} else {
 		$("#addTripModal #purchaseOrder").val('');
 		$("#addTripModal #voucherNumber").val('');
@@ -155,6 +168,8 @@ function initiateAddTripModel(dataLookup) {
 
 		$('#addTripModal .btn-primary').text('Add Trip');
 		$('#addTripModal h4.modal-title').text('<Add New Trip>');
+
+		$('#addTripModal #tripAddedOnDetails').hide();
 	}
 
 	$('#tripDateFormGroup').datepicker(
@@ -163,6 +178,7 @@ function initiateAddTripModel(dataLookup) {
 			format: 'dd/mm/yyyy'
 		}
 	);
+	$('#addTripModal .btn-primary').removeAttr('disabled');
 
 	//show the modal
 	if (window.modalCreated) {
@@ -176,9 +192,6 @@ function initiateAddTripModel(dataLookup) {
 		).on('hide.bs.modal',
 			function () {
 				initWorkingObject();
-
-				//TODO
-				//remove popovers from fields
 			}
 		);
 	}
@@ -322,7 +335,8 @@ function wireTripEditModalEvents() {
 
 	$('#addTripModal .modal-body').keyup(function (eventObj) {
 		if (eventObj.keyCode == 13) {
-			$('#addTripModal .btn-primary').click();
+			if (!$('#addTripModal .btn-primary').attr('disabled'))
+				$('#addTripModal .btn-primary').click();
 		}
 	});
 

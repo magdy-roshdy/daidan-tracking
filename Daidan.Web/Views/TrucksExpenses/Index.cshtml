@@ -34,7 +34,7 @@
 		<div class="panel-footer">
 			<div class="row">
 				<div class="col-lg-3">
-					@Html.ActionLink("+ Add Truck Expense", "Create", "TrucksExpenses", null, new { @class = "btn btn-default", role = "button", style = "float: left;" })
+					@Html.ActionLink("+ Add Truck Expense", "Create", "TrucksExpenses", new { Year = DateTime.Now.Year }, new { @class = "btn btn-default", role = "button", style = "float: left;" })
 				</div>
 				<div class="col-lg-6">&nbsp;</div>
 				<div class="col-lg-3">

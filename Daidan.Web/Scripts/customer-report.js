@@ -51,8 +51,8 @@
 
 			var parameters = {
 				'PONumber': $('#PONumber').val(),
-				'From': moment($('#fromDate').val(), "DD/MM/YYYY").format('MM/DD/YYYY'),
-				'To': moment($('#toDate').val(), "DD/MM/YYYY").format('MM/DD/YYYY'),
+				'From': moment($('#fromDate').val(), "DD/MM/YYYY").format('DD/MM/YYYY'),
+				'To': moment($('#toDate').val(), "DD/MM/YYYY").format('DD/MM/YYYY'),
 				'CustomerId': $('#customers').val(),
 				'SiteId': $('#sites').val(),
 				'MaterialId': $('#materials').val()

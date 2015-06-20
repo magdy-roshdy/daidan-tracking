@@ -26,7 +26,7 @@ namespace Daidan.Web.Controllers
 		[HttpPost]
 		public ActionResult MasterReportSearch(MasterReportSearchParameters parameter)
 		{
-			return Json(dbRepository.MasterReportSearch(parameter), JsonRequestBehavior.AllowGet);
+			return Json(dbRepository.MasterReportSearch(parameter).OrderBy(x => x.Date).ToList(), JsonRequestBehavior.AllowGet);
 		}
 
 		public ActionResult CustomerReport()
