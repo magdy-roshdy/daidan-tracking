@@ -153,6 +153,11 @@ function initiateAddTripModel(dataLookup) {
 			$('#addTripModal #tripAddedOnDetails #editedOnDiv').text(getDateFromJSON(window.currentWorkObject.currentTrip.LastModifiedOn).format('DD/MM/YYYY HH:mm'));
 			$('#addTripModal #tripAddedOnDetails #editByDiv').text(window.currentWorkObject.currentTrip.LastModefiedBy.Name);
 		}
+		else
+		{
+			$('#addTripModal #tripAddedOnDetails #editedOnDiv').text('');
+			$('#addTripModal #tripAddedOnDetails #editByDiv').text('');
+		}
 	} else {
 		$("#addTripModal #purchaseOrder").val('');
 		$("#addTripModal #voucherNumber").val('');
