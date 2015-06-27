@@ -189,10 +189,10 @@ namespace Daidan.Domain
 
 				if (parameters.DriverId.HasValue)
 					queryOver.Where(x => x.Driver.Id == parameters.DriverId);
-				if (parameters.CustomerId.HasValue)
-				{ 
+				
+				if (parameters.CustomerId.HasValue) 
 					queryOver.Inner.JoinQueryOver<Site>(y => y.Site).Where(z => z.Customer.Id == parameters.CustomerId);
-				}
+				
 				if (parameters.SiteId.HasValue)
 					queryOver.Where(x => x.Site.Id == parameters.SiteId);
 				if (parameters.MaterialId.HasValue)
@@ -930,6 +930,18 @@ namespace Daidan.Domain
 			}
 
 			return result;
+		}
+
+		public IList<TruckExpense> GetTruckSheetExpenses(int truckId, int month, int year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				IQueryOver<TruckExpense, TruckExpense> query = session.QueryOver<TruckExpense>();
+				query.Inner.JoinQueryOver<ExpensesSection>(y => y.Section);
+				query.Where(x => x.Year == year).Where(x => x.Month == month).Where(x => x.Truck.Id == truckId);
+
+				return query.List();
+			}
 		}
 	}
 }

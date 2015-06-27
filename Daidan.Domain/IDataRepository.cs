@@ -67,5 +67,7 @@ namespace Daidan.Domain
 		DriverCash SaveDriverCash(DriverCash cash);
 		DriverCash GetDriverCashById(long cashId);
 		bool DeleteDriverCash(long cashId);
+
+		IList<TruckExpense> GetTruckSheetExpenses(int truckId, int month, int year);
 	}
 }
