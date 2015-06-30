@@ -83,6 +83,10 @@
 			'addDeleteToTripRow': true
 		}
 	);
+
+	$('#printButton').click(function () {
+		$('.print-area').printArea();
+	});
 });
 
 function showSearchResult(tripsArray) {

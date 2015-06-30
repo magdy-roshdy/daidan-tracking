@@ -24,6 +24,12 @@
 		margin-top: 10px;
 	}
 </style>
+<style type="text/css" media="print">
+	#resultTable
+	{
+		width: 50%;
+	}
+</style>
 <h2><i class="fa fa-file-o"></i> Master Report</h2>
 <input type="hidden" id="lookupsText" value='@Html.Raw(Json.Encode(Model))' />
 <div id="searchPanel">
@@ -150,29 +156,44 @@
 	</div>
 	<div class="row" style="border-bottom: dotted 1px #000;">&nbsp;</div>
 	<div id="searchResult" style="display: none;">
-		<table border="1" class="table-responsive" style="width: 100%;" id="resultTable">
-			<thead>
-				<tr style="background-color: #EBEBEB; height: 35px;">
-					<th style="text-align: center;" width="85">Date</th>
-					<th style="text-align: center;" width="75">Voucher #</th>
-					<th style="text-align: center;" width="75">P.O</th>
-					<th style="text-align: center;">Customer</th>
-					<th style="text-align: center;" width="130">Site</th>
-					<th style="text-align: center;" width="80">Truck</th>
-					<th style="text-align: center;" width="90">Material</th>
-					<th style="text-align: center;" width="80">Quantity</th>
-					<th style="text-align: center;" width="70">Unit Cost</th>
-					<th style="text-align: center;" width="75">Trip Cost</th>
-					<th style="text-align: center;" width="75">Extra Cost</th>
-					<th style="text-align: center;" width="75">Total Cost</th>
-					<th style="text-align: center;" width="30">&nbsp;</th>
-					<th style="text-align: center;" width="30">&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody>
-				
-			</tbody>
-		</table>
+		<div class="row">
+			<div class="col-lg-11">&nbsp;</div>
+			<div class="col-lg-1">
+				<button id="printButton" class="btn btn-default" style="margin: 5px 0px 5px 0px;">
+					<i class="fa fa-print"></i>
+					&nbsp;
+					Print
+				</button>
+			</div>
+		</div>
+		<div class="row print-area">
+			<table border="1" class="table-responsive" style="width: 100%;" id="resultTable">
+				<thead>
+					<tr style="background-color: #EBEBEB; height: 35px;">
+						<th style="text-align: center;" width="85">Date</th>
+						<th style="text-align: center;" width="75">Voucher #</th>
+						<th style="text-align: center;" width="75">P.O</th>
+						<th style="text-align: center;">Customer</th>
+						<th style="text-align: center;" width="130">Site</th>
+						<th style="text-align: center;" width="80">Truck</th>
+						<th style="text-align: center;" width="90">Material</th>
+						<th style="text-align: center;" width="80">Quantity</th>
+						<th style="text-align: center;" width="70">Unit Cost</th>
+						<th style="text-align: center;" width="75">Trip Cost</th>
+						<th style="text-align: center;" width="75">Extra Cost</th>
+						<th style="text-align: center;" width="75">Total Cost</th>
+						<th style="text-align: center;" width="30">&nbsp;</th>
+						<th style="text-align: center;" width="30">&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<style type="text/css" media="print">
+				#resultTable {
+					margin: 0px 15px 0px 15px;
+				}
+			</style>
+		</div>
 	</div>
 	<div class="row" id="loadingDiv" style="display: none;">
 		<div style="margin: 0 auto; width: 150px;">
@@ -189,3 +210,4 @@
 @Html.Partial("~/Views/Shared/_EditTripModal.cshtml", null)
 
 <script type="text/javascript" src="~/Scripts/master-report.js?version=1.2"></script>
+<script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>
