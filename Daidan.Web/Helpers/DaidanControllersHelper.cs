@@ -240,5 +240,51 @@ namespace Daidan.Web.Helpers
 
 			return selectListItems;
 		}
+
+		public static void UpdateTripsAdminPercentage(IList<Trip> trips, int month, int year, IDataRepository dbRepository)
+		{
+			IList<MonthPercentage> months = dbRepository.GetMonthsPercentage(month, year);
+			byte globalPercentage = 20;
+			byte.TryParse(System.Configuration.ConfigurationManager.AppSettings["globalPercentage"], out globalPercentage);
+
+			bool percentageFound = false;
+			foreach (Trip trip in trips)
+			{
+				if (months.Count > 0)
+				{
+					MonthPercentage _month = months.FirstOrDefault(x => x.Month == trip.Date.Month && x.Year == trip.Date.Year);
+					if (_month != null)
+					{
+						CustomerPercentage customer = _month.CustomersPercentage.FirstOrDefault(x => x.Customer.Id == trip.Site.Customer.Id);
+						if (customer != null)
+						{
+							MaterialPercentage material = customer.MaterialsPercentage.FirstOrDefault(x => x.Material.Id == trip.Material.Id);
+							if (material != null)
+							{
+								trip.AdministrationPercentage = material.Amount;
+								percentageFound = true;
+							}
+							else
+							{
+								trip.AdministrationPercentage = customer.Amount;
+								percentageFound = true;
+							}
+						}
+						else
+						{
+							trip.AdministrationPercentage = _month.Amount;
+							percentageFound = true;
+						}
+					}
+				}
+
+				if (!percentageFound)
+				{
+					trip.AdministrationPercentage = globalPercentage;
+				}
+
+				percentageFound = false;
+			}
+		}
 	}
 }

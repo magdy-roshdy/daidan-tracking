@@ -19,10 +19,6 @@
 	#resultTable tr {
 		height: 30px;
 	}
-
-	#resultTable {
-		margin-top: 10px;
-	}
 </style>
 <h2><i class="fa fa-truck"></i> Truck Sheet</h2>
 <div id="searchPanel">
@@ -97,10 +93,9 @@
 						<th style="text-align: center;" width="100">Site</th>
 						<th style="text-align: center;" width="85">Material</th>
 						<th style="text-align: center;" width="80">Quantity</th>
-						<th style="text-align: center;" width="50">Unit Cost</th>
 						<th style="text-align: center;" width="50">Trip Cost</th>
-						<th style="text-align: center;" width="50">Unit Price</th>
 						<th style="text-align: center;" width="50">Trip Price</th>
+						<th style="text-align: center;" width="90">Trip Net Profit</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -112,12 +107,14 @@
 			<table border="1" class="table-responsive" style="width: 350px;" id="expensesTable">
 				<tbody></tbody>
 			</table>
-</div>
+		</div>
 	</div>
 </div>
 
 <div class="row" id="loadingDiv" style="display: none;">
 	<div style="margin: 0 auto; width: 150px;">
+		<img src="~/Content/images/loading.gif" alt="" style="margin: 10px;" />
+		<br />
 		loading ...
 	</div>
 </div>

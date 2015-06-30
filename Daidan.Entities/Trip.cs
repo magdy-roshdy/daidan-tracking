@@ -17,7 +17,8 @@ namespace Daidan.Entities
 		public virtual decimal UnitCost { get; set; }
 		public virtual decimal UnitsQuantity { get; set; }
 		public virtual decimal ExtraCost { get; set; }
-		public virtual decimal UnitSellingPrice { get; set; }
+		public virtual decimal UnitSellingPrice  { get; set; }
+		public virtual decimal AdministrationPercentage { get; set; }
 
 		public virtual DateTime AddedOn { get; set; }
 		public virtual DateTime? LastModifiedOn { get; set; }
@@ -52,6 +53,35 @@ namespace Daidan.Entities
 			get
 			{
 				return this.UnitSellingPrice * this.UnitsQuantity;
+			}
+		}
+
+		public virtual decimal TripGrossProfit
+		{
+			get
+			{
+				if (this.TripTotalPrice > 0)
+				{
+					return this.TripTotalPrice - this.TripTotalCost;
+				}
+				else
+					return 0;
+			}
+		}
+
+		public virtual decimal TripNetProfit
+		{
+			get
+			{
+				if (this.TripGrossProfit != 0)
+				{
+					if (this.AdministrationPercentage > 0)
+						return this.TripGrossProfit * (1 - (this.AdministrationPercentage / 100));
+					else
+						return this.TripGrossProfit;
+				}
+				else
+					return 0;
 			}
 		}
 

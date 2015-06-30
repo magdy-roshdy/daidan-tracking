@@ -21,6 +21,8 @@ namespace Daidan.Web.Controllers
         {
 			DriversCashIndexViewModel model = new DriversCashIndexViewModel();
 			model.Drivers = Helpers.DaidanControllersHelper.DriversToSelectListItems(dbRepository.GetAllDrivers());
+			model.From = new DateTime(DateTime.Now.AddMonths(-1).Year, DateTime.Now.AddMonths(-1).Month, 1);
+			model.To = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
 			return View(model);
         }
 

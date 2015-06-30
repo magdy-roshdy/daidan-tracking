@@ -22,7 +22,8 @@ namespace Daidan.Web.Controllers
 			TrucksExpensesIndexViewModel model = new TrucksExpensesIndexViewModel();
 			model.Trucks = Helpers.DaidanControllersHelper.TrucksToSelectListItems(dbRepository.GetAllTrucks());
 			model.Months = Helpers.DaidanControllersHelper.YearMonthsToSelectListItems();
-			model.Year = DateTime.Now.Year;
+			model.Year = DateTime.Now.AddMonths(-1).Year;
+			model.Month = DateTime.Now.AddMonths(-1).Month;
 
 			return View(model);
         }

@@ -22,7 +22,7 @@
 				<div class="col-lg-1">From:</div>
 				<div class="col-lg-3">
 					<div class="input-group date" id="fromDateGroup">
-						@Html.TextBoxFor(x => x.From, new { @class = "form-control", placeholder="From Date" })
+						@Html.TextBoxFor(x => x.From, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "From Date" })
 						<span class="input-group-addon" style="cursor: pointer;">
 							<i class="fa fa-calendar"></i>
 						</span>
@@ -32,7 +32,7 @@
 				<div class="col-lg-1">To:</div>
 				<div class="col-lg-3">
 					<div class="input-group date" id="toDateGroup">
-						@Html.TextBoxFor(x => x.To, new { @class = "form-control", placeholder = "To Date" })
+						@Html.TextBoxFor(x => x.To, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "To Date" })
 						<span class="input-group-addon" style="cursor: pointer;">
 							<i class="fa fa-calendar"></i>
 						</span>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Daidan.Entities"
+                   namespace="Daidan.Entities">
+	<class name="DriverMonthBalance" table="DriverMonthBalance">
+
+		<id name="Id" column="DriverMonthBalanceId">
+			<generator class="identity"/>
+		</id>
+		<property name="Month" column="DriverMonthBalanceMonth" />
+		<property name="Year" column="DriverMonthBalanceYear" />
+		<property name="Amount" column="DriverMonthBalanceAmount" />
+		<property name="LastModefied" column="DriverMonthBalanceLastModefied" />
+
+		<many-to-one name="Driver" class="Driver" column="DriverMonthBalanceDriverId" not-null="false" lazy="false" />
+	</class>
+
+</hibernate-mapping>

@@ -69,5 +69,19 @@ namespace Daidan.Domain
 		bool DeleteDriverCash(long cashId);
 
 		IList<TruckExpense> GetTruckSheetExpenses(int truckId, int month, int year);
+
+		IList<MonthPercentage> GetMonthsPercentage(int month, int year);
+
+		IList<DriverSalary> GetDriverSalaries(int driverId);
+		DriverSalary GetDriverSalaryById(long driverSalaryId);
+		DriverSalary SaveDriverSalary(DriverSalary salary);
+		bool DeleteDriverSalary(long salaryId);
+		DriverSalary GetDriverMonthSalary(int driverId, int month, int year);
+
+		IList<TruckExpense> GetTruckExpensesByDriver(int driverId, int month, int year);
+		
+		DriverMonthBalance GetDriverMonthBalance(int driverId, int month, int year);
+
+		bool UpdateDriverMonthBalanace(int driverId, int month, int year, decimal balanace);
 	}
 }

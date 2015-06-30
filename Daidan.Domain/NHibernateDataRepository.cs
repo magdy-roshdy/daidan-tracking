@@ -943,5 +943,152 @@ namespace Daidan.Domain
 				return query.List();
 			}
 		}
+
+		public IList<MonthPercentage> GetMonthsPercentage(int month, int year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<MonthPercentage>().Where(x => x.Month == month).Where(x => x.Year == year).List();
+			}
+		}
+
+		public IList<DriverSalary> GetDriverSalaries(int driverId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<DriverSalary>().Where(x => x.Driver.Id == driverId).List();
+			}
+		}
+
+		public DriverSalary GetDriverSalaryById(long driverSalaryId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<DriverSalary>(driverSalaryId);
+			}
+		}
+
+		public DriverSalary SaveDriverSalary(DriverSalary salary)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (salary.Id > 0)
+					{
+						DriverSalary db_salary = session.Get<DriverSalary>(salary.Id);
+						db_salary.Amount = salary.Amount;
+						db_salary.Year = salary.Year;
+						db_salary.Month = salary.Month;
+
+						session.Save(db_salary);
+						salary = db_salary;
+					}
+					else
+					{
+						session.Save(salary);
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return salary;
+		}
+
+		public bool DeleteDriverSalary(long salaryId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						DriverSalary db_salary = session.Get<DriverSalary>(salaryId);
+						session.Delete(db_salary);
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
+
+		public DriverSalary GetDriverMonthSalary(int driverId, int month, int year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<DriverSalary>().Where(x => x.Driver.Id == driverId && x.Month == month && x.Year == year).List().FirstOrDefault();
+			}
+		}
+
+		public IList<TruckExpense> GetTruckExpensesByDriver(int driverId, int month, int year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<TruckExpense>().Where(x => x.Driver.Id == driverId && x.Month == month && x.Year == year).List();
+			}
+		}
+
+		public DriverMonthBalance GetDriverMonthBalance(int driverId, int month, int year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<DriverMonthBalance>().Where(x => x.Driver.Id == driverId && x.Month == month && x.Year == year).List().FirstOrDefault();
+			}
+		}
+
+		public bool UpdateDriverMonthBalanace(int driverId, int month, int year, decimal balanace)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						DriverMonthBalance monthBalanace = this.GetDriverMonthBalance(driverId, month, year);
+						if (monthBalanace != null)
+						{
+							monthBalanace = session.Get<DriverMonthBalance>(monthBalanace.Id);
+							monthBalanace.Amount = balanace;
+						}
+						else
+						{
+							monthBalanace = new DriverMonthBalance();
+							monthBalanace.Amount = balanace;
+							monthBalanace.Month = month;
+							monthBalanace.Year = year;
+							monthBalanace.Driver = new Driver { Id = driverId };
+						}
+
+						monthBalanace.LastModefied = DateTime.Now;
+						session.Save(monthBalanace);
+
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
 	}
 }

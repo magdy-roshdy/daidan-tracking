@@ -29,8 +29,6 @@ namespace Daidan.Web
 		{
 			Exception exc = Server.GetLastError();
 			logger.Error(exc.ToString());
-			logger.Error(exc.StackTrace);
-			logger.Error("*******");
 		}
     }
 }

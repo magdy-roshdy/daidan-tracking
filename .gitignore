@@ -13,5 +13,5 @@ Daidan.Domain/obj/*
 
 DaidanTripsTrackingSolution.v12.suo
 
-logs
-logs/*
+app_logs
+app_logs/*

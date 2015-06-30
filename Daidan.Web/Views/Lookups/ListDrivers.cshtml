@@ -20,6 +20,7 @@
 			<th>Is Outsourced</th>
 			<th>Is Active</th>
 			<th></th>
+			<th></th>
 		</tr>
 	</thead>
 	@foreach (Daidan.Entities.Driver driver in Model)
@@ -30,6 +31,9 @@
 			</td>
 			<td>@driver.IsOutsourced</td>
 			<td>@driver.IsActive</td>
+			<td>
+				@Html.ActionLink("Driver Salaries", "List", "DriverSalary", new { driver.Id }, null)
+			</td>
 			<td>
 				@using (@Html.BeginForm("DeleteDriver", "Lookups"))
 				{

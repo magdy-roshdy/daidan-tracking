@@ -1,0 +1,45 @@
+﻿@model Daidan.Web.Models.DriverSalariesListViewModel
+@{
+    ViewBag.Title = "Driver Salaries List";
+}
+
+<h2>Salaries list of : @Model.Driver.Name</h2>
+
+
+<div class="row">
+	<div class="col-lg-10">&nbsp;</div>
+	<div class="col-lg-2">
+		@Html.ActionLink("+ Add Salary", "Create", "DriverSalary", new { Model.Driver.Id }, new { @class = "btn btn-default", role = "button", style = "float: right;" })
+	</div>
+</div>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Month</th>
+			<th>Amount</th>
+			<th></th>
+		</tr>
+	</thead>
+	@foreach (Daidan.Entities.DriverSalary salary in Model.Salaries)
+	{
+		<tr>
+			<td>
+				@Html.ActionLink(salary.DisplayName, "Edit", new { salary.Id })
+			</td>
+			<td>
+				@salary.Amount
+			</td>
+			<td>
+				@using (@Html.BeginForm("Delete", "DriverSalary"))
+				{
+					@Html.Hidden("salaryId", salary.Id)
+					@Html.Hidden("driverId", salary.Driver.Id)
+					<input type="image" src="/Content/images/delete.png"
+						   onclick="return confirm('Are you sure?')" />
+				}
+			</td>
+		</tr>
+	}
+
+</table>

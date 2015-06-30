@@ -1,0 +1,76 @@
+﻿@model Daidan.Web.Models.DriverSalaryEditViewModel
+@{
+	ViewBag.Title = "Edit Driver Salary";
+}
+
+<style type="text/css">
+	div.row {
+		margin: 5px;
+	}
+</style>
+<div class="panel panel-default" style="width: 45%; margin: 20px auto;">
+	<div class="panel-heading">
+		@if (Model.DriverSalaryId > 0)
+		{
+			<h4>Edit Driver Salary</h4>
+		}
+		else
+		{
+			<h4>Add Driver Salary</h4>
+		}
+	</div>
+
+	@using (Html.BeginForm("Edit", "DriverSalary", FormMethod.Post, new { role = "form" }))
+	{
+		<div class="panel-body">
+			@Html.ValidationSummary(true)
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Driver:</label>
+				</div>
+				<div class="col-lg-9">
+					<label>@Model.Driver.Name</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Month:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.DropDownListFor(x => x.Month,
+					@Model.Months,
+					new { @class = "form-control" })
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Year:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.TextBoxFor(x => x.Year, new { @class = "form-control", type = "number" })
+					@Html.ValidationMessageFor(x => x.Year)
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Amount:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.TextBoxFor(x => x.Amount, new { @class = "form-control", type = "number" })
+					@Html.ValidationMessageFor(x => x.Amount)
+				</div>
+			</div>
+
+			@Html.HiddenFor(x => x.DriverSalaryId)
+			@Html.HiddenFor(x => x.DriverId)
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-10">&nbsp;</div>
+				<div class="col-lg-2">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</div>
+		</div>
+	}
+</div>
