@@ -15,7 +15,7 @@ function constructTripRow(tripObject) {
 		<td style='text-align: center;'>" + tripObject.TripCost.toFixed(2) + "</td>\
 		<td style='text-align: center;'>" + tripObject.ExtraCost.toFixed(2) + "</td>\
 		<td style='text-align: center;'>" + tripObject.TripTotalCost.toFixed(2) + "</td>\
-		<td style='text-align: center;'>\
+		<td style='text-align: center;' class='hide-print'>\
 			<div style='cursor: pointer;' onclick='editTrip(this);'>\
 				<i class='fa fa-edit fa-lg'></i>\
 				<i class='fa fa-spinner fa-pulse fa-lg' style='display: none;'></i>\
@@ -23,8 +23,8 @@ function constructTripRow(tripObject) {
 			<input type='hidden' value='" + tripObject.Id.toString() + "' />\
 		</td>";
 	if (window.currentWorkObject.addDeleteToTripRow) {
-		newTripRow += "<td style='text-align: center;'>\
-				<div style='cursor: pointer;' onclick='deleteTrip(this);'><img src='/Content/images/delete.png' alt='' /></i></div>\
+		newTripRow += "<td style='text-align: center;' class='hide-print'>\
+				<div style='cursor: pointer;' onclick='deleteTrip(this);'><img src='/Content/images/delete.png' alt='' /></div>\
 				<input type='hidden' value='" + tripObject.Id.toString() + "' />\
 			</td>";
 	}

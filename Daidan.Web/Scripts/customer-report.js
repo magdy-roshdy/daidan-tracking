@@ -199,7 +199,7 @@ function showSearchResult(tripsArray) {
 
 	//sum row
 	var sumTripObj = { 'QuantityCaption': quantitySum.toFixed(2) + ' ' + tripsUnit, 'TripTotalPrice': tripPriceSum, 'Id': 0 };
-	var totalRowObj = $(constructTripRowForCustomerReport('', sumTripObj));
+	var totalRowObj = $(constructTripRowForCustomerReport('', sumTripObj, true));
 	totalRowObj.css('font-weight', 'bold');
 	totalRowObj.css('height', '35px');
 	totalRowObj.css('background-color', '#EBEBEB');
@@ -242,7 +242,7 @@ function validateReportForm() {
 	return isValid;
 }
 
-function constructTripRowForCustomerReport(counter, tripObject) {
+function constructTripRowForCustomerReport(counter, tripObject, hideDelete) {
 	var newTripRow = "<tr>\
 		<td style='text-align: center;'>" + counter.toString() + "<input type='hidden' value='" + tripObject.Id.toString() + "' /></td>\
 		<td style='text-align: center;'>" + (tripObject.Date ? getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') : '') + "</td>\
@@ -252,7 +252,20 @@ function constructTripRowForCustomerReport(counter, tripObject) {
 		<td style='text-align: center;'>" + (tripObject.QuantityCaption ? tripObject.QuantityCaption : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.UnitSellingPrice ? tripObject.UnitSellingPrice.toFixed(2) : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.TripTotalPrice ? tripObject.TripTotalPrice.toFixed(2) : '') + "</td>\
-	</tr>";
+		<td style='text-align: center;' class='hide-print'>";
+	if (!hideDelete) {
+		newTripRow += "<div style='cursor: pointer;' onclick='removeTripFromReport(this);'><img src='/Content/images/delete.png' alt='' /></div>";
+	} else
+	{
+		newTripRow += "&nbsp;"
+	}
+	newTripRow += "</td></tr>";
 
 	return newTripRow;
+}
+
+function removeTripFromReport(deleteDiv) {
+	if (confirm('Are you sure?')) {
+		$(deleteDiv).parent().parent().remove();
+	}
 }
