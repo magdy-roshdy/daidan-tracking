@@ -28,11 +28,17 @@ namespace Daidan.Web.Controllers
         public ActionResult Add()
         {
 			AddTripViewModel viewModel = new AddTripViewModel();
-			viewModel.TripsList = dbRepository.GetAddedTodayTrips();
 			viewModel.AddTripLookup = DaidanControllersHelper.GetTripLookups(dbRepository);
 
 			return View(viewModel);
         }
+
+		[HttpPost]
+		[RedirectAuthorize(Roles = "data-entry, admin, systemAdmin")]
+		public ActionResult GetAddedTodayTrips()
+		{
+			return Json(dbRepository.GetAddedTodayTrips().OrderByDescending(x => x.AddedOn).ToList());
+		}
 
 		[HttpPost]
 		[RedirectAuthorize(Roles = "data-entry, admin, systemAdmin")]

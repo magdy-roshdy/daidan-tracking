@@ -1,5 +1,6 @@
 ﻿using Daidan.Domain;
 using Daidan.Entities;
+using Daidan.Web.Infrastructure;
 using Daidan.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
+	[RedirectAuthorize(Roles = "admin, systemAdmin")]
     public class DriversCashController : Controller
     {
 		private IDataRepository dbRepository;

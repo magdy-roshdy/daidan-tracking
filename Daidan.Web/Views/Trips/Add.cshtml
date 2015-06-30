@@ -26,9 +26,10 @@
 	</div>
 </div>
 <div class="row">
-	<table border="1" class="table-responsive" style="width: 100%;" id="tripsTable">
+	<table border="1" class="table-responsive" style="width: 100%; display: none;" id="tripsTable">
 		<thead>
 			<tr style="background-color: #EBEBEB; height: 35px;">
+				<th style="text-align: center;" width="30">&nbsp;</th>
 				<th style="text-align: center;" width="85">Date</th>
 				<th style="text-align: center;" width="75">Voucher #</th>
 				<th style="text-align: center;" width="75">P.O</th>
@@ -44,33 +45,15 @@
 				<th style="text-align: center;" width="35">&nbsp;</th>
 			</tr>
 		</thead>
-		<tbody>
-			@foreach (Daidan.Entities.Trip trip in Model.TripsList)
-			{
-				<tr>
-					<td style="text-align: center;">@trip.Date.ToString("dd/MM/yyyy")</td>
-					<td style="text-align: center;">@trip.VoucherNumber</td>
-					<td style="text-align: center;">@trip.PONumber</td>
-					<td style="text-align: center;">@trip.Site.Customer.Name</td>
-					<td style="text-align: center;">@trip.Site.Name</td>
-					<td style="text-align: center;">@trip.Truck.Number</td>
-					<td style="text-align: center;">@trip.Material.Name</td>
-					<td style="text-align: center;">@trip.QuantityCaption</td>
-					<td style="text-align: center;">@trip.UnitCost.ToString("0.00")</td>
-					<td style="text-align: center;">@trip.TripCost.ToString("0.00")</td>
-					<td style="text-align: center;">@(trip.ExtraCost > 0 ? trip.ExtraCost.ToString("#.00") : "0.00" )</td>
-					<td style="text-align: center;">@trip.TripTotalCost.ToString("0.00")</td>
-					<td style="text-align: center;">
-						<div style="cursor: pointer;" onclick="editTrip(this);">
-							<i class="fa fa-edit fa-lg"></i>
-							<i class="fa fa-spinner fa-pulse fa-lg" style="display: none;"></i>
-						</div>
-						<input type="hidden" value="@trip.Id.ToString()" />
-					</td>
-				</tr>
-			}
-		</tbody>
+		<tbody></tbody>
 	</table>
+	<div class="row" id="loadingDiv">
+		<div style="margin: 0 auto; width: 150px;">
+			<img src="~/Content/images/loading.gif" alt="" style="margin: 10px;" />
+			<br />
+			loading ...
+		</div>
+	</div>
 </div>
 @Html.Partial("~/Views/Shared/_EditTripModal.cshtml", null)
-<script type="text/javascript" src="~/Scripts/add-trip-script.js"></script>
+<script type="text/javascript" src="~/Scripts/add-trip-script.js?version=1.1"></script>

@@ -244,7 +244,7 @@ function validateReportForm() {
 
 function constructTripRowForCustomerReport(counter, tripObject, hideDelete) {
 	var newTripRow = "<tr>\
-		<td style='text-align: center;'>" + counter.toString() + "<input type='hidden' value='" + tripObject.Id.toString() + "' /></td>\
+		<td style='text-align: center;' class='counterCell'>" + counter.toString() + "</td>\
 		<td style='text-align: center;'>" + (tripObject.Date ? getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.VoucherNumber ? tripObject.VoucherNumber : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.PONumber ? tripObject.PONumber : '') + "</td>\
@@ -252,7 +252,8 @@ function constructTripRowForCustomerReport(counter, tripObject, hideDelete) {
 		<td style='text-align: center;'>" + (tripObject.QuantityCaption ? tripObject.QuantityCaption : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.UnitSellingPrice ? tripObject.UnitSellingPrice.toFixed(2) : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.TripTotalPrice ? tripObject.TripTotalPrice.toFixed(2) : '') + "</td>\
-		<td style='text-align: center;' class='hide-print'>";
+		<td style='text-align: center;' class='hide-print'>\
+		<input type='hidden' value='" + tripObject.Id.toString() + "' />";
 	if (!hideDelete) {
 		newTripRow += "<div style='cursor: pointer;' onclick='removeTripFromReport(this);'><img src='/Content/images/delete.png' alt='' /></div>";
 	} else
@@ -268,4 +269,15 @@ function removeTripFromReport(deleteDiv) {
 	if (confirm('Are you sure?')) {
 		$(deleteDiv).parent().parent().remove();
 	}
+
+	resetCustomerTripsTableCounter($('#resultTable'));
+}
+
+function resetCustomerTripsTableCounter(tableObject) {
+	var cells = $('td.counterCell', tableObject[0]);
+	var counter = 1;
+	$.each(cells, function (index, cell) {
+		if($(cell).text())
+			$(cell).text(counter++);
+	});
 }

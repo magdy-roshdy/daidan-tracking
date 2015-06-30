@@ -8,7 +8,6 @@ namespace Daidan.Web.Models
 {
 	public class AddTripViewModel
 	{
-		public IList<Trip> TripsList { get; set; }
 		public AddTripLookup AddTripLookup { get; set; }
 	}
 }

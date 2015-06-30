@@ -98,6 +98,8 @@ function showSearchResult(tripsArray) {
 		tripRow = constructTripRow(trip);
 		$('#searchResult #resultTable tbody').append($(tripRow));
 	});
+
+	resetTripsTableCounter($('#searchResult'));
 }
 
 function deleteTrip(deleteDiv) {
@@ -119,6 +121,8 @@ function deleteTrip(deleteDiv) {
 				);
 
 				showNotification('Trip deleted succesfully <i class="fa fa-check fa-lg"></i>', 'success');
+
+				resetTripsTableCounter($('#searchResult'));
 			},
 			error: function (jqXHR, textStatus, errorThrown) { alert(errorThrown); }
 		});

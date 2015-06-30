@@ -3,7 +3,9 @@
 }
 
 function constructTripRow(tripObject) {
-	var newTripRow = "<tr><td style ='text-align: center;'>" + getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') + "</td>\
+	var newTripRow = "<tr>\
+		<td style ='text-align: center;' class='counterCell'></td>\
+		<td style ='text-align: center;'>" + getDateFromJSON(tripObject.Date).format('DD/MM/YYYY') + "</td>\
 		<td style='text-align: center;'>" + tripObject.VoucherNumber + "</td>\
 		<td style='text-align: center;'>" + (tripObject.PONumber ? tripObject.PONumber : "") + "</td>\
 		<td style='text-align: center;'>" + tripObject.Site.Customer.Name + "</td>\
@@ -30,6 +32,14 @@ function constructTripRow(tripObject) {
 	}
 	newTripRow += "</tr>";
 	return newTripRow;
+}
+
+function resetTripsTableCounter(tableObject) {
+	var cells = $('td.counterCell', tableObject[0]);
+	var counter = 1;
+	$.each(cells, function (index, cell) {
+		$(cell).text(counter++);
+	});
 }
 
 function initWorkingObject(initObject) {
@@ -455,7 +465,10 @@ function saveNewTrip(saveButtonObject) {
 			saveButtonObject.removeAttr('disabled');
 			appendNewTrip(data);
 		},
-		error: function (jqXHR, textStatus, errorThrown) { alert(errorThrown); }
+		error: function (jqXHR, textStatus, errorThrown) {
+			alert(errorThrown);
+			saveButtonObject.removeAttr('disabled');
+		}
 	});
 }
 
@@ -463,6 +476,7 @@ function appendNewTrip(tripObject) {
 	var newTripRow = constructTripRow(tripObject);
 
 	if (!window.currentWorkObject.currentTrip) {
+		$("#tripsTable").show();
 		$("#tripsTable tr:first").after(newTripRow);
 		resetAddTripForm();
 
@@ -476,6 +490,7 @@ function appendNewTrip(tripObject) {
 		showNotification('Trip updated successfully <i class="fa fa-check fa-lg"></i>', 'success ');
 	}
 
+	resetTripsTableCounter($("#tripsTable"));
 	initWorkingObject();
 }
 
