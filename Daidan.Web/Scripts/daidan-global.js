@@ -477,6 +477,7 @@ function appendNewTrip(tripObject) {
 
 	if (!window.currentWorkObject.currentTrip) {
 		$("#tripsTable").show();
+		$("#noResultMessage").hide();
 		$("#tripsTable tr:first").after(newTripRow);
 		resetAddTripForm();
 

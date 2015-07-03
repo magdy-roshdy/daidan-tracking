@@ -8,6 +8,11 @@ namespace Daidan.Web.Models
 {
 	public class DriverSheetResultViewModel
 	{
+		public DriverSheetResultViewModel()
+		{
+			this.MonthPaidExpenses = new List<TruckExpense>();
+		}
+
 		public IList<Trip> Trips { get; set; }
 
 		public decimal PreviousMonthBalanace { get; set; }
@@ -18,6 +23,7 @@ namespace Daidan.Web.Models
 		public decimal MonthDriverCashSum { get; set; }
 
 		public IList<DriverCash> MonthDriverCash { get; set; }
+		public IList<TruckExpense> MonthPaidExpenses { get; set; }
 
 		public decimal MonthBalance
 		{

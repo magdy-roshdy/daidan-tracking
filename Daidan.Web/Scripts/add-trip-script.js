@@ -22,6 +22,8 @@
 			$('#loadingDiv').hide();
 			if (data.length > 0) {
 				showTrips(data);
+			} else {
+				$('#noResultMessage').show();
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) { alert(errorThrown); }
@@ -29,6 +31,7 @@
 
 	function showTrips(tripsArray) {
 		$('#tripsTable').show();
+		$('#noResultMessage').hide();
 		$('#tripsTable #tripsTable tbody').empty();
 
 		var tripRow = "";

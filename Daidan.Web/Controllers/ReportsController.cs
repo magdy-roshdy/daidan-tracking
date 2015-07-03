@@ -126,6 +126,12 @@ namespace Daidan.Web.Controllers
 			IList<TruckExpense> expenses = dbRepository.GetTruckExpensesByDriver(searchParameter.DriverId, searchParameter.Month, searchParameter.Year);
 			result.MonthPaidExpensesSum = expenses.Sum(x => x.Amount);
 
+			IEnumerable<IGrouping<ExpensesSection, TruckExpense>> groups = expenses.GroupBy(x => x.Section);
+			foreach (IGrouping<ExpensesSection, TruckExpense> group in groups)
+			{
+				result.MonthPaidExpenses.Add(new TruckExpense { Section = group.Key, Amount = group.Sum(x => x.Amount) });
+			}
+
 			result.ExtraCostSum = result.Trips.Sum(x => x.ExtraCost);
 
 			result.MonthDriverCash = dbRepository.GetDriverCashList(searchParameter.DriverId, tripsSearchParameters.From,  tripsSearchParameters.To).OrderBy(x => x.Date).ToList();

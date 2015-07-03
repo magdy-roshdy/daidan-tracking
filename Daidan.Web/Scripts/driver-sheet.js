@@ -42,6 +42,7 @@
 		$('#searchResult #summaryTable #monthBalanaceCell_').empty();
 		$('#searchResult #summaryTable #monthBalanaceCell').empty();
 		$('#searchResult #recievedCashTable tbody').empty();
+		$('#searchResult #paidExpensesTable tbody').empty();
 		
 
 		var counter = 1;
@@ -96,6 +97,21 @@
 			cashRow = constructRecievedCashRow('', { 'VoucherNumber': '', 'Amount': cashSum });
 			$('#searchResult #recievedCashTable tbody').append($(cashRow).css('font-weight', 'bold').css('height', '35px').css('background-color', '#EBEBEB'));
 		}
+
+		//paid expenses
+		var expensesSum = 0;
+		var expensesRow = "";
+		$.each(sheetInfo.MonthPaidExpenses, function (index, expense) {
+			expensesRow = constructPaidExpenseRow(expense);
+			$('#searchResult #paidExpensesTable tbody').append($(expensesRow));
+
+			expensesSum += expense.Amount;
+		});
+
+		if (cashSum > 0) {
+			expensesRow = constructPaidExpenseRow({ 'Amount': expensesSum });
+			$('#searchResult #paidExpensesTable tbody').append($(expensesRow).css('font-weight', 'bold').css('height', '35px').css('background-color', '#EBEBEB'));
+		}
 	}
 
 	function constructTripRowForTruckSheet(counter, tripObject) {
@@ -123,6 +139,15 @@
 			<td style='text-align: center;'>" + (cashObject.Date ? getDateFromJSON(cashObject.Date).format('DD/MM/YYYY') : '') + "</td>\
 			<td style='text-align: center;'>" + cashObject.VoucherNumber+ "</td>\
 			<td style='text-align: center;'>" + cashObject.Amount.toFixed(2) + "</td>\
+		</tr>";
+
+		return cashRow;
+	}
+
+	function constructPaidExpenseRow(expenseObject) {
+		var cashRow = "<tr>\
+			<td style='text-align: center;'>" + (expenseObject.Section ? expenseObject.Section.Name : '') + "</td>\
+			<td style='text-align: center;'>" + expenseObject.Amount.toFixed(2) + "</td>\
 		</tr>";
 
 		return cashRow;
