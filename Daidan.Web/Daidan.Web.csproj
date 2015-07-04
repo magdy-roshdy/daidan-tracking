@@ -149,7 +149,7 @@
     <Content Include="Scripts\driver-sheet.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery.PrintArea.js_4.js" />
-    <Content Include="Scripts\master-report.js" />
+    <Content Include="Scripts\master-search.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\truck-sheet.js" />
@@ -200,7 +200,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Trips\Add.cshtml" />
-    <Content Include="Views\Reports\MasterReport.cshtml" />
+    <Content Include="Views\Trips\MasterSearch.cshtml" />
     <Content Include="Views\Shared\_EditTripModal.cshtml" />
     <Content Include="Views\Reports\CustomerReport.cshtml" />
     <Content Include="Views\Lookups\ListDrivers.cshtml" />

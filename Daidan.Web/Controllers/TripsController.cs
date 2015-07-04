@@ -74,6 +74,17 @@ namespace Daidan.Web.Controllers
 			return Json(dbRepository.GetTripById(tripId), JsonRequestBehavior.AllowGet);
 		}
 
+		public ActionResult MasterSearch()
+		{
+			return View(DaidanControllersHelper.GetTripLookups(dbRepository));
+		}
+
+		[HttpPost]
+		public ActionResult MasterSearch(MasterReportSearchParameters parameter)
+		{
+			return Json(dbRepository.MasterReportSearch(parameter).OrderBy(x => x.Date).ToList(), JsonRequestBehavior.AllowGet);
+		}
+
 		[HttpPost]
 		[RedirectAuthorize(Roles = "admin, systemAdmin")]
 		public ActionResult PONumberBatchUpdate(PONumberBatchUpdateParameter parameters)

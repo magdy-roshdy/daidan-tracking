@@ -60,7 +60,7 @@
 		$.ajax({
 			type: 'POST',
 			dataType: 'json',
-			url: '/Reports/MasterReportSearch',
+			url: '/Trips/MasterSearch',
 			data: parameters,
 			success: function (data) {
 				$('#loadingDiv').hide();

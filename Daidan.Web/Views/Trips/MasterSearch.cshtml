@@ -1,6 +1,6 @@
 ﻿@model Daidan.Web.Models.AddTripLookup
 @{
-	ViewBag.Title = "Master Report";
+	ViewBag.Title = "Master Search";
 }
 
 <style type="text/css">
@@ -31,7 +31,7 @@
 		width: 50%;
 	}
 </style>
-<h2><i class="fa fa-file-o"></i> Master Report</h2>
+<h2><i class="fa fa-file-o"></i> Master Search</h2>
 <input type="hidden" id="lookupsText" value='@Html.Raw(Json.Encode(Model))' />
 <div id="searchPanel">
 	<div class="row">
@@ -220,5 +220,5 @@
 </div>
 @Html.Partial("~/Views/Shared/_EditTripModal.cshtml", null)
 
-<script type="text/javascript" src="~/Scripts/master-report.js?version=1.5"></script>
+<script type="text/javascript" src="~/Scripts/master-search.js?version=1.5"></script>
 <script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>

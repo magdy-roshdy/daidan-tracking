@@ -22,17 +22,6 @@ namespace Daidan.Web.Controllers
 			dbRepository = repo;
 		}
 
-		public ActionResult MasterReport()
-		{
-			return View(DaidanControllersHelper.GetTripLookups(dbRepository));
-		}
-
-		[HttpPost]
-		public ActionResult MasterReportSearch(MasterReportSearchParameters parameter)
-		{
-			return Json(dbRepository.MasterReportSearch(parameter).OrderBy(x => x.Date).ToList(), JsonRequestBehavior.AllowGet);
-		}
-
 		public ActionResult CustomerReport()
 		{
 			return View(DaidanControllersHelper.GetTripLookups(dbRepository));

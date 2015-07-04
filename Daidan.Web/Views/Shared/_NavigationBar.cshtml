@@ -74,9 +74,9 @@
 				@if (DaidanControllersHelper.IsUserAdmin(User.Identity) || DaidanControllersHelper.IsUserSystemAdmin(User.Identity))
 				{
 					<li>
-						<a href="@Url.Action("MasterReport", "Reports")">
-							<i class="fa fa-file-o fa-lg"></i>
-							&nbsp;Master Report
+						<a href="@Url.Action("MasterSearch", "Trips")">
+							<i class="fa fa-search fa-lg"></i>
+							&nbsp;Master Search
 						</a>
 					</li>
 				}
