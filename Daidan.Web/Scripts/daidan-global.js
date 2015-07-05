@@ -185,12 +185,12 @@ function initiateAddTripModel(dataLookup) {
 		$('#addTripModal #tripAddedOnDetails').hide();
 	}
 
-	$('#tripDateFormGroup').datepicker(
-		{
-			autoclose: true,
-			format: 'dd/mm/yyyy'
-		}
-	);
+	$('#tripDateFormGroup').datepicker({ autoclose: true, format: 'dd/mm/yyyy' })
+		.on('hide.bs.modal', function (event) {
+			// prevent datepicker from firing bootstrap modal "show.bs.modal"
+			event.stopPropagation();
+		});
+
 	$('#addTripModal .btn-primary').removeAttr('disabled');
 
 	//show the modal
