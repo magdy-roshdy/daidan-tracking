@@ -92,14 +92,7 @@ namespace Daidan.Web.Controllers
 				TempData["message"] = model.DriverCashId > 0 ? "Driver cash information updated successfully" : "Driver cash added successfully";
 				TempData["message-class"] = "alert-success";
 
-				DriverCashListViewModel listModel = new DriverCashListViewModel();
-				listModel.DriverId = model.DriverId;
-				listModel.From = new DateTime(cash.Date.Year, cash.Date.Month, 1);
-				listModel.To = listModel.From.AddMonths(1).AddDays(-1);
-				listModel.DriverName = dbRepository.GetDriverById(listModel.DriverId).Name;
-				listModel.DriverCashList = dbRepository.GetDriverCashList(listModel.DriverId, listModel.From, listModel.To).OrderBy(x => x.Date).ToList();
-
-				return View("List", listModel);
+				return Create(model.DriverId);
 			}
 			else
 			{
@@ -122,14 +115,11 @@ namespace Daidan.Web.Controllers
 				TempData["message-class"] = "alert-danger";
 			}
 
-			DriverCashListViewModel listModel = new DriverCashListViewModel();
-			listModel.DriverId = driverId;
-			listModel.From = dateFrom;
-			listModel.To = dateTo;
-			listModel.DriverName = dbRepository.GetDriverById(listModel.DriverId).Name;
-			listModel.DriverCashList = dbRepository.GetDriverCashList(listModel.DriverId, listModel.From, listModel.To).OrderBy(x => x.Date).ToList();
-
-			return View("List", listModel);
+			DriversCashIndexViewModel model = new DriversCashIndexViewModel();
+			model.Drivers = Helpers.DaidanControllersHelper.DriversToSelectListItems(dbRepository.GetAllDrivers());
+			model.From = dateFrom;
+			model.To = dateTo;
+			return View("Index", model);
 		}
     }
 }

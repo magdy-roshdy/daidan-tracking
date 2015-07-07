@@ -100,7 +100,7 @@ namespace Daidan.Web.Controllers
 				listModel.TruckId = model.TruckId;
 				listModel.TruckExpenseList = dbRepository.GetTruckExpenses(model.TruckId, model.Month, model.Year);
 
-				return View("List", listModel);
+				return Create(model.TruckId, model.Month, model.Year);
 			}
 			else
 			{
@@ -143,14 +143,13 @@ namespace Daidan.Web.Controllers
 				TempData["message-class"] = "alert-danger";
 			}
 
-			TrucksExpensesListViewModel listModel = new TrucksExpensesListViewModel();
-			listModel.Month = new DateTime(1, month, 1).ToString("MMMM");
-			listModel.Year = year;
-			listModel.TruckNumber = truckNumber;
-			listModel.TruckId = truckId;
-			listModel.TruckExpenseList = dbRepository.GetTruckExpenses(truckId, month, year);
+			TrucksExpensesIndexViewModel model = new TrucksExpensesIndexViewModel();
+			model.Trucks = Helpers.DaidanControllersHelper.TrucksToSelectListItems(dbRepository.GetAllTrucks());
+			model.Months = Helpers.DaidanControllersHelper.YearMonthsToSelectListItems();
+			model.Year = year;
+			model.Month = month;
 
-			return View("List", listModel);
+			return View("Index", model);
 		}
     }
 }
