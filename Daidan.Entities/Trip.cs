@@ -85,6 +85,17 @@ namespace Daidan.Entities
 			}
 		}
 
+		public virtual decimal AdminFeesAmount
+		{
+			get
+			{
+				if (this.AdministrationPercentage > 0 && this.TripGrossProfit > 0)
+					return this.TripGrossProfit * this.AdministrationPercentage / 100;
+				else
+					return 0;
+			}
+		}
+
 		public virtual string QuantityCaption
 		{
 			get

@@ -62,7 +62,7 @@
 
 		//add sum row
 		tripRow = constructTripRowForTruckSheet('', { 'TripTotalCost': costSum, 'ExtraCost': extraCostSum, 'TripNetProfit': profitSum });
-		$('#searchResult #resultTable tbody').append($(tripRow).css('font-weight', 'bold').css('height', '35px').css('background-color', '#EBEBEB'));
+		$('#searchResult #resultTable tbody').append($(tripRow).addClass('table-header-row'));
 
 		//fill summary info
 		if(sheetInfo.PreviousMonthBalanace < 0)
@@ -95,7 +95,7 @@
 
 		if (cashSum > 0){
 			cashRow = constructRecievedCashRow('', { 'VoucherNumber': '', 'Amount': cashSum });
-			$('#searchResult #recievedCashTable tbody').append($(cashRow).css('font-weight', 'bold').css('height', '35px').css('background-color', '#EBEBEB'));
+			$('#searchResult #recievedCashTable tbody').append($(cashRow).addClass('table-header-row'));
 		}
 
 		//paid expenses
@@ -108,9 +108,9 @@
 			expensesSum += expense.Amount;
 		});
 
-		if (cashSum > 0) {
+		if (expensesSum > 0) {
 			expensesRow = constructPaidExpenseRow({ 'Amount': expensesSum });
-			$('#searchResult #paidExpensesTable tbody').append($(expensesRow).css('font-weight', 'bold').css('height', '35px').css('background-color', '#EBEBEB'));
+			$('#searchResult #paidExpensesTable tbody').append($(expensesRow).addClass('table-header-row'));
 		}
 	}
 
@@ -128,6 +128,8 @@
 			<td style='text-align: center;'>" + tripObject.TripTotalCost.toFixed(2) + "</td>\
 			<td style='text-align: center;'>" + tripObject.ExtraCost.toFixed(2) + "</td>\
 			<td style='text-align: center;'>" + (tripObject.TripNetProfit ? tripObject.TripNetProfit.toFixed(2) : zero.toFixed(2)) + "</td>\
+			<td style='text-align: center;' class='hide-print'>" + (tripObject.AdministrationPercentage ? tripObject.AdministrationPercentage + '%' : '') + "</td>\
+			<td style='text-align: center;' class='hide-print'>" + (tripObject.AdminFeesAmount ? tripObject.AdminFeesAmount.toFixed(2) : '') + "</td>\
 		</tr>";
 
 		return newTripRow;

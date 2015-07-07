@@ -19,6 +19,13 @@
 	#resultTable tr {
 		height: 30px;
 	}
+
+	.table-header-row
+	{
+		 background-color: #EBEBEB;
+		 line-height: 35px;
+		 font-weight: bold;
+	}
 </style>
 <h2><i class="fa fa-truck"></i> Truck Sheet</h2>
 <div id="searchPanel">
@@ -86,7 +93,7 @@
 
 			<table border="1" class="table-responsive" style="width: 100%;" id="resultTable">
 				<thead>
-					<tr style="background-color: #EBEBEB; height: 35px;">
+					<tr class="table-header-row">
 						<th style="text-align: center;" width="30">&nbsp;</th>
 						<th style="text-align: center;" width="85">Date</th>
 						<th style="text-align: center;" width="120">Customer</th>
@@ -96,10 +103,29 @@
 						<th style="text-align: center;" width="50">Trip Cost</th>
 						<th style="text-align: center;" width="50">Trip Price</th>
 						<th style="text-align: center;" width="90">Trip Net Profit</th>
+						<th style="text-align: center;" width="120" class="hide-print">Admin. percentage</th>
+						<th style="text-align: center;" width="90" class="hide-print">Admin. Amount</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
 			</table>
+			<style type="text/css" media="print">
+				.hide-print {
+					display: none;
+				}
+
+				#resultTable
+				{
+					font-size: 0.7em;
+				}
+
+				.table-header-row{
+					 background-color: #EBEBEB;
+					 line-height: 20px;
+					 font-weight: bold;
+				}
+			</style>
+
 			<br /><br />
 
 			<h3>Truck Expenses</h3>
@@ -120,4 +146,4 @@
 </div>
 
 <script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>
-<script type="text/javascript" src="~/Scripts/truck-sheet.js"></script>
+<script type="text/javascript" src="~/Scripts/truck-sheet.js?version=1.1"></script>
