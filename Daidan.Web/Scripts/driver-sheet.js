@@ -43,6 +43,9 @@
 		$('#searchResult #summaryTable #monthBalanaceCell').empty();
 		$('#searchResult #recievedCashTable tbody').empty();
 		$('#searchResult #paidExpensesTable tbody').empty();
+
+		$('#toggleAdminExpensesCheckbox').prop('checked', false);
+		$("#resultTable th[data-show-hide-toggle='true']").show();
 		
 
 		var counter = 1;
@@ -112,6 +115,13 @@
 			expensesRow = constructPaidExpenseRow({ 'Amount': expensesSum });
 			$('#searchResult #paidExpensesTable tbody').append($(expensesRow).addClass('table-header-row'));
 		}
+
+		//final values table
+		var monthTripsCost = sheetInfo.MonthSalary + sheetInfo.DriverTripsProfit + sheetInfo.MonthPaidExpensesSum;
+		var monthFinalValue = profitSum - monthTripsCost;
+		$('#searchResult #finalValuesTable #monthTripsProfitCell').text(profitSum.toFixed(2));
+		$('#searchResult #finalValuesTable #monthTripsCostCell').text(monthTripsCost.toFixed(2));
+		$('#searchResult #finalValuesTable #monthFinalValueCell').text(monthFinalValue.toFixed(2));
 	}
 
 	function constructTripRowForTruckSheet(counter, tripObject) {
@@ -128,8 +138,8 @@
 			<td style='text-align: center;'>" + tripObject.TripTotalCost.toFixed(2) + "</td>\
 			<td style='text-align: center;'>" + tripObject.ExtraCost.toFixed(2) + "</td>\
 			<td style='text-align: center;'>" + (tripObject.TripNetProfit ? tripObject.TripNetProfit.toFixed(2) : zero.toFixed(2)) + "</td>\
-			<td style='text-align: center;' class='hide-print'>" + (tripObject.AdministrationPercentage ? tripObject.AdministrationPercentage + '%' : '') + "</td>\
-			<td style='text-align: center;' class='hide-print'>" + (tripObject.AdminFeesAmount ? tripObject.AdminFeesAmount.toFixed(2) : '') + "</td>\
+			<td style='text-align: center;' data-show-hide-toggle='true'>" + (tripObject.AdministrationPercentage ? tripObject.AdministrationPercentage + '%' : '') + "</td>\
+			<td style='text-align: center;' data-show-hide-toggle='true'>" + (tripObject.AdminFeesAmount ? tripObject.AdminFeesAmount.toFixed(2) : '') + "</td>\
 		</tr>";
 
 		return newTripRow;
@@ -154,6 +164,14 @@
 
 		return cashRow;
 	}
+
+	$('#toggleAdminExpensesCheckbox').click(function () {
+		if (this.checked) {
+			$("#resultTable td[data-show-hide-toggle='true'], #resultTable th[data-show-hide-toggle='true']").hide();
+		} else {
+			$("#resultTable td[data-show-hide-toggle='true'], #resultTable th[data-show-hide-toggle='true']").show();
+		}
+	});
 
 	$('#printButton').click(function () {
 		$('.print-area').printArea();

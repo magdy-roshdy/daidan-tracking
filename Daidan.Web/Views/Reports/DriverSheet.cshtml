@@ -35,7 +35,7 @@
 
 	.table-header-row {
 		background-color: #EBEBEB;
-		line-height: 35px;
+		height: 35px;
 		font-weight: bold;
 	}
 </style>
@@ -102,30 +102,35 @@
 
 			<h3>Month Trips</h3>
 			<hr style="border-color: #7D7D7D;" />
-
+			<div class="row hide-print">
+				<div class="col-lg-9">&nbsp;</div>
+				<div class="col-lg-3">
+					<input type="checkbox" id="toggleAdminExpensesCheckbox" />
+					<label for="toggleAdminExpensesCheckbox">Hide Admin Expenses Columns</label>
+				</div>
+			</div>
 			<table border="1" class="table-responsive" style="width: 100%;" id="resultTable">
 				<thead>
 					<tr class="table-header-row">
 						<th style="text-align: center;" width="40">&nbsp;</th>
 						<th style="text-align: center;" width="90">Date</th>
 						<th style="text-align: center;" width="80">Voucher #</th>
-						<th style="text-align: center;" width="85">Truck #</th>
-						<th style="text-align: center;" width="190">Customer</th>
+						<th style="text-align: center;" width="80">Truck #</th>
+						<th style="text-align: center;" width="165">Customer</th>
 						<th style="text-align: center;" width="130">Site</th>
-						<th style="text-align: center;" width="85">Material</th>
+						<th style="text-align: center;" width="120">Material</th>
 						<th style="text-align: center;" width="85">Quantity</th>
 						<th style="text-align: center;" width="75">Trip Cost</th>
 						<th style="text-align: center;" width="75">Paid Cash</th>
 						<th style="text-align: center;" width="80">Trip Profit</th>
-						<th style="text-align: center;" width="110" class="hide-print">Admin. percentage</th>
-						<th style="text-align: center;" width="90" class="hide-print">Admin. Amount</th>
+						<th style="text-align: center;" width="110" data-show-hide-toggle="true">Admin. percentage</th>
+						<th style="text-align: center;" width="90" data-show-hide-toggle="true">Admin. Amount</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
 			</table>
-			<br /><br />
 
-			<hr style="border-color: #7D7D7D;" />
+			<hr style="border-color: #7D7D7D;" class="page-breaker" />
 			<table border="0" style="width: 100%;">
 				<tr>
 					<td style="width: 50%; vertical-align: top;">
@@ -169,10 +174,26 @@
 								</tr>
 							</tbody>
 						</table>
+
+						<br />
+
+						<h4>Month Final Values</h4>
+						<table border="1" class="table-responsive" style="width: 410px;" id="finalValuesTable">
+							<thead>
+								<tr class="table-header-row ">
+									<th style="width: 100px;text-align: center;">Month Trips Profit</th>
+									<th style="width: 100px;text-align: center;">Month Trips Cost</th>
+									<th style="width: 90px;text-align: center;">Final Value</th>
+								</tr>
+								<tr>
+									<td style="text-align: center" class ="monthSummaryTitle" id="monthTripsProfitCell"></td>
+									<td style="text-align: center" class="monthSummaryTitle" id="monthTripsCostCell"></td>
+									<td style="text-align: center" class="monthSummaryTitle" id="monthFinalValueCell"></td>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
 					</td>
-					<!--
-					<td style="width: 50px; border-left: dotted 1px #000;">&nbsp;</td>
-					-->
 					<td style="vertical-align: top;">
 						<h4>Received Cash Details</h4>
 						<table border="1" class="table-responsive" style="width: 100%;" id="recievedCashTable">
@@ -208,7 +229,7 @@
 					display: none;
 				}
 
-				#summaryTable, #recievedCashTable, #paidExpensesTable {
+				#summaryTable, #recievedCashTable, #paidExpensesTable, #finalValuesTable {
 					font-size: 0.7em;
 				}
 
@@ -219,8 +240,13 @@
 
 				.table-header-row {
 					background-color: #EBEBEB;
-					line-height: 20px;
+					line-height: 15px;
 					font-weight: bold;
+				}
+
+				.page-breaker
+				{
+					page-break-after: always;
 				}
 			</style>
 
@@ -237,4 +263,4 @@
 </div>
 
 <script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>
-<script type="text/javascript" src="~/Scripts/driver-sheet.js?version=1.4"></script>
+<script type="text/javascript" src="~/Scripts/driver-sheet.js?version=1.6"></script>
