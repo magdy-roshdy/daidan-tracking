@@ -138,7 +138,7 @@
 			<td style='text-align: center;'>" + tripObject.TripTotalCost.toFixed(2) + "</td>\
 			<td style='text-align: center;'>" + tripObject.ExtraCost.toFixed(2) + "</td>\
 			<td style='text-align: center;'>" + (tripObject.TripNetProfit ? tripObject.TripNetProfit.toFixed(2) : zero.toFixed(2)) + "</td>\
-			<td style='text-align: center;' data-show-hide-toggle='true'>" + (tripObject.AdministrationPercentage ? tripObject.AdministrationPercentage + '%' : '') + "</td>\
+			<td style='text-align: center;' data-show-hide-toggle='true'>" + (tripObject.AdminFeesCaption ? tripObject.AdminFeesCaption : '') + "</td>\
 			<td style='text-align: center;' data-show-hide-toggle='true'>" + (tripObject.AdminFeesAmount ? tripObject.AdminFeesAmount.toFixed(2) : '') + "</td>\
 		</tr>";
 

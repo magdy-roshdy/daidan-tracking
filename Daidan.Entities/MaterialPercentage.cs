@@ -12,5 +12,6 @@ namespace Daidan.Entities
 		public virtual CustomerPercentage CustomerPercentage { get; set; }
 		public virtual Material Material { get; set; }
 		public virtual decimal Amount { get; set; }
+		public virtual bool IsAmount { get; set; }
 	}
 }

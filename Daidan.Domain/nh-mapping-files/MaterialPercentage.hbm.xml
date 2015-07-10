@@ -8,6 +8,7 @@
 			<generator class="identity"/>
 		</id>
 		<property name="Amount" column="MaterialPercentageAmount" />
+		<property name="IsAmount" column="MaterialPercentageIsAmount" />
 
 		<many-to-one name="CustomerPercentage" class="CustomerPercentage" column="MaterialPercentageCustomer" not-null="false" lazy="false" />
 		<many-to-one name="Material" class="Material" column="MaterialPercentageMaterialId" not-null="false" lazy="false" />

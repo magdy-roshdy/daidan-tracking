@@ -261,18 +261,18 @@ namespace Daidan.Web.Helpers
 							MaterialPercentage material = customer.MaterialsPercentage.FirstOrDefault(x => x.Material.Id == trip.Material.Id);
 							if (material != null)
 							{
-								trip.AdministrationPercentage = material.Amount;
+								trip.AdministrationPercentage = new AdminFeesPercentage { Amount = material.Amount, IsAmount =  material.IsAmount};
 								percentageFound = true;
 							}
 							else
 							{
-								trip.AdministrationPercentage = customer.Amount;
+								trip.AdministrationPercentage = new AdminFeesPercentage { Amount = customer.Amount, IsAmount = false };
 								percentageFound = true;
 							}
 						}
 						else
 						{
-							trip.AdministrationPercentage = _month.Amount;
+							trip.AdministrationPercentage = new AdminFeesPercentage { Amount = _month.Amount, IsAmount = false };
 							percentageFound = true;
 						}
 					}
@@ -280,7 +280,7 @@ namespace Daidan.Web.Helpers
 
 				if (!percentageFound)
 				{
-					trip.AdministrationPercentage = globalPercentage;
+					trip.AdministrationPercentage = new AdminFeesPercentage { Amount = globalPercentage, IsAmount = false };
 				}
 
 				percentageFound = false;

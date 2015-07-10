@@ -18,7 +18,7 @@ namespace Daidan.Entities
 		public virtual decimal UnitsQuantity { get; set; }
 		public virtual decimal ExtraCost { get; set; }
 		public virtual decimal UnitSellingPrice  { get; set; }
-		public virtual decimal AdministrationPercentage { get; set; }
+		public virtual AdminFeesPercentage AdministrationPercentage { get; set; }
 
 		public virtual DateTime AddedOn { get; set; }
 		public virtual DateTime? LastModifiedOn { get; set; }
@@ -75,8 +75,13 @@ namespace Daidan.Entities
 			{
 				if (this.TripGrossProfit != 0)
 				{
-					if (this.AdministrationPercentage > 0)
-						return this.TripGrossProfit * (1 - (this.AdministrationPercentage / 100));
+					if (this.AdministrationPercentage != null && this.AdministrationPercentage.Amount  > 0)
+					{
+						if (!this.AdministrationPercentage.IsAmount)
+							return this.TripGrossProfit * (1 - (this.AdministrationPercentage.Amount / 100));
+						else
+							return this.TripGrossProfit - this.AdministrationPercentage.Amount;
+					}
 					else
 						return this.TripGrossProfit;
 				}
@@ -89,8 +94,13 @@ namespace Daidan.Entities
 		{
 			get
 			{
-				if (this.AdministrationPercentage > 0 && this.TripGrossProfit > 0)
-					return this.TripGrossProfit * this.AdministrationPercentage / 100;
+				if (this.AdministrationPercentage != null && this.AdministrationPercentage.Amount > 0 && this.TripGrossProfit > 0)
+				{
+					if (!this.AdministrationPercentage.IsAmount)
+						return this.TripGrossProfit * this.AdministrationPercentage.Amount / 100;
+					else
+						return this.AdministrationPercentage.Amount;
+				}
 				else
 					return 0;
 			}
@@ -104,5 +114,35 @@ namespace Daidan.Entities
 				return x;
 			}
 		}
+
+		public virtual string AdminFeesCaption
+		{
+			get
+			{
+				if (this.AdministrationPercentage != null)
+				{
+					if (this.AdministrationPercentage.IsAmount)
+					{
+						return this.AdministrationPercentage.Amount.ToString();
+					}
+					else
+					{
+						return this.AdministrationPercentage.Amount.ToString() + "%";
+					}
+				}
+				else
+					return string.Empty;
+			}
+		}
     }
+
+	public class AdminFeesPercentage
+	{
+		public AdminFeesPercentage()
+		{
+			this.IsAmount = false; //silly but to be sure
+		}
+		public decimal Amount { get; set; }
+		public bool IsAmount { get; set; }
+	}
 }
