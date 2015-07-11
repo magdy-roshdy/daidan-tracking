@@ -80,7 +80,8 @@
 	initWorkingObject
 	(
 		{
-			'addDeleteToTripRow': true
+			'addDeleteToTripRow': true,
+			'showSellingPriceColumns' :true
 		}
 	);
 
@@ -113,13 +114,6 @@ function deleteTrip(deleteDiv) {
 			data: { tripId: $('input', $(deleteDiv).parent()).val() },
 			success: function (data) {
 				window.currentWorkObject.deletedTD.parent().remove();
-				initWorkingObject
-				(
-					{
-						'addDeleteToTripRow': true
-					}
-				);
-
 				showNotification('Trip deleted succesfully <i class="fa fa-check fa-lg"></i>', 'success');
 
 				resetTripsTableCounter($('#searchResult'));

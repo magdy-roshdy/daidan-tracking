@@ -9,7 +9,8 @@
 	initWorkingObject
 		(
 			{
-				'addDeleteToTripRow': false
+				'addDeleteToTripRow': false,
+				'showSellingPriceColumns': false
 			}
 		);
 

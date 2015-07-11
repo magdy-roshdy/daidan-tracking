@@ -16,14 +16,24 @@ function constructTripRow(tripObject) {
 		<td style='text-align: center;'>" + tripObject.UnitCost.toFixed(2) + "</td>\
 		<td style='text-align: center;'>" + tripObject.TripCost.toFixed(2) + "</td>\
 		<td style='text-align: center;'>" + tripObject.ExtraCost.toFixed(2) + "</td>\
-		<td style='text-align: center;'>" + tripObject.TripTotalCost.toFixed(2) + "</td>\
-		<td style='text-align: center;' class='hide-print'>\
-			<div style='cursor: pointer;' onclick='editTrip(this);'>\
-				<i class='fa fa-edit fa-lg'></i>\
-				<i class='fa fa-spinner fa-pulse fa-lg' style='display: none;'></i>\
-			</div>\
-			<input type='hidden' value='" + tripObject.Id.toString() + "' />\
-		</td>";
+		<td style='text-align: center;'>" + tripObject.TripTotalCost.toFixed(2) + "</td>";
+
+	//selling price columns
+	if (window.currentWorkObject.showSellingPriceColumns) {
+		newTripRow += "<td style='text-align: center;'>" + tripObject.UnitSellingPrice.toFixed(2) + "</td>\
+				<td style='text-align: center;'>" + tripObject.TripTotalPrice.toFixed(2) + "</td>";
+	}
+
+	//edit column
+	newTripRow += "<td style='text-align: center;' class='hide-print'>\
+		<div style='cursor: pointer;' onclick='editTrip(this);'>\
+			<i class='fa fa-edit fa-lg'></i>\
+			<i class='fa fa-spinner fa-pulse fa-lg' style='display: none;'></i>\
+		</div>\
+		<input type='hidden' value='" + tripObject.Id.toString() + "' />\
+	</td>";
+
+	//delete column
 	if (window.currentWorkObject.addDeleteToTripRow) {
 		newTripRow += "<td style='text-align: center;' class='hide-print'>\
 				<div style='cursor: pointer;' onclick='deleteTrip(this);'><img src='/Content/images/delete.png' alt='' /></div>\
@@ -44,11 +54,15 @@ function resetTripsTableCounter(tableObject) {
 
 function initWorkingObject(initObject) {
 	var _addDeleteToTripRow = false;
+	var _showSellingPriceColumns = false;
 	if (!initObject) {
-		if (window.currentWorkObject)
+		if (window.currentWorkObject) {
 			_addDeleteToTripRow = window.currentWorkObject.addDeleteToTripRow;
+			_showSellingPriceColumns = window.currentWorkObject.showSellingPriceColumns;
+		}
 	} else {
 		_addDeleteToTripRow = initObject.addDeleteToTripRow;
+		_showSellingPriceColumns = initObject.showSellingPriceColumns;
 	}
 
 	var workingObject = {
@@ -56,7 +70,8 @@ function initWorkingObject(initObject) {
 		'deletedTD': null,
 		'currentTrip': null,
 		'SelectText': '[SELECT]',
-		'addDeleteToTripRow': _addDeleteToTripRow
+		'addDeleteToTripRow': _addDeleteToTripRow,
+		'showSellingPriceColumns': _showSellingPriceColumns
 	};
 
 	window.currentWorkObject = workingObject;

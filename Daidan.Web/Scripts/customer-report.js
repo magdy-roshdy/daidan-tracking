@@ -1,12 +1,5 @@
 ﻿$(function () {
 	window.lookups = getTripLookups();
-	initWorkingObject
-		(
-			{
-				'addDeleteToTripRow': false
-			}
-		);
-
 	fillDropDown($('#customers'), window.lookups.Customers, 'Name');
 	fillDropDown($('#materials'), window.lookups.Materials, 'Name');
 	$('#fromDateGroup').datepicker(
@@ -135,7 +128,7 @@
 	$('#updateSellingPriceModal .btn-primary').click(function () {
 		var modalObj = $('#updateSellingPriceModal');
 		var textBoxObj = $('#updateSellingPriceModal #sellingPrice');
-		var valid = validateField(textBoxObj, /^(?:\d*\.\d{1,2}|\d+)$/, "Please enter selling price", '#updateSellingPriceModal');
+		var valid = validateField(textBoxObj, /^(?:\d*\.\d{1,3}|\d+)$/, "Please enter selling price", '#updateSellingPriceModal');
 		if (valid) {
 			var idsArray = [];
 			$('#searchResult #resultTable tbody input:hidden').each(function (index, hidden) {
@@ -250,7 +243,7 @@ function constructTripRowForCustomerReport(counter, tripObject, hideDelete) {
 		<td style='text-align: center;'>" + (tripObject.PONumber ? tripObject.PONumber : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.Truck ? tripObject.Truck.Number : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.QuantityCaption ? tripObject.QuantityCaption : '') + "</td>\
-		<td style='text-align: center;'>" + (tripObject.UnitSellingPrice ? tripObject.UnitSellingPrice.toFixed(2) : '') + "</td>\
+		<td style='text-align: center;'>" + (tripObject.UnitSellingPrice ? tripObject.UnitSellingPrice.toFixed(3) : '') + "</td>\
 		<td style='text-align: center;'>" + (tripObject.TripTotalPrice ? tripObject.TripTotalPrice.toFixed(2) : '') + "</td>\
 		<td style='text-align: center;' class='hide-print'>\
 		<input type='hidden' value='" + tripObject.Id.toString() + "' />";
