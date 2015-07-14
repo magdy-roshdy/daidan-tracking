@@ -52,6 +52,9 @@ namespace Daidan.Web.Controllers
 			//update admin perecntage
 			Helpers.DaidanControllersHelper.UpdateTripsAdminPercentage(result.Trips, searchParameter.Month, searchParameter.Year, dbRepository);
 
+			result.MonthAdminFeesSum = result.Trips.Sum(x => x.AdminFeesAmount);
+
+			//TODO: refactor to use grouping ... idiot!
 			IList<TruckExpense> expenses = dbRepository.GetTruckSheetExpenses(searchParameter.TruckId, searchParameter.Month, searchParameter.Year);
 			IList<TruckExpense> grupedExpenses = new List<TruckExpense>();
 
@@ -122,6 +125,7 @@ namespace Daidan.Web.Controllers
 			}
 
 			result.ExtraCostSum = result.Trips.Sum(x => x.ExtraCost);
+			result.MonthAdminFeesSum = result.Trips.Sum(x => x.AdminFeesAmount);
 
 			result.MonthDriverCash = dbRepository.GetDriverCashList(searchParameter.DriverId, tripsSearchParameters.From,  tripsSearchParameters.To).OrderBy(x => x.Date).ToList();
 			result.MonthDriverCashSum = result.MonthDriverCash.Sum(x => x.Amount);

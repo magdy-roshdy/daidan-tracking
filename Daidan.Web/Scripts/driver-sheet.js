@@ -64,7 +64,7 @@
 		});
 
 		//add sum row
-		tripRow = constructTripRowForTruckSheet('', { 'TripTotalCost': costSum, 'ExtraCost': extraCostSum, 'TripNetProfit': profitSum });
+		tripRow = constructTripRowForTruckSheet('', { 'TripTotalCost': costSum, 'ExtraCost': extraCostSum, 'TripNetProfit': profitSum, 'AdminFeesAmount': sheetInfo.MonthAdminFeesSum });
 		$('#searchResult #resultTable tbody').append($(tripRow).addClass('table-header-row'));
 
 		//fill summary info

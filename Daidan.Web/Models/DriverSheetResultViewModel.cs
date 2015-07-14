@@ -21,6 +21,7 @@ namespace Daidan.Web.Models
 		public decimal MonthPaidExpensesSum { get; set; }
 		public decimal ExtraCostSum { get; set; }
 		public decimal MonthDriverCashSum { get; set; }
+		public decimal MonthAdminFeesSum { get; set; }
 
 		public IList<DriverCash> MonthDriverCash { get; set; }
 		public IList<TruckExpense> MonthPaidExpenses { get; set; }

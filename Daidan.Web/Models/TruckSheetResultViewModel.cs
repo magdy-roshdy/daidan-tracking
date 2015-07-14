@@ -10,5 +10,7 @@ namespace Daidan.Web.Models
 	{
 		public IList<Trip> Trips { get; set; }
 		public IList<TruckExpense> Expenses { get; set; }
+
+		public decimal MonthAdminFeesSum { get; set; }
 	}
 }
