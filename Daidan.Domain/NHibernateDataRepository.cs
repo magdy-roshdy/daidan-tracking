@@ -229,35 +229,42 @@ namespace Daidan.Domain
 
 		public Driver SaveDriver(Driver driver)
 		{
-			using (ISession session = SessionFactory.OpenSession())
+			Driver db_driver = null;
+			try
 			{
-				using (ITransaction transaction = session.BeginTransaction())
+				using (ISession session = SessionFactory.OpenSession())
 				{
-					if (driver.Id > 0)
+					using (ITransaction transaction = session.BeginTransaction())
 					{
-						Driver db_driver = session.Get<Driver>(driver.Id);
+						if (driver.Id > 0)
+						{
+							db_driver = session.Get<Driver>(driver.Id);
+
+							db_driver.Name = driver.Name;
+							db_driver.IsActive = driver.IsActive;
+							db_driver.IsOutsourced = driver.IsOutsourced;
 
 
+							session.Save(db_driver);
+							driver = db_driver;
+						}
+						else
+						{
+							session.Save(driver);
+							db_driver = driver;
+						}
 
-						db_driver.Name = driver.Name;
-						db_driver.IsActive = driver.IsActive;
-						db_driver.IsOutsourced = driver.IsOutsourced;
-						
-
-						session.Save(db_driver);
-						driver = db_driver;
+						transaction.Commit();
+						session.Flush();
 					}
-					else
-					{
-						session.Save(driver);
-					}
-
-					transaction.Commit();
-					session.Flush();
 				}
 			}
+			catch
+			{
+				db_driver = null;
+			}
 
-			return driver;
+			return db_driver;
 		}
 
 		public bool DeleteDriver(int driverId)
@@ -524,36 +531,45 @@ namespace Daidan.Domain
 
 		public Truck SaveTruck(Truck truck)
 		{
-			using (ISession session = SessionFactory.OpenSession())
+			Truck db_truck = null;
+			try
 			{
-				using (ITransaction transaction = session.BeginTransaction())
+				using (ISession session = SessionFactory.OpenSession())
 				{
-					if (truck.Id > 0)
+					using (ITransaction transaction = session.BeginTransaction())
 					{
-						Truck db_truck = session.Get<Truck>(truck.Id);
+						if (truck.Id > 0)
+						{
+							db_truck = session.Get<Truck>(truck.Id);
 
-						db_truck.Number = truck.Number;
-						db_truck.IsActive = truck.IsActive;
-						db_truck.IsOutsourced = truck.IsOutsourced;
-						if (truck.Driver != null && truck.Driver.Id > 0)
-							db_truck.Driver = session.Get<Driver>(truck.Driver.Id);
+							db_truck.Number = truck.Number;
+							db_truck.IsActive = truck.IsActive;
+							db_truck.IsOutsourced = truck.IsOutsourced;
+							if (truck.Driver != null && truck.Driver.Id > 0)
+								db_truck.Driver = session.Get<Driver>(truck.Driver.Id);
+							else
+								db_truck.Driver = null;
+
+							session.Save(db_truck);
+							truck = db_truck;
+						}
 						else
-							db_truck.Driver = null;
+						{
+							session.Save(truck);
+							db_truck = truck;
+						}
 
-						session.Save(db_truck);
-						truck = db_truck;
+						transaction.Commit();
+						session.Flush();
 					}
-					else
-					{
-						session.Save(truck);
-					}
-
-					transaction.Commit();
-					session.Flush();
 				}
 			}
+			catch
+			{
+				db_truck = null;
+			}
 
-			return truck;
+			return db_truck;
 		}
 
 		public bool DeleteTruck(int truckId)

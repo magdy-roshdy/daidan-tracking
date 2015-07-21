@@ -41,11 +41,21 @@ namespace Daidan.Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				dbRepository.SaveDriver(driver);
-				TempData["message"] = driver.Id > 0 ? "Driver information updated successfully" : "Driver added successfully";
-				TempData["message-class"] = "alert-success";
+				Driver db_driver = dbRepository.SaveDriver(driver);
+				if (db_driver != null)
+				{
+					TempData["message"] = driver.Id > 0 ? "Driver information updated successfully" : "Driver added successfully";
+					TempData["message-class"] = "alert-success";
 
-				return RedirectToAction("ListDrivers");
+					return RedirectToAction("ListDrivers");
+				}
+				else
+				{
+					TempData["message"] = driver.Id > 0 ? "Can't update driver information, may be there is a driver with the same name" : "Can't create the driver, may be there is a driver with the same name";
+					TempData["message-class"] = "alert-danger";
+
+					return View(driver);
+				}
 			}
 			else
 			{
@@ -283,20 +293,27 @@ namespace Daidan.Web.Controllers
 
 			if (ModelState.IsValid)
 			{
-				dbRepository.SaveTruck(truck);
-				TempData["message"] = truck.Id > 0 ? "Truck information updated successfully" : "Truck added successfully";
-				TempData["message-class"] = "alert-success";
+				Truck db_truck = dbRepository.SaveTruck(truck);
 
-				return RedirectToAction("TrucksList");
+				if (db_truck != null)
+				{ 
+					TempData["message"] = truck.Id > 0 ? "Truck information updated successfully" : "Truck added successfully";
+					TempData["message-class"] = "alert-success";
+
+					return RedirectToAction("TrucksList");
+				}
+				else
+				{
+					TempData["message"] = model.TruckId > 0 ? "Can't update truck info, may be there is a truck with the same number" : "Can't create the truck, may be there is a truck with the same number";
+					TempData["message-class"] = "alert-danger";
+				}
 			}
-			else
-			{
-				if (truck.Driver != null)
-					truck.Driver = dbRepository.GetDriverById(truck.Driver.Id);
-				model.TruckIsOutsourcedX = model.TruckIsOutsourced;
-				model.Drivers = getEditTruckDriversList(truck);
-				return View(model);
-			}
+
+			if (truck.Driver != null)
+				truck.Driver = dbRepository.GetDriverById(truck.Driver.Id);
+			model.TruckIsOutsourcedX = model.TruckIsOutsourced;
+			model.Drivers = getEditTruckDriversList(truck);
+			return View(model);
 		}
 
 		public ActionResult CreateTruck(bool isOutsourced)
