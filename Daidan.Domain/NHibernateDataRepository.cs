@@ -960,11 +960,11 @@ namespace Daidan.Domain
 			}
 		}
 
-		public IList<MonthPercentage> GetMonthsPercentage(int month, int year)
+		public IList<MonthAminPercentage> GetMonthsPercentage(int month, int year)
 		{
 			using (ISession session = SessionFactory.OpenSession())
 			{
-				return session.QueryOver<MonthPercentage>().Where(x => x.Month == month).Where(x => x.Year == year).List();
+				return session.QueryOver<MonthAminPercentage>().Where(x => x.Month == month).Where(x => x.Year == year).List();
 			}
 		}
 
@@ -1091,6 +1091,196 @@ namespace Daidan.Domain
 						monthBalanace.LastModefied = DateTime.Now;
 						session.Save(monthBalanace);
 
+						transaction.Commit();
+						session.Flush();
+
+						result = true;
+					}
+					catch
+					{
+						result = false;
+					}
+
+				}
+			}
+
+			return result;
+		}
+
+		public IList<MaterialAdminPercentage> GetMaterialsAdminPercentageByMonth(int monthId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<MaterialAdminPercentage>().Where(x => x.Month.Id == monthId).List();
+			}
+		}
+
+		public MonthAminPercentage GetMonthAminPercentageById(int monthId)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.Get<MonthAminPercentage>(monthId);
+			}
+		}
+
+		public void SaveMonthAdminPercentage(MonthAminPercentage month, IList<MaterialAdminPercentage> monthMaterialPercentages,
+			IList<long> materialsToDelete, IList<long> customersToDelete)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					//delete deleted items
+					foreach (long customerId in customersToDelete)
+					{
+						CustomerAdminPercentage customer_db = session.Get<CustomerAdminPercentage>(customerId);
+						session.Delete(customer_db);
+					}
+					foreach (long materialId in materialsToDelete)
+					{
+						MaterialAdminPercentage material_db = session.Get<MaterialAdminPercentage>(materialId);
+						foreach (CustomerAdminPercentage customerPercentage in material_db.CustomersPercentage)
+						{
+							CustomerAdminPercentage customer_db = session.Get<CustomerAdminPercentage>(customerPercentage.Id);
+							session.Delete(customer_db);
+						}
+						session.Flush();
+
+						session.Delete(material_db);
+					}
+					session.Flush();
+
+					//add new data
+					MaterialAdminPercentage materialPercentage_db = null;
+					CustomerAdminPercentage customerPercentage_db = null;
+
+					if (monthMaterialPercentages != null)
+					{ 
+						foreach (MaterialAdminPercentage materialPercentage in monthMaterialPercentages)
+						{
+							if (materialPercentage.Id > 0)
+							{ 
+								materialPercentage_db = session.Get<MaterialAdminPercentage>(materialPercentage.Id);
+								materialPercentage_db.Material = session.Get<Material>(materialPercentage.Material.Id);
+								materialPercentage_db.Amount = materialPercentage.Amount;
+								materialPercentage_db.IsFixedAmount = materialPercentage.IsFixedAmount;
+								session.Save(materialPercentage_db);
+							}
+							else
+							{
+								materialPercentage.Material = session.Get<Material>(materialPercentage.Material.Id);
+								session.Save(materialPercentage);
+
+								materialPercentage_db = materialPercentage;
+							}
+						
+							if (materialPercentage.CustomersPercentage != null) //stupid I know!
+							{
+								foreach (CustomerAdminPercentage customerPercentage in materialPercentage.CustomersPercentage)
+								{
+									if (customerPercentage.Id > 0)
+									{
+										customerPercentage_db = session.Get<CustomerAdminPercentage>(customerPercentage.Id);
+										customerPercentage.Customer = session.Get<Customer>(customerPercentage.Customer.Id);
+										customerPercentage_db.MaterialPercentage = materialPercentage_db;
+										customerPercentage_db.Amount = customerPercentage.Amount;
+										customerPercentage_db.IsFixedAmount = customerPercentage.IsFixedAmount;
+									
+										session.Save(customerPercentage_db);
+									}
+									else
+									{
+										customerPercentage.MaterialPercentage = materialPercentage_db;
+										customerPercentage.Customer = session.Get<Customer>(customerPercentage.Customer.Id);
+										session.Save(customerPercentage);
+									}
+								}
+							}
+						}
+					}
+					session.Flush();
+
+					transaction.Commit();
+				}
+			}
+		}
+
+		public IList<MonthAminPercentage> GetAllMonthAdminPercentages()
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<MonthAminPercentage>().List();
+			}
+		}
+
+		public MonthAminPercentage SaveMonthAdminPercentage(MonthAminPercentage month, int? monthToCopyFrom)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					if (month.Id > 0)
+					{
+						MonthAminPercentage db_month = session.Get<MonthAminPercentage>(month.Id);
+						db_month.Amount = month.Amount;
+						db_month.Year = month.Year;
+						db_month.Month = month.Month;
+
+						session.Save(db_month);
+						month = db_month;
+					}
+					else
+					{
+						session.Save(month);
+
+						//copy data from a previous month
+						if (monthToCopyFrom.HasValue)
+						{
+							IList<MaterialAdminPercentage> materials = this.GetMaterialsAdminPercentageByMonth(monthToCopyFrom.Value);
+							foreach (MaterialAdminPercentage material in materials)
+							{
+								MaterialAdminPercentage newMaterial = new MaterialAdminPercentage();
+								newMaterial.Month = month;
+								newMaterial.Material = session.Get<Material>(material.Material.Id);
+								newMaterial.Amount = material.Amount;
+								newMaterial.IsFixedAmount = material.IsFixedAmount;
+
+								session.Save(newMaterial);
+
+								//save customers
+								foreach (CustomerAdminPercentage customer in material.CustomersPercentage)
+								{
+									CustomerAdminPercentage newCustomer = new CustomerAdminPercentage();
+									newCustomer.MaterialPercentage = newMaterial;
+									newCustomer.Customer = session.Get<Customer>(customer.Customer.Id);
+									newCustomer.Amount = customer.Amount;
+									newCustomer.IsFixedAmount = customer.IsFixedAmount;
+
+									session.Save(newCustomer);
+								}
+							}
+						}
+					}
+
+					transaction.Commit();
+					session.Flush();
+				}
+			}
+
+			return month;
+		}
+
+		public bool DeleteMonthAdminPercentage(int monthId)
+		{
+			bool result = false;
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				using (ITransaction transaction = session.BeginTransaction())
+				{
+					try
+					{
+						MonthAminPercentage db_month = session.Get<MonthAminPercentage>(monthId);
+						session.Delete(db_month);
 						transaction.Commit();
 						session.Flush();
 

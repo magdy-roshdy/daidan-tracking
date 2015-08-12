@@ -3,7 +3,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="Daidan.Entities"
                    namespace="Daidan.Entities">
-	<class name="MonthPercentage" table="MonthPercentage">
+	<class name="MonthAminPercentage" table="MonthAminPercentage">
 
 		<id name="Id" column="MonthPercentageId">
 			<generator class="identity"/>
@@ -11,10 +11,5 @@
 		<property name="Month" column="MonthPercentageMonth" />
 		<property name="Year" column="MonthPercentageYear" />
 		<property name="Amount" column="MonthPercentageAmount" />
-
-		<bag name="CustomersPercentage" lazy="false">
-			<key column="CustomerPercentageMonthId" />
-			<one-to-many class="CustomerPercentage"/>
-		</bag>
 	</class>
 </hibernate-mapping>

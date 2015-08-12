@@ -135,6 +135,7 @@
     </Content>
     <Content Include="notes.txt" />
     <Content Include="Scripts\add-trip-script.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-notify.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminPercentageController.cs" />
     <Compile Include="Controllers\DriverSalaryController.cs" />
     <Compile Include="Controllers\DriversCashController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Infrastructure\RedirectAuthorizeAttribute.cs" />
     <Compile Include="Models\AddTripLookup.cs" />
     <Compile Include="Models\AddTripViewModel.cs" />
+    <Compile Include="Models\AdminPercentageEditViewModel.cs" />
     <Compile Include="Models\DriverCashEditViewModel.cs" />
     <Compile Include="Models\DriverCashListViewModel.cs" />
     <Compile Include="Models\DriverSalariesListViewModel.cs" />
@@ -185,6 +188,7 @@
     <Compile Include="Models\EditSiteViewModel.cs" />
     <Compile Include="Models\EditTruckViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\MonthAdminPercentageEditViewModel.cs" />
     <Compile Include="Models\SitesListViewModel.cs" />
     <Compile Include="Models\TrucksExpensesEditViewModel.cs" />
     <Compile Include="Models\TrucksExpensesIndexViewModel.cs" />
@@ -228,6 +232,9 @@
     <Content Include="Views\DriverSalary\List.cshtml" />
     <Content Include="Views\DriverSalary\Edit.cshtml" />
     <Content Include="Views\Reports\DriverSheet.cshtml" />
+    <Content Include="Views\AdminPercentage\Manage.cshtml" />
+    <Content Include="Views\AdminPercentage\List.cshtml" />
+    <Content Include="Views\AdminPercentage\EditMonth.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -86,10 +86,16 @@
   <ItemGroup>
     <EmbeddedResource Include="nh-mapping-files\CustomerPercentage.hbm.xml" />
     <EmbeddedResource Include="nh-mapping-files\MaterialPercentage.hbm.xml" />
-    <EmbeddedResource Include="nh-mapping-files\MonthPercentage.hbm.xml" />
+    <EmbeddedResource Include="nh-mapping-files\MonthAminPercentage.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="nh-mapping-files\DriverMonthBalance.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="nh-mapping-files\MaterialAdminPercentage.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="nh-mapping-files\CustomerAdminPercentage.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

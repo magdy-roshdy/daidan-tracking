@@ -4,7 +4,7 @@
 		<property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
 		<property name="dialect">NHibernate.Dialect.MsSql2008Dialect</property>
 		<property name="connection.driver_class">NHibernate.Driver.Sql2008ClientDriver</property>
-		<property name="connection.connection_string">Server=.\SQLEXPRESS;Database=daidan_trips_system;User Id=sa;Password=sa;</property>
+		<property name="connection.connection_string">Server=.\SQLEXPRESS;Database=daidan_trips_system_dev;User Id=sa;Password=sa;</property>
 		<property name="current_session_context_class">web</property>
 
 		<property name="show_sql">false</property>

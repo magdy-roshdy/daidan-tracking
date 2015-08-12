@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Daidan.Entities
 {
-	public class CustomerPercentage
+	public class MaterialAdminPercentage
 	{
-		public virtual double Id { get; set; }
+		public virtual long Id { get; set; }
 		public virtual MonthAminPercentage Month { get; set; }
-		public virtual Customer Customer { get; set; }
+		public virtual Material Material { get; set; }
 		public virtual decimal Amount { get; set; }
+		public virtual bool IsFixedAmount { get; set; }
 
-		public virtual IList<MaterialPercentage> MaterialsPercentage { get; set; }
+		public virtual IList<CustomerAdminPercentage> CustomersPercentage { get; set; }
 	}
 }

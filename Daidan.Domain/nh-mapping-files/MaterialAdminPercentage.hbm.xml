@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Daidan.Entities"
+                   namespace="Daidan.Entities">
+	<class name="MaterialAdminPercentage" table="MaterialAdminPercentage">
+		<id name="Id" column="MaterialPercentageId">
+			<generator class="identity"/>
+		</id>
+		<property name="Amount" column="MaterialPercentageAmount" />
+		<property name="IsFixedAmount" column="MaterialPercentageIsFixedAmount" />
+
+		<many-to-one name="Month" class="MonthAminPercentage" column="MaterialPercentageMonthId" not-null="false" lazy="false" />
+		<many-to-one name="Material" class="Material" column="MaterialPercentageMaterialId" not-null="false" lazy="false" />
+
+		<bag name="CustomersPercentage" lazy="false" inverse="false">
+			<key column="CustomerPercentageMaterialPercentageId" />
+			<one-to-many class="CustomerAdminPercentage"/>
+		</bag>
+	</class>
+
+</hibernate-mapping>

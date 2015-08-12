@@ -243,7 +243,7 @@ namespace Daidan.Web.Helpers
 
 		public static void UpdateTripsAdminPercentage(IList<Trip> trips, int month, int year, IDataRepository dbRepository)
 		{
-			IList<MonthPercentage> months = dbRepository.GetMonthsPercentage(month, year);
+			IList<MonthAminPercentage> months = dbRepository.GetMonthsPercentage(month, year);
 			byte globalPercentage = 20;
 			byte.TryParse(System.Configuration.ConfigurationManager.AppSettings["globalPercentage"], out globalPercentage);
 
@@ -252,9 +252,10 @@ namespace Daidan.Web.Helpers
 			{
 				if (months.Count > 0)
 				{
-					MonthPercentage _month = months.FirstOrDefault(x => x.Month == trip.Date.Month && x.Year == trip.Date.Year);
+					MonthAminPercentage _month = months.FirstOrDefault(x => x.Month == trip.Date.Month && x.Year == trip.Date.Year);
 					if (_month != null)
 					{
+						/**
 						CustomerPercentage customer = _month.CustomersPercentage.FirstOrDefault(x => x.Customer.Id == trip.Site.Customer.Id);
 						if (customer != null)
 						{
@@ -275,6 +276,7 @@ namespace Daidan.Web.Helpers
 							trip.AdministrationPercentage = new AdminFeesPercentage { Amount = _month.Amount, IsAmount = false };
 							percentageFound = true;
 						}
+						 * */
 					}
 				}
 

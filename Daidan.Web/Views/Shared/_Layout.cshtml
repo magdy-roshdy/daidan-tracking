@@ -14,7 +14,8 @@
 
 	<script type="text/javascript" src="~/Scripts/modernizr-2.6.2.js"></script>
 	<script type="text/javascript" src="~/Scripts/jquery-2.1.4.min.js"></script>
-
+	
+	<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
 	<script type="text/javascript" src="~/Scripts/bootstrap-datepicker.min.js"></script>
 	<script type="text/javascript" src="~/Scripts/bootstrap-notify.min.js"></script>
 	<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
@@ -31,11 +32,8 @@
 		<div class="alert @TempData["message-class"]" style="width: 40%; margin: 6px auto; text-align:center;">@TempData["message"]</div>
 	}
 
-    <div class="container body-content">
-        @RenderBody()
-    </div>
-
-    
-    <script src="~/Scripts/bootstrap.min.js"></script>
+	<div class="container body-content fill">
+		@RenderBody()
+	</div>
 </body>
 </html>

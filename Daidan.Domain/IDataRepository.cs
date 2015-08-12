@@ -70,7 +70,7 @@ namespace Daidan.Domain
 
 		IList<TruckExpense> GetTruckSheetExpenses(int truckId, int month, int year);
 
-		IList<MonthPercentage> GetMonthsPercentage(int month, int year);
+		IList<MonthAminPercentage> GetMonthsPercentage(int month, int year);
 
 		IList<DriverSalary> GetDriverSalaries(int driverId);
 		DriverSalary GetDriverSalaryById(long driverSalaryId);
@@ -83,5 +83,12 @@ namespace Daidan.Domain
 		DriverMonthBalance GetDriverMonthBalance(int driverId, int month, int year);
 
 		bool UpdateDriverMonthBalanace(int driverId, int month, int year, decimal balanace);
+
+		IList<MaterialAdminPercentage> GetMaterialsAdminPercentageByMonth(int monthId);
+		MonthAminPercentage GetMonthAminPercentageById(int monthId);
+		void SaveMonthAdminPercentage(MonthAminPercentage month, IList<MaterialAdminPercentage> monthMaterialPercentages, IList<long> materialsToDelete, IList<long> customersToDelete);
+		IList<MonthAminPercentage> GetAllMonthAdminPercentages();
+		MonthAminPercentage SaveMonthAdminPercentage(MonthAminPercentage month, int? monthToCopyFrom);
+		bool DeleteMonthAdminPercentage(int monthId);
 	}
 }

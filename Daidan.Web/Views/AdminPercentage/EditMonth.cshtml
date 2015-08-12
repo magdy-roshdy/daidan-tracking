@@ -1,0 +1,81 @@
+﻿@model Daidan.Web.Models.MonthAdminPercentageEditViewModel
+
+<style type="text/css">
+	div.row {
+		margin: 5px;
+	}
+</style>
+<div class="panel panel-default" style="width: 45%; margin: 20px auto;">
+	<div class="panel-heading">
+		@if (Model.Month.Id > 0)
+		{
+			<h4>Edit Month Admin Percentage</h4>
+			ViewBag.Title = "Edit Month Admin Percentage";
+		}
+		else
+		{
+			<h4>Add Month Admin Percentage</h4>
+			ViewBag.Title = "Add Month Admin Percentage";
+		}
+	</div>
+
+	@using (Html.BeginForm("EditMonth", "AdminPercentage", FormMethod.Post, new { role = "form" }))
+	{
+		<div class="panel-body">
+			@Html.ValidationSummary(true)
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Year:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.TextBoxFor(x => x.Month.Year, new { @class = "form-control", placeholder = "Year" })
+					@Html.ValidationMessageFor(x => x.Month.Year)
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Month:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.DropDownListFor(x => x.Month.Month,
+					@Model.Months,
+					new { @class = "form-control" })
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3">
+					<label>Amount:</label>
+				</div>
+				<div class="col-lg-9">
+					@Html.TextBoxFor(x => x.Month.Amount, new { @class = "form-control", placeholder = "Amount" })
+					@Html.ValidationMessageFor(x => x.Month.Amount)
+				</div>
+			</div>
+			@if (Model.Month.Id == 0)
+			{ 
+				<div class="row">
+					<div class="col-lg-3">
+						<label>Copy data from:</label>
+					</div>
+					<div class="col-lg-9">
+						@Html.DropDownListFor(x => x.MonthToCopyFrom,
+						@Model.PreviouseMonths,
+						new { @class = "form-control" })
+					</div>
+				</div>
+			}
+
+			@Html.HiddenFor(x => x.Month.Id)
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-lg-10">&nbsp;</div>
+				<div class="col-lg-2">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</div>
+		</div>
+	}
+</div>
