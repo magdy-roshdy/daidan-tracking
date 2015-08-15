@@ -960,11 +960,11 @@ namespace Daidan.Domain
 			}
 		}
 
-		public IList<MonthAminPercentage> GetMonthsPercentage(int month, int year)
+		public MonthAminPercentage GetMonthPercentageByMonthYear(int month, int year)
 		{
 			using (ISession session = SessionFactory.OpenSession())
 			{
-				return session.QueryOver<MonthAminPercentage>().Where(x => x.Month == month).Where(x => x.Year == year).List();
+				return session.QueryOver<MonthAminPercentage>().Where(x => x.Month == month).Where(x => x.Year == year).List().FirstOrDefault();
 			}
 		}
 

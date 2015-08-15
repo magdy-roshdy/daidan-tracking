@@ -100,6 +100,8 @@ namespace Daidan.Web.Controllers
 				listModel.TruckId = model.TruckId;
 				listModel.TruckExpenseList = dbRepository.GetTruckExpenses(model.TruckId, model.Month, model.Year);
 
+				ModelState.Clear();
+
 				return Create(model.TruckId, model.Month, model.Year);
 			}
 			else

@@ -77,7 +77,7 @@ namespace Daidan.Entities
 				{
 					if (this.AdministrationPercentage != null && this.AdministrationPercentage.Amount  > 0)
 					{
-						if (!this.AdministrationPercentage.IsAmount)
+						if (!this.AdministrationPercentage.IsFixedAmount)
 							return this.TripGrossProfit * (1 - (this.AdministrationPercentage.Amount / 100));
 						else
 							return this.TripGrossProfit - this.AdministrationPercentage.Amount;
@@ -96,7 +96,7 @@ namespace Daidan.Entities
 			{
 				if (this.AdministrationPercentage != null && this.AdministrationPercentage.Amount > 0 && this.TripGrossProfit > 0)
 				{
-					if (!this.AdministrationPercentage.IsAmount)
+					if (!this.AdministrationPercentage.IsFixedAmount)
 						return this.TripGrossProfit * this.AdministrationPercentage.Amount / 100;
 					else
 						return this.AdministrationPercentage.Amount;
@@ -121,7 +121,7 @@ namespace Daidan.Entities
 			{
 				if (this.AdministrationPercentage != null)
 				{
-					if (this.AdministrationPercentage.IsAmount)
+					if (this.AdministrationPercentage.IsFixedAmount)
 					{
 						return this.AdministrationPercentage.Amount.ToString();
 					}
@@ -140,9 +140,9 @@ namespace Daidan.Entities
 	{
 		public AdminFeesPercentage()
 		{
-			this.IsAmount = false; //silly but to be sure
+			this.IsFixedAmount = false; //silly but to be sure
 		}
 		public decimal Amount { get; set; }
-		public bool IsAmount { get; set; }
+		public bool IsFixedAmount { get; set; }
 	}
 }

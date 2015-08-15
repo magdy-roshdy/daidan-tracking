@@ -70,7 +70,7 @@ namespace Daidan.Domain
 
 		IList<TruckExpense> GetTruckSheetExpenses(int truckId, int month, int year);
 
-		IList<MonthAminPercentage> GetMonthsPercentage(int month, int year);
+		MonthAminPercentage GetMonthPercentageByMonthYear(int month, int year);
 
 		IList<DriverSalary> GetDriverSalaries(int driverId);
 		DriverSalary GetDriverSalaryById(long driverSalaryId);

@@ -92,6 +92,7 @@ namespace Daidan.Web.Controllers
 				TempData["message"] = model.DriverCashId > 0 ? "Driver cash information updated successfully" : "Driver cash added successfully";
 				TempData["message-class"] = "alert-success";
 
+				ModelState.Clear();
 				return Create(model.DriverId);
 			}
 			else

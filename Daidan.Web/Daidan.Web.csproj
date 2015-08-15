@@ -135,6 +135,7 @@
     </Content>
     <Content Include="notes.txt" />
     <Content Include="Scripts\add-trip-script.js" />
+    <Content Include="Scripts\admin-fees-management.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-notify.min.js" />

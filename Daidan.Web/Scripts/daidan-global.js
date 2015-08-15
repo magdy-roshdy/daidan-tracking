@@ -380,7 +380,7 @@ function wireTripEditModalEvents() {
 		if (valid) {
 			var poNumber = $('#addTripModal #purchaseOrder');
 			if (poNumber.val())
-				valid = validateField(poNumber, numberPattern, 'Please enter a valid P.O number', '#addTripModal');
+				valid = validateField(poNumber, null, 'Please enter a valid P.O number', '#addTripModal');
 		}
 
 		if (valid) {
@@ -452,7 +452,7 @@ function saveNewTrip(saveButtonObject) {
 	var tripObject = {
 		'Date': moment($('#addTripModal #tripDate').val(), "DD/MM/YYYY").format('DD/MM/YYYY'),
 		'VoucherNumber': parseInt($('#addTripModal #voucherNumber').val()),
-		'PONumber': $('#addTripModal #purchaseOrder').val() ? parseInt($('#addTripModal #purchaseOrder').val()) : null,
+		'PONumber': $('#addTripModal #purchaseOrder').val() ? $('#addTripModal #purchaseOrder').val() : null,
 		'TicketNumber': $('#addTripModal #ticketNumber').val() ? parseInt($('#addTripModal #ticketNumber').val()) : null,
 		'UnitCost': parseFloat($('#addTripModal #unitCost').val()),
 		'UnitsQuantity': parseFloat($('#addTripModal #quantity').val()),
