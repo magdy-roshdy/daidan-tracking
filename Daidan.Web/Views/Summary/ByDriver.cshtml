@@ -1,0 +1,147 @@
+﻿@model Daidan.Web.Models.MonthSummaryByDriverViewModel
+@{
+	ViewBag.Title = "Month Summary - By Driver";
+}
+<style type="text/css">
+	.table-header-row {
+		background-color: #EBEBEB;
+		height: 25px;
+		font-weight: bold;
+	}
+
+	.table-header-row th{
+		text-align: center;
+	}
+
+	.table-bordered tbody td {
+		text-align: center;
+	}
+</style>
+<div class="print-area">
+	<h2>@Model.Month.ToString("MMMM yyyy") Summary - By Driver</h2>
+	<hr />
+	<div class="row hide-print">
+		<div class="col-lg-11">&nbsp;</div>
+		<div class="col-lg-1">
+			<button id="printButton" class="btn btn-default" style="margin: 0px 35px 10px 0px;">
+				<i class="fa fa-print"></i>
+				&nbsp;
+				Print
+			</button>
+		</div>
+	</div>
+
+	<table border="1" class="table-responsive table-bordered" style="width: 100%;" id="resultTable">
+		<thead>
+			<tr class="table-header-row">
+				<th width="30" rowspan="2">&nbsp;</th>
+				<th width="85" rowspan="2">Driver</th>
+				<th width="70" rowspan="2">Nof. Trips</th>
+				<th width="100" rowspan="2">Gross Profit</th>
+				<th width="100" rowspan="2">Admin. Fees</th>
+				<th colspan="@(Model.MonthExpensesSections.Length+1)">Paid Expense</th>
+				<th width="90" colspan="2">Salary</th>
+				<th width="110" rowspan="2">Revieved Cash</th>
+				<th width="100" rowspan="2">Result</th>
+			</tr>
+			<tr class="table-header-row">
+				@for (int index = 0; index < Model.MonthExpensesSections.Length; index++)
+				{
+					<th style="padding: 5px;">@Model.MonthExpensesSections[index].Name</th>
+				}
+				<th style="width: 70px;padding: 5px;">Total</th>
+
+				<th style="width: 90px;">Basic</th>
+				<th style="width: 100px;">Commission</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				int counter = 1;
+				decimal[] paidExpensesSums = new decimal[Model.MonthExpensesSections.Length];
+			}
+			@foreach (Daidan.Web.Models.MonthSummaryByDriverViewModel.SummaryItem item in Model.SummaryItems)
+			{
+				<tr>
+					<td>@counter</td>
+					<td>@item.Driver.Name</td>
+					<td>@item.NofTrips</td>
+					<td>@item.GrossProfit.ToString("0.00")</td>
+					<td>@item.AdminFees.ToString("0.00")</td>
+					@for (int index = 0; index < item.PaidTruckExpenses.Length; index++)
+					{
+						<td style="padding: 5px;">@item.PaidTruckExpenses[index].Amount.ToString("0.00")</td>
+						paidExpensesSums[index] += item.PaidTruckExpenses[index].Amount;
+					}
+					<td>@item.PaidTruckExpenses.Sum(x => x.Amount).ToString("0.00")</td>
+
+					<td>@item.Salary.ToString("0.00")</td>
+					<td>@item.DriversCommission.ToString("0.00")</td>
+					<td>@item.RecievedCash.ToString("0.00")</td>
+					<td>
+						@if (item.Result < 0)
+						{
+							<strong>@item.Result.ToString("0.00")</strong>
+						}
+						else
+						{
+							@item.Result.ToString("0.00")
+						}
+					</td>
+				</tr>
+
+					counter++;
+			}
+
+			<tr class="table-header-row">
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>@Model.SummaryItems.Sum(x => x.NofTrips)</td>
+				<td>@Model.SummaryItems.Sum(x => x.GrossProfit).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.AdminFees).ToString("0.00")</td>
+
+				@for (int index = 0; index < paidExpensesSums.Length; index++)
+				{
+					<td style="padding: 5px;">@paidExpensesSums[index].ToString("0.00")</td>
+				}
+				<td>@paidExpensesSums.Sum().ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.Salary).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.DriversCommission).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.RecievedCash).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.Result).ToString("0.00")</td>
+			</tr>
+		</tbody>
+	</table>
+	<style type="text/css" media="print">
+		.hide-print {
+			display: none;
+		}
+
+		#resultTable {
+			font-size: 0.7em;
+		}
+
+		.table-header-row {
+			background-color: #EBEBEB;
+			line-height: 20px;
+			font-weight: bold;
+		}
+
+		.table-bordered tbody td {
+			text-align: center;
+		}
+
+		.table-header-row th{
+			text-align: center;
+		}
+	</style>
+
+</div>
+<script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$('#printButton').click(function () {
+			$('.print-area').printArea();
+		});
+	});
+</script>

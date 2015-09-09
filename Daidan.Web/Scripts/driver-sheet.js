@@ -35,7 +35,7 @@
 		$('#searchResult #summaryTable #previousMonthBalanceCell_').empty();
 		$('#searchResult #summaryTable #previousMonthBalanceCell').empty();
 		$('#searchResult #summaryTable #salaryCell').empty();
-		$('#searchResult #summaryTable #tripProfit').empty();
+		$('#searchResult #summaryTable #tripDriverCommission').empty();
 		$('#searchResult #summaryTable #recievedCash').empty();
 		$('#searchResult #summaryTable #paidCash').empty();
 		$('#searchResult #summaryTable #paidExpenses').empty();
@@ -74,7 +74,7 @@
 			$('#searchResult #summaryTable #previousMonthBalanceCell').text(sheetInfo.PreviousMonthBalanace.toFixed(2));
 
 		$('#searchResult #summaryTable #salaryCell').text(sheetInfo.MonthSalary.toFixed(2));
-		$('#searchResult #summaryTable #tripProfit').text(sheetInfo.DriverTripsProfit.toFixed(2));
+		$('#searchResult #summaryTable #tripDriverCommission').text(sheetInfo.DriverTripsProfit.toFixed(2));
 		$('#searchResult #summaryTable #recievedCash').text(sheetInfo.MonthDriverCashSum.toFixed(2));
 		$('#searchResult #summaryTable #paidCash').text(sheetInfo.ExtraCostSum.toFixed(2));
 		$('#searchResult #summaryTable #paidExpenses').text(sheetInfo.MonthPaidExpensesSum.toFixed(2));

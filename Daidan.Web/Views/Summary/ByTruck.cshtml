@@ -15,7 +15,7 @@
 	}
 </style>
 <div class="print-area">
-	<h2>Month Summary - By Truck [@Model.Month.ToString("MMMM yyyy")]</h2>
+	<h2>@Model.Month.ToString("MMMM yyyy") Summary - By Truck</h2>
 	<hr />
 	<div class="row hide-print">
 		<div class="col-lg-11">&nbsp;</div>
@@ -28,14 +28,16 @@
 		</div>
 	</div>
 
-	<table border="1" class="table-responsive table-bordered" style="width: 100%;">
+	<table border="1" class="table-responsive table-bordered" style="width: 100%;" id="resultTable">
 		<thead>
 			<tr class="table-header-row">
 				<th style="text-align: center;" width="30">&nbsp;</th>
 				<th style="text-align: center;" width="85">Truck</th>
 				<th style="text-align: center;" width="100">Nof. Trips</th>
-				<th style="text-align: center;" width="100">Profit</th>
+				<th style="text-align: center;" width="100">Gross Profit</th>
+				<th style="text-align: center;" width="100">Admin. Fees</th>
 				<th style="text-align: center;" width="100">Expenses</th>
+				<th style="text-align: center;" width="130">Driver(s) Salary</th>
 				<th style="text-align: center;" width="100">Result</th>
 			</tr>
 		</thead>
@@ -49,10 +51,12 @@
 					<td>@counter.ToString()</td>
 					<td>@item.Truck.Number</td>
 					<td>@item.NofTrips.ToString()</td>
-					<td>@item.Profit.ToString("0.00")</td>
+					<td>@item.GrossProfit.ToString("0.00")</td>
+					<td>@item.AdminFees.ToString("0.00")</td>
 					<td>@item.Expenses.ToString("0.00")</td>
+					<td>@item.DriversSalary.ToString("0.00")</td>
 					<td>
-						@if(item.Result < 0)
+						@if (item.Result < 0)
 						{
 							<strong>@item.Result.ToString("0.00")</strong>
 						}
@@ -60,12 +64,22 @@
 						{
 							@item.Result.ToString("0.00")
 						}
-						
 					</td>
 				</tr>
 
-				counter++;
+						counter++;
 			}
+
+			<tr class="table-header-row">
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>@Model.SummaryItems.Sum(x => x.NofTrips)</td>
+				<td>@Model.SummaryItems.Sum(x => x.GrossProfit).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.AdminFees).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.Expenses).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.DriversSalary).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.Result).ToString("0.00")</td>
+			</tr>
 		</tbody>
 	</table>
 	<style type="text/css" media="print">

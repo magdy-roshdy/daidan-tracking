@@ -1345,5 +1345,12 @@ namespace Daidan.Domain
 			}
 		}
 
+		public IList<DriverCash> GetMonthDriverRecievedCash(int month, int year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<DriverCash>().Where(p => p.Date.Month == month && p.Date.Year == year).List();
+			}
+		}
 	}
 }

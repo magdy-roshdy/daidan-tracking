@@ -98,5 +98,6 @@ namespace Daidan.Domain
 		IList<TruckExpense> GetMonthTruckExpenses(int month, int year);
 
 		IList<DriverSalary> GetMonthDriverSalaries(int month, int year, IEnumerable<int> driversIds = null);
+		IList<DriverCash> GetMonthDriverRecievedCash(int month, int year);
 	}
 }

@@ -91,7 +91,7 @@
 	});
 
 	$('#updatePONumberModal .btn-primary').click(function () {
-		var valid = validateField($('#updatePONumberModal #poNumber'), /^\d+$/, "Please enter P.O number", '#updatePONumberModal');
+		var valid = validateField($('#updatePONumberModal #poNumber'), null, "Please enter P.O number", '#updatePONumberModal');
 		if (valid) {
 			var idsArray = [];
 			$('#searchResult #resultTable tbody input:hidden').each(function (index, hidden) {

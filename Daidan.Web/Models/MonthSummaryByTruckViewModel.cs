@@ -15,12 +15,14 @@ namespace Daidan.Web.Models
 		{
 			public Truck Truck { get; set; }
 			public int NofTrips { get; set; }
-			public decimal Profit { get; set; }
+			public decimal GrossProfit { get; set; }
 			public decimal Expenses { get; set; }
+			public decimal DriversSalary { get; set; }
+			public decimal AdminFees { get; set; }
 			public decimal Result {
 				get
 				{
-					return Profit - Expenses;
+					return this.GrossProfit - (this.Expenses + this.DriversSalary + this.AdminFees);
 				}
 			}
 		}
