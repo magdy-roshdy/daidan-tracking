@@ -246,12 +246,16 @@ namespace Daidan.Web.Helpers
 			MonthAminPercentage monthPercentage = dbRepository.GetMonthPercentageByMonthYear(month, year);
 			decimal globalPercentage = 20;
 			decimal.TryParse(System.Configuration.ConfigurationManager.AppSettings["globalPercentage"], out globalPercentage);
+			
+			IList<MaterialAdminPercentage> monthMaterials = new List<MaterialAdminPercentage>();
+			if(monthPercentage != null)
+				monthMaterials = dbRepository.GetMaterialsAdminPercentageByMonth(monthPercentage.Id).ToList();
 
 			foreach (Trip trip in trips)
 			{
 				if (monthPercentage != null)
 				{
-					MaterialAdminPercentage material = dbRepository.GetMaterialsAdminPercentageByMonth(monthPercentage.Id).FirstOrDefault(x => x.Material.Id == trip.Material.Id);
+					MaterialAdminPercentage material = monthMaterials.FirstOrDefault(x => x.Material.Id == trip.Material.Id);
 					if (material != null)
 					{
 						CustomerAdminPercentage customer = material.CustomersPercentage.FirstOrDefault(x => x.Customer.Id == trip.Site.Customer.Id);
@@ -274,6 +278,46 @@ namespace Daidan.Web.Helpers
 					trip.AdministrationPercentage = new AdminFeesPercentage { Amount = globalPercentage, IsFixedAmount = false };
 				}
 			}			
+		}
+
+		public static IList<TripsDriverSalaryPortion> GetTripsDriverSalaryPortion(IList<Trip> trips, int month, int year, IDataRepository dbRepository)
+		{
+			IEnumerable<IGrouping<Driver, Trip>> monthTripsDriverGroups = dbRepository.GetMonthTrips(month, year).GroupBy(x => x.Driver);
+			IEnumerable<IGrouping<Driver, Trip>> driverGroups = trips.GroupBy(x => x.Driver);
+			IList<DriverSalary> driversSalaries = dbRepository.GetMonthDriverSalaries(month, year, driverGroups.Select(p => p.Key.Id).ToArray());
+
+			IList<TripsDriverSalaryPortion> driversTripsSalaryPortion = new List<TripsDriverSalaryPortion>();
+			foreach (IGrouping<Driver, Trip> group in driverGroups)
+			{
+				DriverSalary driverSalary = driversSalaries.FirstOrDefault(x => x.Driver.Id == group.Key.Id);
+				IGrouping<Driver, Trip> g = driverGroups.FirstOrDefault(x => x.Key.Id == group.Key.Id);
+				if(driverSalary != null)
+				{
+					int nofMonthTrips = 0;
+					decimal tripSalaryPortion = 0;
+					IGrouping<Driver, Trip> driverTripsGroup = monthTripsDriverGroups.FirstOrDefault(x => x.Key.Id == group.Key.Id);
+					if(driverTripsGroup != null)
+					{
+						nofMonthTrips = driverTripsGroup.Count();
+					}
+
+					if(nofMonthTrips > 0)
+					{
+						tripSalaryPortion = driverSalary.Amount / nofMonthTrips;
+						if (g != null)
+						{
+							if(g.Count() > 0)
+								driversTripsSalaryPortion.Add(new TripsDriverSalaryPortion { Driver = group.Key, NumberOfTrips = g.Count(), PortionAmount = tripSalaryPortion * g.Count() });
+						}
+					}	
+				}
+				else
+				{
+					driversTripsSalaryPortion.Add(new TripsDriverSalaryPortion { Driver = group.Key, NumberOfTrips = g.Count(), PortionAmount = 0 });
+				}
+			}
+
+			return driversTripsSalaryPortion;
 		}
 	}
 }

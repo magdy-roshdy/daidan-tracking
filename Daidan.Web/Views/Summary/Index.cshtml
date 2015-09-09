@@ -1,0 +1,37 @@
+﻿@model IList<DateTime>
+
+@{
+    ViewBag.Title = "Month Sammary";
+}
+
+<h2><i class="fa fa-newspaper-o"></i> Month Summary</h2>
+
+<table class="table table-responsive">
+	<thead>
+		<tr>
+			<th>Month</th>
+			<th style="text-align: center;">By Driver</th>
+			<th style="text-align: center;">By Truck</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (DateTime month in Model)
+		{
+			<tr>
+				<td>
+					@month.ToString("MMMM yyyy")
+				</td>
+				<td style="text-align: center;">
+					<a href="@Url.Action("ByDriver", "Summary", new { month = month.Month, year = month.Year })">
+						<i class="fa fa-user fa-lg" style="color: #033074;"></i>
+					</a>
+				</td>
+				<td style="text-align: center;">
+					<a href="@Url.Action("ByTruck", "Summary", new { month = month.Month, year = month.Year })">
+						<i class="fa fa-truck fa-lg" style="color: #033074;"></i>
+					</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

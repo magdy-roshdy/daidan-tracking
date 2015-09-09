@@ -1111,7 +1111,7 @@ namespace Daidan.Domain
 		{
 			using (ISession session = SessionFactory.OpenSession())
 			{
-				return session.QueryOver<MaterialAdminPercentage>().Where(x => x.Month.Id == monthId).List();
+				return session.QueryOver<MaterialAdminPercentage>().Where(x => x.Month.Id == monthId).Cacheable().List();
 			}
 		}
 
@@ -1296,5 +1296,54 @@ namespace Daidan.Domain
 
 			return result;
 		}
+
+		public IList<DateTime> GetDistinctMonths()
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				string sql = @"SELECT DISTINCT DATEPART(month, [TripDate]) AS _m, DATEPART(year, [TripDate]) AS _y FROM [dbo].[Trips] ORDER BY _y DESC, _m DESC;";
+				var monthsSQLData = session.CreateSQLQuery(sql).List();
+				IList<DateTime> monthsList = new List<DateTime>();
+				foreach (object driverObj in monthsSQLData)
+				{
+					object[] properties = driverObj as object[];
+					if(properties != null)
+					{ 
+						DateTime monthDate = new DateTime((int)properties[1], (int)properties[0], 1);
+						monthsList.Add(monthDate);
+					}
+				}
+
+				return monthsList;
+			}
+		}
+
+		public IList<Trip> GetMonthTrips(int month, int year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<Trip>().Where(p => p.Date.Month == month && p.Date.Year == year).List();
+			}
+		}
+
+		public IList<TruckExpense> GetMonthTruckExpenses(int month, int year)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				return session.QueryOver<TruckExpense>().Where(p => p.Month == month && p.Year == year).List();
+			}
+		}
+
+		public IList<DriverSalary> GetMonthDriverSalaries(int month, int year, IEnumerable<int> driversIds = null)
+		{
+			using (ISession session = SessionFactory.OpenSession())
+			{
+				if (driversIds != null)
+					return session.QueryOver<DriverSalary>().Where(p => p.Month == month && p.Year == year).AndRestrictionOn( x => x.Driver.Id).IsIn(driversIds.ToArray()).List();
+				else
+					return session.QueryOver<DriverSalary>().Where(p => p.Month == month && p.Year == year).List();
+			}
+		}
+
 	}
 }

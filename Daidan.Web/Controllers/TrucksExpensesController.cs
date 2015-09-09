@@ -88,10 +88,18 @@ namespace Daidan.Web.Controllers
 				expense.Truck = new Truck { Id = model.TruckId };
 				expense.Amount = model.Amount.Value;
 
-				dbRepository.SaveTruckExpense(expense);
+				try
+				{ 
+					dbRepository.SaveTruckExpense(expense);
 
-				TempData["message"] = model.ExpenseId > 0 ? "Truck expense information updated successfully" : "Truck expense added successfully";
-				TempData["message-class"] = "alert-success";
+					TempData["message"] = model.ExpenseId > 0 ? "Truck expense information updated successfully" : "Truck expense added successfully";
+					TempData["message-class"] = "alert-success";
+				}
+				catch
+				{ 
+					TempData["message"] = "Can't save the changes!";
+					TempData["message-class"] = "alert-danger";
+				}
 
 				TrucksExpensesListViewModel listModel = new TrucksExpensesListViewModel();
 				listModel.Month = new DateTime(1, model.Month, 1).ToString("MMMM");

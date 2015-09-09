@@ -4,6 +4,7 @@
                    assembly="Daidan.Entities"
                    namespace="Daidan.Entities">
 	<class name="MaterialAdminPercentage" table="MaterialAdminPercentage">
+		<cache usage="read-write"/>
 		<id name="Id" column="MaterialPercentageId">
 			<generator class="identity"/>
 		</id>

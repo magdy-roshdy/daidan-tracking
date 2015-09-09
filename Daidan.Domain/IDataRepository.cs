@@ -90,5 +90,13 @@ namespace Daidan.Domain
 		IList<MonthAminPercentage> GetAllMonthAdminPercentages();
 		MonthAminPercentage SaveMonthAdminPercentage(MonthAminPercentage month, int? monthToCopyFrom);
 		bool DeleteMonthAdminPercentage(int monthId);
+
+		IList<DateTime> GetDistinctMonths();
+
+		IList<Trip> GetMonthTrips(int month, int year);
+
+		IList<TruckExpense> GetMonthTruckExpenses(int month, int year);
+
+		IList<DriverSalary> GetMonthDriverSalaries(int month, int year, IEnumerable<int> driversIds = null);
 	}
 }

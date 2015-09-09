@@ -42,7 +42,7 @@
   <ItemGroup>
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\Iesi.Collections.dll</HintPath>
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -62,7 +62,10 @@
     </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\NHibernate.dll</HintPath>
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache">
+      <HintPath>..\packages\NHibernate.Caches.SysCache.4.0.0.4000\lib\net40\NHibernate.Caches.SysCache.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\libs\Ninject.dll</HintPath>
@@ -165,6 +168,7 @@
     <Compile Include="Controllers\DriversCashController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\SummaryController.cs" />
     <Compile Include="Controllers\SystemAdminsController.cs" />
     <Compile Include="Controllers\TripsController.cs" />
     <Compile Include="Controllers\TrucksExpensesController.cs" />
@@ -190,7 +194,9 @@
     <Compile Include="Models\EditTruckViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MonthAdminPercentageEditViewModel.cs" />
+    <Compile Include="Models\MonthSummaryByTruckViewModel.cs" />
     <Compile Include="Models\SitesListViewModel.cs" />
+    <Compile Include="Models\TripsDriverSalaryPortion.cs" />
     <Compile Include="Models\TrucksExpensesEditViewModel.cs" />
     <Compile Include="Models\TrucksExpensesIndexViewModel.cs" />
     <Compile Include="Models\TrucksExpensesListViewModel.cs" />
@@ -236,6 +242,8 @@
     <Content Include="Views\AdminPercentage\Manage.cshtml" />
     <Content Include="Views\AdminPercentage\List.cshtml" />
     <Content Include="Views\AdminPercentage\EditMonth.cshtml" />
+    <Content Include="Views\Summary\Index.cshtml" />
+    <Content Include="Views\Summary\ByTruck.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -85,7 +85,7 @@ namespace Daidan.Web.Controllers
 
 					return RedirectToAction("List", "AdminPercentage", new { id = model.Month.Id });
 				}
-				catch(Exception e)
+				catch(Exception)
 				{
 					TempData["message"] = "Can't save changes, may be there an existing month with the same year and month you entered!";
 					TempData["message-class"] = "alert-danger";

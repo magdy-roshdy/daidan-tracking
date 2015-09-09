@@ -17,6 +17,8 @@
 					$('#loadingDiv').hide();
 					$('#viewReportButton').removeAttr('disabled');
 
+					console.log(data);
+
 					showSearchResult(data)
 				},
 				error: function (jqXHR, textStatus, errorThrown) { alert(errorThrown); }
@@ -31,6 +33,7 @@
 		$('#searchResult #monthCell').text($('#months').children(':selected').text() + ' ' + $('#year').val());
 		$('#searchResult #expensesTable tbody').empty();
 		$('#searchResult #resultTable tbody').empty();
+		$('#searchResult #driversSalaryPortionsTable tbody').empty();
 
 		var counter = 1;
 		var tripRow = "";
@@ -66,6 +69,28 @@
 			expenseRow = constructTruckExpenseRow({ 'Section': { 'Name': '' }, 'Amount': expenseSum });
 			$('#searchResult #expensesTable tbody').append($(expenseRow).addClass('table-header-row'));
 		}
+
+		//drivers salaries table
+		$.each(sheetInfo.DriversSalaryPortion, function (index, driverSalary) {
+			expenseRow = constructDriverSalaryRow(driverSalary);
+			$('#searchResult #driversSalaryPortionsTable tbody').append($(expenseRow));
+		});
+
+		if (sheetInfo.DriversSalaryPortion.length > 1) {
+			expenseRow = constructDriverSalaryRow(
+				{
+					'Driver': { 'Name': '' },
+					'NumberOfTrips': sheetInfo.DriversSalaryPortionTripsCount,
+					'PortionAmount': sheetInfo.DriversSalaryPortionSum
+				}
+			);
+			$('#searchResult #driversSalaryPortionsTable tbody').append($(expenseRow).addClass('table-header-row'));
+		}
+
+		//final values
+		$('#searchResult #monthFinalValuesTable #monthTripsProfitCell').text(profitSum.toFixed(2));
+		$('#searchResult #monthFinalValuesTable #monthTripsCostCell').text((expenseSum + sheetInfo.DriversSalaryPortionSum).toFixed(2));
+		$('#searchResult #monthFinalValuesTable #monthFinalValueCell').text((profitSum - expenseSum - sheetInfo.DriversSalaryPortionSum).toFixed(2));
 	}
 
 	function constructTripRowForTruckSheet(counter, tripObject) {
@@ -88,12 +113,18 @@
 	}
 
 	function constructTruckExpenseRow(expenseObject) {
-		var newTripRow = "<tr style='height: 27px;'>\
+		return "<tr style='height: 27px;'>\
 			<td style='text-align: left; padding-left: 10px;'><strong>" + expenseObject.Section.Name + "</strong></td>\
 			<td style='text-align: center;width: 100px;'>" + expenseObject.Amount.toFixed(2) + "</td>\
 		</tr>";
+	}
 
-		return newTripRow;
+	function constructDriverSalaryRow(driverSalaryObject) {
+		return "<tr>\
+			<td style='text-align: center;'>" + driverSalaryObject.Driver.Name + "</td>\
+			<td style='text-align: center;'>" + driverSalaryObject.NumberOfTrips + "</td>\
+			<td style='text-align: center;'>" + driverSalaryObject.PortionAmount.toFixed(2) + "</td>\
+		</tr>";
 	}
 
 	$('#printButton').click(function () {

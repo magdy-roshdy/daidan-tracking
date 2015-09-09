@@ -69,7 +69,7 @@
 
 		//fill summary info
 		if(sheetInfo.PreviousMonthBalanace < 0)
-			$('#searchResult #summaryTable #previousMonthBalanceCell_').text((sheetInfo.PreviousMonthBalanace * -1).toFixed(2));
+			$('#searchResult #summaryTable #previousMonthBalanceCell_').text((sheetInfo.PreviousMonthBalanace).toFixed(2));
 		else
 			$('#searchResult #summaryTable #previousMonthBalanceCell').text(sheetInfo.PreviousMonthBalanace.toFixed(2));
 
@@ -80,7 +80,7 @@
 		$('#searchResult #summaryTable #paidExpenses').text(sheetInfo.MonthPaidExpensesSum.toFixed(2));
 
 		if (sheetInfo.MonthBalance < 0)
-			$('#searchResult #summaryTable #monthBalanaceCell_').text((sheetInfo.MonthBalance * -1).toFixed(2));
+			$('#searchResult #summaryTable #monthBalanaceCell_').text((sheetInfo.MonthBalance).toFixed(2));
 		else
 			$('#searchResult #summaryTable #monthBalanaceCell').text(sheetInfo.MonthBalance.toFixed(2));
 

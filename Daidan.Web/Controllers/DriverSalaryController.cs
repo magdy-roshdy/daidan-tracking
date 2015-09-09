@@ -62,7 +62,7 @@ namespace Daidan.Web.Controllers
 					TempData["message"] = model.DriverSalaryId > 0 ? "Driver salary information updated successfully" : "Driver salary added successfully";
 					TempData["message-class"] = "alert-success";
 				}
-				catch(Exception e)
+				catch(Exception)
 				{
 					TempData["message"] = "Can't save the salary, may be there is a salary with the same month for this driver!";
 					TempData["message-class"] = "alert-danger";

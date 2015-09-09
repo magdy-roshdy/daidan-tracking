@@ -52,26 +52,16 @@ namespace Daidan.Web.Controllers
 			//update admin perecntage
 			Helpers.DaidanControllersHelper.UpdateTripsAdminPercentage(result.Trips, searchParameter.Month, searchParameter.Year, dbRepository);
 
-			result.MonthAdminFeesSum = result.Trips.Sum(x => x.AdminFeesAmount);
-
-			//TODO: refactor to use grouping ... idiot!
-			IList<TruckExpense> expenses = dbRepository.GetTruckSheetExpenses(searchParameter.TruckId, searchParameter.Month, searchParameter.Year);
-			IList<TruckExpense> grupedExpenses = new List<TruckExpense>();
-
-			foreach (TruckExpense expense in expenses)
+			IEnumerable<IGrouping<ExpensesSection, TruckExpense>> expensesGroup = dbRepository.GetTruckSheetExpenses(searchParameter.TruckId, searchParameter.Month, searchParameter.Year).GroupBy(x => x.Section);
+			result.Expenses = new List<TruckExpense>();
+			foreach (IGrouping<ExpensesSection, TruckExpense> group in expensesGroup)
 			{
-				TruckExpense e = grupedExpenses.FirstOrDefault(x => x.Section.Id == expense.Section.Id);
-				if(e != null)
-				{
-					e.Amount += expense.Amount;
-				}
-				else
-				{
-					grupedExpenses.Add(expense);
-				}
+				TruckExpense e = new TruckExpense { Section = group.Key, Amount = group.Sum(p => p.Amount) };
+				result.Expenses.Add(e);
 			}
 
-			result.Expenses = grupedExpenses;
+			result.DriversSalaryPortion = Helpers.DaidanControllersHelper.GetTripsDriverSalaryPortion(result.Trips, searchParameter.Month, searchParameter.Year, dbRepository);
+
 			return Json(result);
 		}
 
