@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
-	[RedirectAuthorize(Roles = "admin, systemAdmin")]
+	[RedirectAuthorize(Roles = "systemAdmin")]
     public class AdminPercentageController : Controller
     {
         private IDataRepository dbRepository;

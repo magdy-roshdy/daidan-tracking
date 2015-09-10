@@ -16,6 +16,7 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
+	[RedirectAuthorize]
     public class TripsController : Controller
     {
 		private IDataRepository dbRepository;
@@ -23,8 +24,7 @@ namespace Daidan.Web.Controllers
 		{
 			dbRepository = repo;
 		}
-
-		[RedirectAuthorize(Roles = "data-entry, admin, systemAdmin")]
+		
         public ActionResult Add()
         {
 			AddTripViewModel viewModel = new AddTripViewModel();
@@ -34,14 +34,12 @@ namespace Daidan.Web.Controllers
         }
 
 		[HttpPost]
-		[RedirectAuthorize(Roles = "data-entry, admin, systemAdmin")]
 		public ActionResult GetAddedTodayTrips()
 		{
 			return Json(dbRepository.GetAddedTodayTrips().OrderByDescending(x => x.AddedOn).ToList());
 		}
 
 		[HttpPost]
-		[RedirectAuthorize(Roles = "data-entry, admin, systemAdmin")]
 		public ActionResult SaveTrip(Trip trip)
 		{
 			if(trip != null)
@@ -62,7 +60,6 @@ namespace Daidan.Web.Controllers
 		}
 
 		[HttpPost]
-		[RedirectAuthorize(Roles = "admin, systemAdmin")]
 		public ActionResult DeletedTrip(long tripId)
 		{
 			dbRepository.DeleteTrip(tripId);

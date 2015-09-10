@@ -38,6 +38,14 @@ namespace Daidan.Web.Models
 					return this.GrossProfit - (this.PaidTruckExpenses.Sum(x => x.Amount) + this.Salary + this.DriversCommission + this.AdminFees);
 				}
 			}
+
+			public decimal ResultPlusAdmin
+			{
+				get
+				{
+					return this.Result + this.AdminFees;
+				}
+			}
 		}
 	}
 }

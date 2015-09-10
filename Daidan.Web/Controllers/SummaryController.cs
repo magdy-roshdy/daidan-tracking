@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
-	[RedirectAuthorize(Roles = "admin, systemAdmin")]
+	[RedirectAuthorize(Roles = "systemAdmin")]
     public class SummaryController : Controller
     {
         private IDataRepository dbRepository;
@@ -47,6 +47,7 @@ namespace Daidan.Web.Controllers
 				item.Truck = monthTripsTruckGroupItem.Key;
 				item.NofTrips = monthTripsTruckGroupItem.Count();
 				item.GrossProfit = monthTripsTruckGroupItem.Sum(x => x.TripGrossProfit);
+				item.NetProfit = monthTripsTruckGroupItem.Sum(x => x.TripNetProfit);
 				item.AdminFees = monthTripsTruckGroupItem.Sum(x => x.AdminFeesAmount);
 				item.Expenses = monthTrucksExpenses.Where(x => x.Truck.Id == item.Truck.Id).Sum(y => y.Amount);
 
@@ -59,7 +60,7 @@ namespace Daidan.Web.Controllers
 					{
 						int nofDriverMonthTrips = monthTripsDriverGroups.FirstOrDefault(x => x.Key.Id == truckDriversGroupItem.Key.Id).Count();
 						decimal driverTripSalaryCost = driverSalary.Amount / nofDriverMonthTrips;
-						item.DriversSalary += driverTripSalaryCost * truckDriversGroupItem.Count();
+						item.DriversBasicSalary += driverTripSalaryCost * truckDriversGroupItem.Count();
 					}
 				}
 
@@ -118,7 +119,7 @@ namespace Daidan.Web.Controllers
 				model.SummaryItems.Add(item);
 			}
 
-			model.SummaryItems = model.SummaryItems.OrderByDescending(x => x.Result).ToList();
+			model.SummaryItems = model.SummaryItems.OrderByDescending(x => x.ResultPlusAdmin).ToList();
 			return View(model);
 		}
     }

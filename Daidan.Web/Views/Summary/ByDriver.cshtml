@@ -16,6 +16,10 @@
 	.table-bordered tbody td {
 		text-align: center;
 	}
+
+	#summaryTable {
+		font-size: 0.9em;
+	}
 </style>
 <div class="print-area">
 	<h2>@Model.Month.ToString("MMMM yyyy") Summary - By Driver</h2>
@@ -31,7 +35,7 @@
 		</div>
 	</div>
 
-	<table border="1" class="table-responsive table-bordered" style="width: 100%;" id="resultTable">
+	<table border="1" class="table-responsive table-bordered" style="width: 100%;" id="summaryTable">
 		<thead>
 			<tr class="table-header-row">
 				<th width="30" rowspan="2">&nbsp;</th>
@@ -42,7 +46,8 @@
 				<th colspan="@(Model.MonthExpensesSections.Length+1)">Paid Expense</th>
 				<th width="90" colspan="2">Salary</th>
 				<th width="110" rowspan="2">Revieved Cash</th>
-				<th width="100" rowspan="2">Result</th>
+				<th width="95" rowspan="2">Result</th>
+				<th width="115" rowspan="2">Result + Admin</th>
 			</tr>
 			<tr class="table-header-row">
 				@for (int index = 0; index < Model.MonthExpensesSections.Length; index++)
@@ -64,7 +69,9 @@
 			{
 				<tr>
 					<td>@counter</td>
-					<td>@item.Driver.Name</td>
+					<td>
+						@Html.ActionLink(item.Driver.Name, "DriverSheet", "Reports", new { month = Model.Month.Month, year = Model.Month.Year, driverId = item.Driver.Id }, new { target = "_blank" })
+					</td>
 					<td>@item.NofTrips</td>
 					<td>@item.GrossProfit.ToString("0.00")</td>
 					<td>@item.AdminFees.ToString("0.00")</td>
@@ -73,20 +80,16 @@
 						<td style="padding: 5px;">@item.PaidTruckExpenses[index].Amount.ToString("0.00")</td>
 						paidExpensesSums[index] += item.PaidTruckExpenses[index].Amount;
 					}
-					<td>@item.PaidTruckExpenses.Sum(x => x.Amount).ToString("0.00")</td>
+					<td><strong>@item.PaidTruckExpenses.Sum(x => x.Amount).ToString("0.00")</strong></td>
 
 					<td>@item.Salary.ToString("0.00")</td>
 					<td>@item.DriversCommission.ToString("0.00")</td>
 					<td>@item.RecievedCash.ToString("0.00")</td>
 					<td>
-						@if (item.Result < 0)
-						{
-							<strong>@item.Result.ToString("0.00")</strong>
-						}
-						else
-						{
-							@item.Result.ToString("0.00")
-						}
+						<strong>@item.Result.ToString("0.00")</strong>
+					</td>
+					<td>
+						<strong>@item.ResultPlusAdmin.ToString("0.00")</strong>
 					</td>
 				</tr>
 
@@ -109,6 +112,7 @@
 				<td>@Model.SummaryItems.Sum(x => x.DriversCommission).ToString("0.00")</td>
 				<td>@Model.SummaryItems.Sum(x => x.RecievedCash).ToString("0.00")</td>
 				<td>@Model.SummaryItems.Sum(x => x.Result).ToString("0.00")</td>
+				<td>@Model.SummaryItems.Sum(x => x.ResultPlusAdmin).ToString("0.00")</td>
 			</tr>
 		</tbody>
 	</table>
@@ -117,8 +121,8 @@
 			display: none;
 		}
 
-		#resultTable {
-			font-size: 0.7em;
+		#summaryTable {
+			font-size: 0.65em;
 		}
 
 		.table-header-row {

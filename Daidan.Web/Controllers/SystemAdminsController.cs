@@ -1,5 +1,6 @@
 ﻿using Daidan.Domain;
 using Daidan.Entities;
+using Daidan.Web.Infrastructure;
 using Daidan.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
-	[Authorize]
     public class SystemAdminsController : Controller
     {
 		private IDataRepository dbRepository;
@@ -80,6 +80,7 @@ namespace Daidan.Web.Controllers
 			return RedirectToAction("Add", "Trips");
 		}
 
+		[RedirectAuthorize]
 		public ActionResult Unauthorized()
 		{
 			return View();

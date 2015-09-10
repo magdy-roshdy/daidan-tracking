@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Daidan.Web.Controllers
 {
-	[RedirectAuthorize(Roles = "admin, systemAdmin")]
+	[RedirectAuthorize]
     public class TrucksExpensesController : Controller
     {
 		private IDataRepository dbRepository;

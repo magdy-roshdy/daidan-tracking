@@ -71,15 +71,12 @@
 						</ul>
 					</li>
 				}
-				@if (DaidanControllersHelper.IsUserAdmin(User.Identity) || DaidanControllersHelper.IsUserSystemAdmin(User.Identity))
-				{
-					<li>
-						<a href="@Url.Action("MasterSearch", "Trips")">
-							<i class="fa fa-search fa-lg"></i>
-							&nbsp;Master Search
-						</a>
-					</li>
-				}
+				<li>
+					<a href="@Url.Action("MasterSearch", "Trips")">
+						<i class="fa fa-search fa-lg"></i>
+						&nbsp;Master Search
+					</a>
+				</li>
 				@if (DaidanControllersHelper.IsUserAdmin(User.Identity) || DaidanControllersHelper.IsUserSystemAdmin(User.Identity))
 				{
 					<li class="dropdown">

@@ -130,5 +130,14 @@
 	$('#printButton').click(function () {
 		$('.print-area').printArea();
 	});
+
+	//check auto load querystrings
+	if ($.QueryString["month"] && $.QueryString["year"] && $.QueryString["truckId"]) {
+		$('#trucks').val($.QueryString["truckId"])
+		$('#months').val($.QueryString["month"]);
+		$('#year').val($.QueryString["year"]);
+
+		$('#viewSheetButton').click();
+	}
 });
 

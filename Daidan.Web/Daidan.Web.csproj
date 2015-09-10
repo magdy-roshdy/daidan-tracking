@@ -157,6 +157,7 @@
     <Content Include="Scripts\master-search.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\query-string.js" />
     <Content Include="Scripts\truck-sheet.js" />
     <Content Include="Web.config" />
   </ItemGroup>

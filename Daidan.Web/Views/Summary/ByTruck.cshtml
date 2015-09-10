@@ -13,6 +13,10 @@
 	.table-bordered tbody td{
 		text-align: center;
 	}
+
+	#summaryTable {
+		font-size: 0.9em;
+	}
 </style>
 <div class="print-area">
 	<h2>@Model.Month.ToString("MMMM yyyy") Summary - By Truck</h2>
@@ -28,7 +32,7 @@
 		</div>
 	</div>
 
-	<table border="1" class="table-responsive table-bordered" style="width: 100%;" id="resultTable">
+	<table border="1" class="table-responsive table-bordered" style="width: 100%;" id="summaryTable">
 		<thead>
 			<tr class="table-header-row">
 				<th style="text-align: center;" width="30">&nbsp;</th>
@@ -49,21 +53,16 @@
 			{
 				<tr>
 					<td>@counter.ToString()</td>
-					<td>@item.Truck.Number</td>
+					<td>
+						@Html.ActionLink(item.Truck.Number, "TruckSheet", "Reports", new { month = Model.Month.Month, year = Model.Month.Year, truckId = item.Truck.Id }, new { target = "_blank" })
+					</td>
 					<td>@item.NofTrips.ToString()</td>
 					<td>@item.GrossProfit.ToString("0.00")</td>
 					<td>@item.AdminFees.ToString("0.00")</td>
 					<td>@item.Expenses.ToString("0.00")</td>
 					<td>@item.DriversSalary.ToString("0.00")</td>
 					<td>
-						@if (item.Result < 0)
-						{
-							<strong>@item.Result.ToString("0.00")</strong>
-						}
-						else
-						{
-							@item.Result.ToString("0.00")
-						}
+						<strong>@item.Result.ToString("0.00")</strong>
 					</td>
 				</tr>
 
@@ -87,7 +86,7 @@
 			display: none;
 		}
 
-		#resultTable {
+		#summaryTable {
 			font-size: 0.7em;
 		}
 
