@@ -73,16 +73,27 @@
 <div class="row" style="border-bottom: dotted 1px #000;">&nbsp;</div>
 
 <div id="searchResult" style="display: none; width: 100%;">
-	<div class="row">
-		<div class="col-lg-11">&nbsp;</div>
-		<div class="col-lg-1">
-			<button id="printButton" class="btn btn-default" style="margin: 5px 0px 5px 0px;">
-				<i class="fa fa-print"></i>
-				&nbsp;
-				Print
-			</button>
-		</div>
-	</div>
+	<br />
+	<table style="width: 100%; margin-bottom: 10px;" class="hide-print">
+		<tr>
+			<td style="width: 100%;"></td>
+			<td>
+				<button id="excelExportButton" class="btn btn-default">
+					<i class="fa fa-file-excel-o"></i>
+					&nbsp;
+					Save Excel
+				</button>
+			</td>
+			<td>&nbsp;</td>
+			<td>
+				<button id="printButton" class="btn btn-default">
+					<i class="fa fa-print"></i>
+					&nbsp;
+					Print
+				</button>
+			</td>
+		</tr>
+	</table>
 	<div class="row print-area">
 		<div style="border: solid 1px #000; padding: 5px 15px 15px 15px;">
 			<h2 class="text-center">Driver Sheet</h2>
@@ -265,4 +276,5 @@
 
 <script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>
 <script type="text/javascript" src="~/Scripts/query-string.js"></script>
+<script type="text/javascript" src="~/Scripts/HTMLToExcel.js"></script>
 <script type="text/javascript" src="~/Scripts/driver-sheet.js?version=1.11"></script>

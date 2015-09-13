@@ -131,6 +131,12 @@
 		$('.print-area').printArea();
 	});
 
+	$('#excelExportButton').click(function () {
+		var $printAreaClone = $('.print-area').clone();
+		$('.hide-print', $printAreaClone).remove();
+		HTMLToExcel($printAreaClone[0], 'Summary Sheet');
+	});
+
 	//check auto load querystrings
 	if ($.QueryString["month"] && $.QueryString["year"] && $.QueryString["truckId"]) {
 		$('#trucks').val($.QueryString["truckId"])

@@ -33,7 +33,11 @@
 		$('.print-area').printArea();
 	});
 
-	
+	$('#excelExportButton').click(function () {
+		var $printAreaClone = $('.print-area').clone();
+		$('.hide-print', $printAreaClone).remove();
+		HTMLToExcel($printAreaClone[0], 'Summary Sheet');
+	});
 
 	$('#viewReportButton').click(function () {
 		if(validateReportForm()){

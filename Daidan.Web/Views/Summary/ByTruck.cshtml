@@ -21,17 +21,26 @@
 <div class="print-area">
 	<h2>@Model.Month.ToString("MMMM yyyy") Summary - By Truck</h2>
 	<hr />
-	<div class="row hide-print">
-		<div class="col-lg-11">&nbsp;</div>
-		<div class="col-lg-1">
-			<button id="printButton" class="btn btn-default" style="margin: 0px 35px 10px 0px;">
-				<i class="fa fa-print"></i>
-				&nbsp;
-				Print
-			</button>
-		</div>
-	</div>
-
+	<table style="width: 100%; margin-bottom: 10px;" class="hide-print">
+		<tr>
+			<td style="width: 100%;"></td>
+			<td>
+				<button id="excelExportButton" class="btn btn-default">
+					<i class="fa fa-file-excel-o"></i>
+					&nbsp;
+					Save Excel
+				</button>
+			</td>
+			<td>&nbsp;</td>
+			<td>
+				<button id="printButton" class="btn btn-default">
+					<i class="fa fa-print"></i>
+					&nbsp;
+					Print
+				</button>
+			</td>
+		</tr>
+	</table>
 	<table border="1" class="table-responsive table-bordered" style="width: 100%;" id="summaryTable">
 		<thead>
 			<tr class="table-header-row">
@@ -43,6 +52,7 @@
 				<th style="text-align: center;" width="100">Expenses</th>
 				<th style="text-align: center;" width="130">Driver(s) Salary</th>
 				<th style="text-align: center;" width="100">Result</th>
+				<th style="text-align: center;" width="70" class="hide-print">Sheet</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -53,9 +63,7 @@
 			{
 				<tr>
 					<td>@counter.ToString()</td>
-					<td>
-						@Html.ActionLink(item.Truck.Number, "TruckSheet", "Reports", new { month = Model.Month.Month, year = Model.Month.Year, truckId = item.Truck.Id }, new { target = "_blank" })
-					</td>
+					<td>@item.Truck.Number</td>
 					<td>@item.NofTrips.ToString()</td>
 					<td>@item.GrossProfit.ToString("0.00")</td>
 					<td>@item.AdminFees.ToString("0.00")</td>
@@ -63,6 +71,11 @@
 					<td>@item.DriversSalary.ToString("0.00")</td>
 					<td>
 						<strong>@item.Result.ToString("0.00")</strong>
+					</td>
+					<td class="hide-print">
+						<a href='@Url.Action("TruckSheet", "Reports", new { month = Model.Month.Month, year = Model.Month.Year, truckId = item.Truck.Id })' target="_blank">
+							<i class="fa fa-bars fa-lg"></i>
+						</a>
 					</td>
 				</tr>
 
@@ -78,6 +91,7 @@
 				<td>@Model.SummaryItems.Sum(x => x.Expenses).ToString("0.00")</td>
 				<td>@Model.SummaryItems.Sum(x => x.DriversSalary).ToString("0.00")</td>
 				<td>@Model.SummaryItems.Sum(x => x.Result).ToString("0.00")</td>
+				<td class="hide-print">&nbsp;</td>
 			</tr>
 		</tbody>
 	</table>
@@ -103,10 +117,17 @@
 
 </div>
 <script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>
+<script type="text/javascript" src="~/Scripts/HTMLToExcel.js"></script>
 <script type="text/javascript">
 	$(function () {
 		$('#printButton').click(function () {
 			$('.print-area').printArea();
+		});
+
+		$('#excelExportButton').click(function () {
+			var $printAreaClone = $('.print-area').clone();
+			$('.hide-print', $printAreaClone).remove();
+			HTMLToExcel($printAreaClone[0], 'Summary Sheet');
 		});
 	});
 </script>

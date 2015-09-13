@@ -152,6 +152,7 @@
     <Content Include="Scripts\daidan-global.js" />
     <Content Include="Scripts\driver-cash-index.js" />
     <Content Include="Scripts\driver-sheet.js" />
+    <Content Include="Scripts\HTMLToExcel.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery.PrintArea.js_4.js" />
     <Content Include="Scripts\master-search.js" />
