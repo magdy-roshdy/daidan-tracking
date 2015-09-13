@@ -43,7 +43,7 @@
 	</table>
 	<table border="1" class="table-responsive table-bordered" style="width: 100%;" id="summaryTable">
 		<thead>
-			<tr class="table-header-row">
+			<tr class="table-header-row" style="height: 50px;">
 				<th style="text-align: center;" width="30">&nbsp;</th>
 				<th style="text-align: center;" width="85">Truck</th>
 				<th style="text-align: center;" width="100">Nof. Trips</th>
@@ -69,9 +69,7 @@
 					<td>@item.AdminFees.ToString("0.00")</td>
 					<td>@item.Expenses.ToString("0.00")</td>
 					<td>@item.DriversSalary.ToString("0.00")</td>
-					<td>
-						<strong>@item.Result.ToString("0.00")</strong>
-					</td>
+					<td><strong>@item.Result.ToString("0.00")</strong></td>
 					<td class="hide-print">
 						<a href='@Url.Action("TruckSheet", "Reports", new { month = Model.Month.Month, year = Model.Month.Year, truckId = item.Truck.Id })' target="_blank">
 							<i class="fa fa-bars fa-lg"></i>
