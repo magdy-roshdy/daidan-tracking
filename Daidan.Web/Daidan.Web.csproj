@@ -248,6 +248,7 @@
     <Content Include="Views\Summary\Index.cshtml" />
     <Content Include="Views\Summary\ByTruck.cshtml" />
     <Content Include="Views\Summary\ByDriver.cshtml" />
+    <Content Include="Views\Shared\_PrintStyle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

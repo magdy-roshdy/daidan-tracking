@@ -186,11 +186,7 @@
 				</thead>
 				<tbody></tbody>
 			</table>
-			<style type="text/css" media="print">
-				.hide-print {
-					display: none;
-				}
-			</style>
+			@{Html.RenderPartial(@"~/Views/Shared/_PrintStyle.cshtml");}
 		</div>
 	</div>
 </div>
@@ -259,5 +255,4 @@
 </div>
 
 <script type="text/javascript" src="~/Scripts/HTMLToExcel.js"></script>
-<script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>
 <script type="text/javascript" src="~/Scripts/customer-report.js?version=1.9"></script>

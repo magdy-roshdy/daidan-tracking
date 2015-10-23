@@ -232,6 +232,7 @@ function updateTrucksList(driversSelectObject) {
 
 	if (driverObj.length > 0) {
 		var trucksSelect = $('#addTripModal #trucks').empty();
+		trucksSelect.removeAttr('disabled', 'disabled');
 		if (!driverObj[0].IsOutsourced) {
 			var truckArray = [];
 
@@ -239,16 +240,20 @@ function updateTrucksList(driversSelectObject) {
 				return !truck.IsOutsourced && truck.Driver && truck.Driver.Id == parseInt(driversSelectObject.val());
 			});
 			
-			if (window.currentWorkObject.currentTrip)
+			if (window.currentWorkObject.currentTrip) {
 				trucksSelect.append($("<option />").val(window.currentWorkObject.currentTrip.Truck.Id).text(window.currentWorkObject.currentTrip.Truck.Number)).attr('selected', 'selected');
 
-			if (truckArray.length > 0) {
-				
-				if (window.currentWorkObject.currentTrip && window.currentWorkObject.currentTrip.Truck.Id != truckArray[0].Id)
-				{
+				if (truckArray.length > 0 && window.currentWorkObject.currentTrip.Truck.Id != truckArray[0].Id)
 					trucksSelect.append($("<option />").val(truckArray[0].Id).text(truckArray[0].Number));
-				} else
-						trucksSelect.attr('disabled', 'disabled');
+				else
+					trucksSelect.attr('disabled', 'disabled');
+			}
+			else
+			{
+				if (truckArray.length > 0) {
+					trucksSelect.append($("<option />").val(truckArray[0].Id).text(truckArray[0].Number));
+					trucksSelect.attr('disabled', 'disabled');
+				}
 			}
 		} else {
 			var truckArray = $.grep(window.lookups.Trucks, function (truck, index) {

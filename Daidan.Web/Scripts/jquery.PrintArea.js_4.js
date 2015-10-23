@@ -68,7 +68,7 @@
             writeDoc.close();
 
             printWindow.focus();
-            printWindow.print();
+    		printWindow.print();
 
             if ( settings.mode == modes.popup && settings.popClose )
                 printWindow.close();
@@ -77,28 +77,27 @@
     function docType()
     {
         if ( settings.mode == modes.iframe || !settings.strict ) return "";
-
-        var standard = settings.strict == false ? " Trasitional" : "";
-        var dtd = settings.strict == false ? "loose" : "strict";
-
-        return '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01' + standard + '//EN" "http://www.w3.org/TR/html4/' + dtd +  '.dtd">';
+        return '<!DOCTYPE HTML>';
     }
 
     function getHead()
     {
-        var head = "<head><title>" + settings.popTitle + "</title>";
-        $(document).find("link")
-            .filter(function(){
-                    return $(this).attr("rel").toLowerCase() == "stylesheet";
-                })
-            .filter(function(){ // this filter contributed by "mindinquiring"
-            		var media = $(this).attr("media");
-            		if (!media) { media = ''; }
-                    return (media.toLowerCase() == "" || media.toLowerCase() == "print" || media.toLowerCase() == "all");
-                })
-            .each(function(){
-                    head += '<link type="text/css" rel="stylesheet" href="' + $(this).attr("href") + '" >';
-                });
+    	var head = "<head><title>" + settings.popTitle + "</title>";
+    	//head += '<link type="text/css" rel="stylesheet" href="/Content/css/print-styles.css" />';
+        //$(document).find("link")
+        //    .filter(function(){
+        //            return $(this).attr("rel").toLowerCase() == "stylesheet";
+        //        })
+        //    .filter(function(){ // this filter contributed by "mindinquiring"
+        //    		var media = $(this).attr("media");
+        //    		if (!media) { media = ''; }
+        //            return (media.toLowerCase() == "" || media.toLowerCase() == "print" || media.toLowerCase() == "all");
+        //        })
+        //    .each(function () {
+        //    	var text = '<link type="text/css" rel="stylesheet" href="' + $(this).attr("href") + '" />';
+        //    	head += text;
+        //    	console.log(text);
+        //        });
         head += "</head>";
         return head;
     }

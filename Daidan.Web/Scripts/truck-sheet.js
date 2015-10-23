@@ -17,8 +17,6 @@
 					$('#loadingDiv').hide();
 					$('#viewReportButton').removeAttr('disabled');
 
-					console.log(data);
-
 					showSearchResult(data)
 				},
 				error: function (jqXHR, textStatus, errorThrown) { alert(errorThrown); }

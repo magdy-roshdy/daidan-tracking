@@ -171,28 +171,8 @@
 					<td style="width: 50%;">&nbsp;</td>
 				</tr>
 			</table>
+			@{Html.RenderPartial(@"~/Views/Shared/_PrintStyle.cshtml");}
 		</div>
-		<style type="text/css" media="print">
-			.hide-print {
-				display: none;
-			}
-
-			#resultTable {
-				font-size: 0.7em;
-			}
-
-			.table-header-row {
-				background-color: #EBEBEB;
-				line-height: 20px;
-				font-weight: bold;
-			}
-
-			.table-header-row th
-			{
-				text-align: center;
-			}
-		</style>
-
 	</div>
 </div>
 
@@ -204,7 +184,6 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="~/Scripts/jquery.PrintArea.js_4.js"></script>
 <script type="text/javascript" src="~/Scripts/query-string.js"></script>
 <script type="text/javascript" src="~/Scripts/HTMLToExcel.js"></script>
 <script type="text/javascript" src="~/Scripts/truck-sheet.js?version=1.7"></script>
